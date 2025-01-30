@@ -1,0 +1,764 @@
+{
+    "logo": {
+        "metadata": {
+            "tags": [],
+            "concepts": []
+        },
+        "sys": {
+            "space": {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Space",
+                    "id": "6jlrlv1l95yr"
+                }
+            },
+            "id": "3ZU4GP7wCbxOvscthZkv1t",
+            "type": "Asset",
+            "createdAt": "2025-01-08T21:57:31.012Z",
+            "updatedAt": "2025-01-13T15:22:49.714Z",
+            "environment": {
+                "sys": {
+                    "id": "master",
+                    "type": "Link",
+                    "linkType": "Environment"
+                }
+            },
+            "publishedVersion": 18,
+            "revision": 3,
+            "locale": "en-US"
+        },
+        "fields": {
+            "title": "ValeIa",
+            "description": "Logo de ValeIa",
+            "file": {
+                "url": "//images.ctfassets.net/6jlrlv1l95yr/3ZU4GP7wCbxOvscthZkv1t/1633afc7daec443fa138c96cde0c8fed/logo.png",
+                "details": {
+                    "size": 233390,
+                    "image": {
+                        "width": 6200,
+                        "height": 2000
+                    }
+                },
+                "fileName": "logo.png",
+                "contentType": "image/png"
+            }
+        }
+    },
+    "ctaText": "Try it Free",
+    "ctaUrl": "https://UrlParaCompra",
+    "widthLogo": 200
+}
+{
+    "title": "Creamos sistemas con IA para impulsar tu negocio",
+    "description": "Automatizamos tareas repetitivas, optimizamos tu flujo de trabajo y ayudamos a que tu negocio crezca sin límites, gracias al poder de la Inteligencia Artificial.",
+    "ctaText": "Empecemos  ->",
+    "ctaUrl": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F",
+    "isVisible": true,
+    "image": {
+        "metadata": {
+            "tags": [],
+            "concepts": []
+        },
+        "sys": {
+            "space": {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Space",
+                    "id": "6jlrlv1l95yr"
+                }
+            },
+            "id": "3g3A8RbLZT0NFQ6Krava3k",
+            "type": "Asset",
+            "createdAt": "2025-01-14T00:38:31.496Z",
+            "updatedAt": "2025-01-14T00:38:31.496Z",
+            "environment": {
+                "sys": {
+                    "id": "master",
+                    "type": "Link",
+                    "linkType": "Environment"
+                }
+            },
+            "publishedVersion": 8,
+            "revision": 1,
+            "locale": "en-US"
+        },
+        "fields": {
+            "title": "Imagen 1",
+            "description": "descripcion",
+            "file": {
+                "url": "//images.ctfassets.net/6jlrlv1l95yr/3g3A8RbLZT0NFQ6Krava3k/186db482dae1fbc0505a7448121b79bd/07R01.jpg",
+                "details": {
+                    "size": 14841509,
+                    "image": {
+                        "width": 6500,
+                        "height": 4200
+                    }
+                },
+                "fileName": "07R01.jpg",
+                "contentType": "image/jpeg"
+            }
+        }
+    },
+    "imagePosition": "background",
+    "imageWidth": 500
+}
+{
+    "title": "Titulo de los Features",
+    "subtitle": "Subtitulo de los Features",
+    "steps": [
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "2fdZ6AgT0FjhWN3rEcSOvH",
+                "type": "Entry",
+                "createdAt": "2025-01-09T00:33:24.082Z",
+                "updatedAt": "2025-01-14T02:00:04.643Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 14,
+                "revision": 5,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "processStep"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "title": "TItulo del primer paso",
+                "description": "Descripcion del primer paso",
+                "icon": "ArrowRightCircle",
+                "ctaText": "Ver Mas",
+                "ctaUrl": "https://www.google.com/"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "6W03OaX8V5856anGGwoJCp",
+                "type": "Entry",
+                "createdAt": "2025-01-09T00:33:48.774Z",
+                "updatedAt": "2025-01-13T23:45:45.301Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 17,
+                "revision": 6,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "processStep"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "title": "Titullo del Paso 2",
+                "description": "Descripcion del paso 2",
+                "icon": "ArrowRightCircle"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "5cfOv53S5UcqBtKq1oEaet",
+                "type": "Entry",
+                "createdAt": "2025-01-14T00:57:37.342Z",
+                "updatedAt": "2025-01-14T00:57:37.342Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 4,
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "processStep"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "title": "Feature 3",
+                "description": "Descricion feature 3",
+                "icon": "ArrowRightCircle"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "8CGoECGhh83xUQkMEr6n6",
+                "type": "Entry",
+                "createdAt": "2025-01-14T00:58:26.905Z",
+                "updatedAt": "2025-01-14T06:16:44.731Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 12,
+                "revision": 5,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "processStep"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "title": "feature 4",
+                "description": "descripcion 4dlkfsldf s\nfsdfsddfsdfsdfsgd\nrghd\nh\nfgh\nfghfjfgjgfjg",
+                "icon": "Activity",
+                "ctaText": "Ver Mas",
+                "ctaUrl": "https://www.antevenio.com/blog/5-tipos-de-hero-images-para-landing-pages/"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "56ezVmEcq0l4fb1O1wjWK2",
+                "type": "Entry",
+                "createdAt": "2025-01-14T00:59:46.420Z",
+                "updatedAt": "2025-01-14T00:59:46.420Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 3,
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "processStep"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "title": "Feature 5",
+                "description": "descripcion 5",
+                "icon": "AlarmCheck"
+            }
+        }
+    ],
+    "isVisible": true
+}
+{
+    "title": "Titulo de la seccion de Precios ",
+    "subtitle": "Subtitulo de la seccion de Precios ",
+    "plans": [
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "6ct1PP2EQcuBBJ1PL0YdO",
+                "type": "Entry",
+                "createdAt": "2025-01-09T01:25:01.975Z",
+                "updatedAt": "2025-01-14T01:09:34.633Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 11,
+                "revision": 2,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "pricingPlan"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "name": "Plan 1",
+                "price": "50 USD",
+                "description": "Descripcion del plan |1",
+                "features": [
+                    "feature 1",
+                    "feature 2{",
+                    "feature 3"
+                ],
+                "highlightedText": false,
+                "payLinkText": "PAGAR",
+                "payLink": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "5s94gTQby6EOovwgIoCZjO",
+                "type": "Entry",
+                "createdAt": "2025-01-09T01:27:02.680Z",
+                "updatedAt": "2025-01-14T07:01:47.871Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 21,
+                "revision": 7,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "pricingPlan"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "name": "Plan 2",
+                "price": "100 USD",
+                "description": "Descripcion plan 2\n\n__text in bold__",
+                "features": [
+                    "feature 1",
+                    "feature 2",
+                    "feature 3",
+                    "features 4"
+                ],
+                "payLinkText": "PAGAR",
+                "payLink": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F",
+                "highlightedText": false,
+                "promotionalText": "¡El más vendido del 2024!"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "67sXXqaA5JXoTUCocYOfa8",
+                "type": "Entry",
+                "createdAt": "2025-01-14T01:12:01.500Z",
+                "updatedAt": "2025-01-14T07:02:15.465Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 14,
+                "revision": 4,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "pricingPlan"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "name": "Plan 3",
+                "price": "100 USD",
+                "description": "descripcion del plan\n\nsldknas\n\ns\nadsda\nasd\nad",
+                "features": [
+                    "feature 1",
+                    "feature 2",
+                    "feature 3"
+                ],
+                "payLinkText": "PAGAR",
+                "payLink": "https://www.notion.so/Easy-templates-17a3741c09ed8051ad74ffde57350ecb",
+                "highlightedText": true,
+                "promotionalText": "¡El más vendido del 2024!"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "2M1aL1QyMjNlbrGSeggHEd",
+                "type": "Entry",
+                "createdAt": "2025-01-14T01:13:32.585Z",
+                "updatedAt": "2025-01-14T06:15:53.298Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 7,
+                "revision": 2,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "pricingPlan"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "name": "Plan 4",
+                "price": "150 USD",
+                "description": "zldfnzldcad",
+                "highlightedText": false,
+                "payLinkText": "PAGAR",
+                "payLink": "https://www.antevenio.com/blog/5-tipos-de-hero-images-para-landing-pages/"
+            }
+        }
+    ],
+    "isVisible": true
+}
+{
+    "title": "Relied on marketers trusted by engineers and Beloved by Executives",
+    "subtitle": "opcional subtitulo",
+    "logos": [
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "3ZU4GP7wCbxOvscthZkv1t",
+                "type": "Asset",
+                "createdAt": "2025-01-08T21:57:31.012Z",
+                "updatedAt": "2025-01-13T15:22:49.714Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 18,
+                "revision": 3,
+                "locale": "en-US"
+            },
+            "fields": {
+                "title": "ValeIa",
+                "description": "Logo de ValeIa",
+                "file": {
+                    "url": "//images.ctfassets.net/6jlrlv1l95yr/3ZU4GP7wCbxOvscthZkv1t/1633afc7daec443fa138c96cde0c8fed/logo.png",
+                    "details": {
+                        "size": 233390,
+                        "image": {
+                            "width": 6200,
+                            "height": 2000
+                        }
+                    },
+                    "fileName": "logo.png",
+                    "contentType": "image/png"
+                }
+            }
+        }
+    ],
+    "displayMode": "grid",
+    "scrollSpeed": 30,
+    "height": 60,
+    "isVisible": true
+}
+{
+    "title": "Titulo CTA",
+    "subtitle": "Subtitulo del CTA Section",
+    "ctaText": "Cta Text",
+    "ctaUrl": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F",
+    "isVisible": true
+}
+{
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Subtitulo de preguntas frecuentes",
+    "faqs": [
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "3g5CCnD7F16VdmHkAqScdf",
+                "type": "Entry",
+                "createdAt": "2025-01-09T18:00:14.673Z",
+                "updatedAt": "2025-01-09T18:00:14.673Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 3,
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "faq"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "question": "Pregunta 1",
+                "answer": "Respuesta a la pregunta 1 \nclkdsn\ns\nda\nad\n"
+            }
+        }
+    ],
+    "isVisible": true
+}
+{
+    "logo": {
+        "metadata": {
+            "tags": [],
+            "concepts": []
+        },
+        "sys": {
+            "space": {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Space",
+                    "id": "6jlrlv1l95yr"
+                }
+            },
+            "id": "3ZU4GP7wCbxOvscthZkv1t",
+            "type": "Asset",
+            "createdAt": "2025-01-08T21:57:31.012Z",
+            "updatedAt": "2025-01-13T15:22:49.714Z",
+            "environment": {
+                "sys": {
+                    "id": "master",
+                    "type": "Link",
+                    "linkType": "Environment"
+                }
+            },
+            "publishedVersion": 18,
+            "revision": 3,
+            "locale": "en-US"
+        },
+        "fields": {
+            "title": "ValeIa",
+            "description": "Logo de ValeIa",
+            "file": {
+                "url": "//images.ctfassets.net/6jlrlv1l95yr/3ZU4GP7wCbxOvscthZkv1t/1633afc7daec443fa138c96cde0c8fed/logo.png",
+                "details": {
+                    "size": 233390,
+                    "image": {
+                        "width": 6200,
+                        "height": 2000
+                    }
+                },
+                "fileName": "logo.png",
+                "contentType": "image/png"
+            }
+        }
+    },
+    "widthLogo": 150,
+    "socialLinks": [
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "2dKkHnrvk9m8RxBPQajRhO",
+                "type": "Entry",
+                "createdAt": "2025-01-08T20:32:26.534Z",
+                "updatedAt": "2025-01-08T20:32:26.534Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 6,
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "socialLink"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "redSocial": "Facebook",
+                "url": "https://www.facebook.com/login/"
+            }
+        },
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "6jlrlv1l95yr"
+                    }
+                },
+                "id": "2fsEormLvm3VfkiJYXeIpA",
+                "type": "Entry",
+                "createdAt": "2025-01-09T00:20:03.282Z",
+                "updatedAt": "2025-01-09T18:51:34.328Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 8,
+                "revision": 3,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "socialLink"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "redSocial": "YouTube",
+                "url": "https://wa.me/3228854498"
+            }
+        }
+    ],
+    "email": "pedro@estarter.co",
+    "phone": "3228854498",
+    "copyright": "derechos resevados",
+    "isVisible": true
+}
