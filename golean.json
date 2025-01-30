@@ -137,7 +137,7 @@
         },
         {
           "id": "isVisible",
-          "name": "is Visible?",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -554,7 +554,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -684,7 +684,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -838,7 +838,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1057,7 +1057,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1310,7 +1310,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1519,7 +1519,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1647,7 +1647,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1867,7 +1867,7 @@
         },
         {
           "id": "isVisible",
-          "name": "Is Visible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2009,14 +2009,14 @@
         },
         {
           "id": "accentColor",
-          "name": "Accent Color",
+          "name": "Highlight Color",
           "type": "Symbol",
           "localized": false,
           "required": false,
           "validations": [
             {
               "regexp": {
-                "pattern": "^#[0-9A-Fa-f]{6}$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               }
             }
@@ -2203,7 +2203,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2400,7 +2400,7 @@
         },
         {
           "id": "isVisible",
-          "name": "isVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2695,7 +2695,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               }
             }
@@ -2705,14 +2705,14 @@
         },
         {
           "id": "accentColor",
-          "name": "AccentColor",
+          "name": "Highlight Color",
           "type": "Symbol",
           "localized": false,
           "required": false,
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               }
             }
@@ -2722,7 +2722,7 @@
         },
         {
           "id": "isVisible",
-          "name": "IsVisible",
+          "name": "showSection",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2806,7 +2806,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               }
             }
@@ -2816,14 +2816,14 @@
         },
         {
           "id": "accentColor",
-          "name": "AccentColor",
+          "name": "Highlight Color",
           "type": "Symbol",
           "localized": false,
           "required": false,
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               }
             }
@@ -2840,7 +2840,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               },
               "message": "Solo se admite formato Hexagesimal"
@@ -2858,7 +2858,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
                 "flags": null
               }
             }
@@ -3008,7 +3008,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Controla si la página es accesible",
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -3034,7 +3034,7 @@
         {
           "fieldId": "author",
           "settings": {
-            "helpText": "Nombre del autor del Articulo"
+            "helpText": "OPCIONAL - Nombre del autor del Articulo"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3044,7 +3044,7 @@
           "settings": {
             "ampm": "24",
             "format": "dateonly",
-            "helpText": "Fecha de publicación del Articullo"
+            "helpText": "OPCIONAL - Fecha de publicación del Articullo"
           },
           "widgetId": "datePicker",
           "widgetNamespace": "builtin"
@@ -3186,7 +3186,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto del botón de llamada a la acción"
+            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3266,7 +3266,7 @@
         {
           "fieldId": "socialLinks",
           "settings": {
-            "helpText": "Enlaces a redes sociales",
+            "helpText": "agrega los enlaces a redes sociales",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3286,6 +3286,11 @@
         },
         {
           "fieldId": "isVisible",
+          "settings": {
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         },
@@ -3370,7 +3375,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto del botón de llamada a la acción"
+            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3385,6 +3390,11 @@
         },
         {
           "fieldId": "isVisible",
+          "settings": {
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         },
@@ -3463,7 +3473,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección"
+            "helpText": "Título llamativo que impulsa a la acción. Debe ser persuasivo y directo"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3471,7 +3481,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": " Subtítulo o descripción de la sección"
+            "helpText": "Texto que refuerza el título y explica el valor de tomar acción"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -3479,7 +3489,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto del botón de llamada a la acción"
+            "helpText": "Texto del botón principal. Debe ser accionable y claro, máximo 20 caracteres"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3487,13 +3497,18 @@
         {
           "fieldId": "ctaUrl",
           "settings": {
-            "helpText": "URL externa para el botón"
+            "helpText": "URL del botón principal. Debe comenzar con http:// o https://"
           },
           "widgetId": "urlEditor",
           "widgetNamespace": "builtin"
         },
         {
           "fieldId": "isVisible",
+          "settings": {
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -3570,7 +3585,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto del botón de llamada a la acción"
+            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3632,7 +3647,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección de Procesos"
+            "helpText": "TTítulo principal que describe el proceso o conjunto de características"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3640,7 +3655,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Subtítulo o descripción de la sección"
+            "helpText": "Descripción general que introduce los pasos o características"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -3648,7 +3663,7 @@
         {
           "fieldId": "steps",
           "settings": {
-            "helpText": "Pasos del proceso",
+            "helpText": "Pasos del proceso en orden. Se recomienda entre 3 y 6 pasos para mejor visualización",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3658,6 +3673,11 @@
         },
         {
           "fieldId": "isVisible",
+          "settings": {
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -3710,7 +3730,7 @@
         {
           "fieldId": "name",
           "settings": {
-            "helpText": "Nombre del plan"
+            "helpText": "Nombre del plan que sea fácil de entender (ej: 'Básico', 'Pro', 'Enterprise')"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3718,7 +3738,7 @@
         {
           "fieldId": "price",
           "settings": {
-            "helpText": "Precio del plan"
+            "helpText": "Precio con moneda y periodicidad si aplica (ej: '$99/mes', 'Desde $199')"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3726,7 +3746,7 @@
         {
           "fieldId": "description",
           "settings": {
-            "helpText": "description"
+            "helpText": "Descripción breve que resalta el valor principal del plan. Máximo 100 caracteres"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -3734,7 +3754,7 @@
         {
           "fieldId": "features",
           "settings": {
-            "helpText": "Características del plan"
+            "helpText": "Lista de características incluidas en el plan. Cada elemento debe ser conciso y claro"
           },
           "widgetId": "tagEditor",
           "widgetNamespace": "builtin"
@@ -3742,7 +3762,7 @@
         {
           "fieldId": "payLinkText",
           "settings": {
-            "helpText": "Texto del botón de pagos"
+            "helpText": "Texto del botón de compra. Debe ser claro y accionable, máximo 20 caracteres"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3750,7 +3770,7 @@
         {
           "fieldId": "payLink",
           "settings": {
-            "helpText": "URL externa para el botón de pagos"
+            "helpText": "URL donde el usuario puede contratar este plan. Debe comenzar con http:// o https://"
           },
           "widgetId": "urlEditor",
           "widgetNamespace": "builtin"
@@ -3758,7 +3778,7 @@
         {
           "fieldId": "highlightedText",
           "settings": {
-            "helpText": "Indica si el plan debe destacarse",
+            "helpText": "Activa para destacar este plan como la mejor opción o más popular",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -3768,7 +3788,7 @@
         {
           "fieldId": "promotionalText",
           "settings": {
-            "helpText": "Texto que se mostrara Promocionando el precio"
+            "helpText": "Texto promocional que aparece sobre el plan (ej: '¡Más popular!', '¡Mejor valor!')"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3822,7 +3842,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección"
+            "helpText": "Título principal de la sección de precios. Debe ser claro y atractivo"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3830,7 +3850,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Subtítulo o descripción de la sección"
+            "helpText": "Texto introductorio que ayuda a los usuarios a elegir el plan adecuado"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3838,7 +3858,7 @@
         {
           "fieldId": "plans",
           "settings": {
-            "helpText": "Planes de precios",
+            "helpText": "Planes a mostrar. Ordénalos de menor a mayor precio para mejor comprensión",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3848,6 +3868,11 @@
         },
         {
           "fieldId": "isVisible",
+          "settings": {
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -3900,7 +3925,7 @@
         {
           "fieldId": "internalName",
           "settings": {
-            "helpText": "Nombre interno para identificar la página"
+            "helpText": "Nombre interno para identificar esta página en el CMS. Solo visible para editores"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3908,7 +3933,7 @@
         {
           "fieldId": "slug",
           "settings": {
-            "helpText": "URL de la página de inicio "
+            "helpText": "URL de la página principal. Mantener como '/'"
           },
           "widgetId": "slugEditor",
           "widgetNamespace": "builtin"
@@ -3916,7 +3941,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la página para SEO"
+            "helpText": "Título SEO de la página. Incluye palabras clave importantes, máximo 60 caracteres"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3924,7 +3949,7 @@
         {
           "fieldId": "description",
           "settings": {
-            "helpText": "Descripción de la página para SEO"
+            "helpText": "Meta descripción SEO. Describe la página de forma atractiva, 150-160 caracteres"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3932,7 +3957,7 @@
         {
           "fieldId": "googleTagManager",
           "settings": {
-            "helpText": "Google Tag Manager ejemplo: GTM-595RCG85"
+            "helpText": "ID de Google Tag Manager (formato: GTM-XXXXXX) para análisis"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3940,7 +3965,7 @@
         {
           "fieldId": "valeiaChat",
           "settings": {
-            "helpText": "Activa o desactiva el chat de ValeIa",
+            "helpText": "Activa el widget de chat de ValeIA en la página",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -3958,7 +3983,7 @@
         {
           "fieldId": "customTheme",
           "settings": {
-            "helpText": "Tema personalizado. Si se selecciona, anulará el tema predefinido",
+            "helpText": "Tema personalizado con colores y estilos específicos, Si se selecciona, anulará el tema predefinido",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -3968,7 +3993,7 @@
         {
           "fieldId": "sections",
           "settings": {
-            "helpText": "Secciones de la página y su orden",
+            "helpText": "Secciones que compondrán la página. Arrastra para reordenar según necesites, puedes duplicarlas segun Necesidad",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3979,7 +4004,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Controla la visibilidad de la página",
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4035,7 +4060,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección"
+            "helpText": "Título de la sección FAQ. Generalmente 'Preguntas Frecuentes' o similar"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4043,7 +4068,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Subtítulo o descripción de la sección"
+            "helpText": "Texto introductorio que anima a los usuarios a explorar las FAQ"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4051,7 +4076,7 @@
         {
           "fieldId": "faqs",
           "settings": {
-            "helpText": "Lista de preguntas frecuentes",
+            "helpText": "Lista de preguntas frecuentes. Organízalas por relevancia o tema",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -4062,13 +4087,18 @@
         {
           "fieldId": "columns",
           "settings": {
-            "helpText": "selecciona el numero de columnas en las que se mostraran las Preguntas"
+            "helpText": "Número de columnas para mostrar las FAQ. 1 para lista simple, 2 para dos columnas"
           },
           "widgetId": "radio",
           "widgetNamespace": "builtin"
         },
         {
           "fieldId": "isVisible",
+          "settings": {
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -4121,7 +4151,7 @@
         {
           "fieldId": "question",
           "settings": {
-            "helpText": "Pregunta"
+            "helpText": "Pregunta frecuente desde la perspectiva del usuario. Debe ser clara y directa"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4129,7 +4159,7 @@
         {
           "fieldId": "answer",
           "settings": {
-            "helpText": "Respuesta detallada"
+            "helpText": "Respuesta clara y concisa. Evita jerga técnica y usa un lenguaje amigable"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -4183,7 +4213,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección"
+            "helpText": "Título de la sección que introduce los partners o clientes"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4191,7 +4221,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Subtítulo o descripción de la sección"
+            "helpText": "Texto descriptivo que proporciona contexto sobre los partners mostrados"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4199,7 +4229,7 @@
         {
           "fieldId": "logos",
           "settings": {
-            "helpText": "Lista de logos de los partners",
+            "helpText": "Logos de partners. Preferiblemente SVG o PNG con fondo transparente. Altura recomendada: 60px",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -4209,7 +4239,7 @@
         {
           "fieldId": "displayMode",
           "settings": {
-            "helpText": "Selecciona un Modo de visualización de los logos"
+            "helpText": "'grid' para mostrar en cuadrícula fija, 'scroll' para carrusel automático"
           },
           "widgetId": "dropdown",
           "widgetNamespace": "builtin"
@@ -4217,7 +4247,7 @@
         {
           "fieldId": "scrollSpeed",
           "settings": {
-            "helpText": "Define la velocidad de desplazamiento para el modo scroll (Default: 15)"
+            "helpText": "Velocidad del carrusel (1-100). Solo aplica si Display Mode es 'scroll'"
           },
           "widgetId": "numberEditor",
           "widgetNamespace": "builtin"
@@ -4225,7 +4255,7 @@
         {
           "fieldId": "height",
           "settings": {
-            "helpText": "Alto en píxeles para todos los logos (Default: 60)"
+            "helpText": "Altura en píxeles para todos los logos. Mantener consistencia visual"
           },
           "widgetId": "numberEditor",
           "widgetNamespace": "builtin"
@@ -4233,7 +4263,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Controla la visibilidad de la sección",
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4315,7 +4345,7 @@
         {
           "fieldId": "accentColor",
           "settings": {
-            "helpText": "Color hexadecimal para elementos distintivos para el caso de uso (ejemplo negro: #000000)"
+            "helpText": "OPCIONAL, Color HEX (ej: #FF0000) para destacar visualmente este beneficio. Usar colores que contrasten bien con el fondo, Si no se especifica, se usará el color principal"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4448,7 +4478,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Controla la visibilidad de la sección",
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4568,7 +4598,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto del botón de llamada a la acción"
+            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4584,7 +4614,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Controla la visibilidad de la sección",
+            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4803,7 +4833,7 @@
         {
           "fieldId": "accentColor",
           "settings": {
-            "helpText": "Color hexadecimal (ej: #FF0000) para destacar visualmente este beneficio. Usar colores que contrasten bien con el fondo"
+            "helpText": "OPCIONAL, Color HEX (ej: #FF0000) para destacar visualmente este beneficio. Usar colores que contrasten bien con el fondo, Si no se especifica, se usará el color principal"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4883,7 +4913,7 @@
         {
           "fieldId": "accentColor",
           "settings": {
-            "helpText": "\"Color secundario para gradientes (formato: #RRGGBB). Si no se especifica, se usará el color principal\""
+            "helpText": "Color secundario para gradientes. Si no se especifica, se usará el color principal"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4923,7 +4953,7 @@
         {
           "fieldId": "preview",
           "settings": {
-            "helpText": "Vista previa del tema personalizado",
+            "helpText": "Vista previa del tema personalizado, agrega pantallazo del tema",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -9387,62 +9417,6 @@
     }
   ],
   "webhooks": [
-    {
-      "name": "Netlify - Deploy a site",
-      "url": "https://api.netlify.com/build_hooks/679854b56daef31e71426b2e",
-      "httpBasicUsername": null,
-      "topics": [
-        "ContentType.publish",
-        "ContentType.unpublish",
-        "Entry.publish",
-        "Entry.unpublish",
-        "Asset.publish",
-        "Asset.unpublish"
-      ],
-      "filters": [
-        {
-          "equals": [
-            {
-              "doc": "sys.environment.sys.id"
-            },
-            "master"
-          ]
-        }
-      ],
-      "transformation": {
-        "contentType": "application/json"
-      },
-      "active": false,
-      "sys": {
-        "type": "WebhookDefinition",
-        "id": "346HKlkOoAsN3Q8CBPuSDj",
-        "version": 2,
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "6jlrlv1l95yr"
-          }
-        },
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "createdAt": "2025-01-28T03:53:44Z",
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedAt": "2025-01-28T06:34:29Z"
-      },
-      "headers": []
-    },
     {
       "name": "actualización  ",
       "url": "https://charming-smakager-816fee.netlify.app/api/revalidate",
