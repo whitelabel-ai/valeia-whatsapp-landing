@@ -9,7 +9,11 @@ import { Benefits } from "@/components/benefits";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Faq } from "@/components/faq";
-import { getNavigationPages, getLandingPage } from "@/lib/contentful";
+import {
+  getNavigationPages,
+  getLandingPage,
+  checkContentfulConnection,
+} from "@/lib/contentful";
 import { Metadata } from "next";
 
 export const revalidate = 86400;
@@ -18,19 +22,69 @@ export async function generateMetadata(): Promise<Metadata> {
   const landingPage = await getLandingPage();
 
   return {
-    title: landingPage?.title || "",
-    description: landingPage?.description || "",
+    title: landingPage?.title || "Sitio en Construcción",
+    description:
+      landingPage?.description ||
+      "Estamos trabajando en el contenido de este sitio.",
   };
 }
 
 export default async function Home() {
+  // Verificar la conexión con Contentful
+  const isConnected = await checkContentfulConnection();
+
+  if (!isConnected) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center p-8">
+          <h1 className="text-4xl font-bold mb-4 text-foreground">
+            Error de Conexión
+          </h1>
+          <p className="text-foreground/60 mb-8">
+            No se pudo establecer conexión con el sistema de contenido. Por
+            favor, inténtelo más tarde.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const [navigationPages, landingPage] = await Promise.all([
     getNavigationPages(),
     getLandingPage(),
   ]);
 
   if (!landingPage) {
-    throw new Error("Required content not found");
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center p-8">
+          <h1 className="text-4xl font-bold mb-4 text-foreground">
+            Sitio en Construcción
+          </h1>
+          <p className="text-foreground/60 mb-8">
+            Estamos trabajando en el contenido de este sitio. Vuelva pronto para
+            ver las novedades.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no hay secciones, mostrar mensaje
+  if (!landingPage.sections || landingPage.sections.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center p-8">
+          <h1 className="text-4xl font-bold mb-4 text-foreground">
+            Contenido en Preparación
+          </h1>
+          <p className="text-foreground/60 mb-8">
+            El contenido de este sitio está siendo preparado. Pronto estará
+            disponible.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   // Función para renderizar una sección basada en su tipo de contenido

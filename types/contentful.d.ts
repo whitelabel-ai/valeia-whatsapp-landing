@@ -212,7 +212,7 @@ export interface UseCase {
   accentColor?: string;
   imagePosition?: "right" | "left" | "top" | "bottom" | "background";
   imageWidth?: number;
-  isActive?: boolean;
+  isActive: boolean;
 }
 
 export interface UseCasesSection {

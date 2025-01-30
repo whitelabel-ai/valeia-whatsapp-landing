@@ -137,7 +137,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "is Visible?",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -554,7 +554,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -684,7 +684,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -838,7 +838,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1057,7 +1057,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1310,7 +1310,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1519,7 +1519,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1647,7 +1647,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -1867,7 +1867,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "Is Visible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2009,14 +2009,14 @@
         },
         {
           "id": "accentColor",
-          "name": "Highlight Color",
+          "name": "Accent Color",
           "type": "Symbol",
           "localized": false,
           "required": false,
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#[0-9A-Fa-f]{6}$",
                 "flags": null
               }
             }
@@ -2203,7 +2203,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2400,7 +2400,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "isVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2695,7 +2695,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
                 "flags": null
               }
             }
@@ -2705,14 +2705,14 @@
         },
         {
           "id": "accentColor",
-          "name": "Highlight Color",
+          "name": "AccentColor",
           "type": "Symbol",
           "localized": false,
           "required": false,
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
                 "flags": null
               }
             }
@@ -2722,7 +2722,7 @@
         },
         {
           "id": "isVisible",
-          "name": "showSection",
+          "name": "IsVisible",
           "type": "Boolean",
           "localized": false,
           "required": false,
@@ -2806,7 +2806,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6})$",
                 "flags": null
               }
             }
@@ -2816,14 +2816,14 @@
         },
         {
           "id": "accentColor",
-          "name": "Highlight Color",
+          "name": "AccentColor",
           "type": "Symbol",
           "localized": false,
           "required": false,
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6})$",
                 "flags": null
               }
             }
@@ -2840,7 +2840,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6})$",
                 "flags": null
               },
               "message": "Solo se admite formato Hexagesimal"
@@ -2858,7 +2858,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6})$",
                 "flags": null
               }
             }
@@ -2974,7 +2974,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título principal de la página. Debe ser descriptivo y contener palabras clave relevantes"
+            "helpText": "Título principal de la página"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -2982,7 +2982,7 @@
         {
           "fieldId": "slug",
           "settings": {
-            "helpText": "URL amigable de la página. Usar guiones y minúsculas, sin espacios ni caracteres especiales"
+            "helpText": "URL amigable para la página, debe coincidir con el slug del menuItem"
           },
           "widgetId": "slugEditor",
           "widgetNamespace": "builtin"
@@ -2990,7 +2990,7 @@
         {
           "fieldId": "featuredImage",
           "settings": {
-            "helpText": "Imagen destacada para la página. Recomendado: 1200x630px para mejor compartición en redes",
+            "helpText": "Imagen destacada que aparecerá en la parte superior de la página",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -3008,7 +3008,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "helpText": "Controla si la página es accesible",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -3034,7 +3034,7 @@
         {
           "fieldId": "author",
           "settings": {
-            "helpText": "OPCIONAL - Nombre del autor del Articulo"
+            "helpText": "Nombre del autor del Articulo"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3044,7 +3044,7 @@
           "settings": {
             "ampm": "24",
             "format": "dateonly",
-            "helpText": "OPCIONAL - Fecha de publicación del Articullo"
+            "helpText": "Fecha de publicación del Articullo"
           },
           "widgetId": "datePicker",
           "widgetNamespace": "builtin"
@@ -3186,7 +3186,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
+            "helpText": "Texto del botón de llamada a la acción"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3266,7 +3266,7 @@
         {
           "fieldId": "socialLinks",
           "settings": {
-            "helpText": "agrega los enlaces a redes sociales",
+            "helpText": "Enlaces a redes sociales",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3286,11 +3286,6 @@
         },
         {
           "fieldId": "isVisible",
-          "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
-            "trueLabel": "Yes",
-            "falseLabel": "No"
-          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         },
@@ -3375,7 +3370,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
+            "helpText": "Texto del botón de llamada a la acción"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3390,11 +3385,6 @@
         },
         {
           "fieldId": "isVisible",
-          "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
-            "trueLabel": "Yes",
-            "falseLabel": "No"
-          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         },
@@ -3473,7 +3463,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título llamativo que impulsa a la acción. Debe ser persuasivo y directo"
+            "helpText": "Título de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3481,7 +3471,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Texto que refuerza el título y explica el valor de tomar acción"
+            "helpText": " Subtítulo o descripción de la sección"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -3489,7 +3479,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto del botón principal. Debe ser accionable y claro, máximo 20 caracteres"
+            "helpText": "Texto del botón de llamada a la acción"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3497,18 +3487,13 @@
         {
           "fieldId": "ctaUrl",
           "settings": {
-            "helpText": "URL del botón principal. Debe comenzar con http:// o https://"
+            "helpText": "URL externa para el botón"
           },
           "widgetId": "urlEditor",
           "widgetNamespace": "builtin"
         },
         {
           "fieldId": "isVisible",
-          "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
-            "trueLabel": "Yes",
-            "falseLabel": "No"
-          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -3585,7 +3570,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
+            "helpText": "Texto del botón de llamada a la acción"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3647,7 +3632,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "TTítulo principal que describe el proceso o conjunto de características"
+            "helpText": "Título de la sección de Procesos"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3655,7 +3640,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Descripción general que introduce los pasos o características"
+            "helpText": "Subtítulo o descripción de la sección"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -3663,7 +3648,7 @@
         {
           "fieldId": "steps",
           "settings": {
-            "helpText": "Pasos del proceso en orden. Se recomienda entre 3 y 6 pasos para mejor visualización",
+            "helpText": "Pasos del proceso",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3673,11 +3658,6 @@
         },
         {
           "fieldId": "isVisible",
-          "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
-            "trueLabel": "Yes",
-            "falseLabel": "No"
-          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -3730,7 +3710,7 @@
         {
           "fieldId": "name",
           "settings": {
-            "helpText": "Nombre del plan que sea fácil de entender (ej: 'Básico', 'Pro', 'Enterprise')"
+            "helpText": "Nombre del plan"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3738,7 +3718,7 @@
         {
           "fieldId": "price",
           "settings": {
-            "helpText": "Precio con moneda y periodicidad si aplica (ej: '$99/mes', 'Desde $199')"
+            "helpText": "Precio del plan"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3746,7 +3726,7 @@
         {
           "fieldId": "description",
           "settings": {
-            "helpText": "Descripción breve que resalta el valor principal del plan. Máximo 100 caracteres"
+            "helpText": "description"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -3754,7 +3734,7 @@
         {
           "fieldId": "features",
           "settings": {
-            "helpText": "Lista de características incluidas en el plan. Cada elemento debe ser conciso y claro"
+            "helpText": "Características del plan"
           },
           "widgetId": "tagEditor",
           "widgetNamespace": "builtin"
@@ -3762,7 +3742,7 @@
         {
           "fieldId": "payLinkText",
           "settings": {
-            "helpText": "Texto del botón de compra. Debe ser claro y accionable, máximo 20 caracteres"
+            "helpText": "Texto del botón de pagos"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3770,7 +3750,7 @@
         {
           "fieldId": "payLink",
           "settings": {
-            "helpText": "URL donde el usuario puede contratar este plan. Debe comenzar con http:// o https://"
+            "helpText": "URL externa para el botón de pagos"
           },
           "widgetId": "urlEditor",
           "widgetNamespace": "builtin"
@@ -3778,7 +3758,7 @@
         {
           "fieldId": "highlightedText",
           "settings": {
-            "helpText": "Activa para destacar este plan como la mejor opción o más popular",
+            "helpText": "Indica si el plan debe destacarse",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -3788,7 +3768,7 @@
         {
           "fieldId": "promotionalText",
           "settings": {
-            "helpText": "Texto promocional que aparece sobre el plan (ej: '¡Más popular!', '¡Mejor valor!')"
+            "helpText": "Texto que se mostrara Promocionando el precio"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3842,7 +3822,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título principal de la sección de precios. Debe ser claro y atractivo"
+            "helpText": "Título de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3850,7 +3830,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Texto introductorio que ayuda a los usuarios a elegir el plan adecuado"
+            "helpText": "Subtítulo o descripción de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3858,7 +3838,7 @@
         {
           "fieldId": "plans",
           "settings": {
-            "helpText": "Planes a mostrar. Ordénalos de menor a mayor precio para mejor comprensión",
+            "helpText": "Planes de precios",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -3868,11 +3848,6 @@
         },
         {
           "fieldId": "isVisible",
-          "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
-            "trueLabel": "Yes",
-            "falseLabel": "No"
-          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -3925,7 +3900,7 @@
         {
           "fieldId": "internalName",
           "settings": {
-            "helpText": "Nombre interno para identificar esta página en el CMS. Solo visible para editores"
+            "helpText": "Nombre interno para identificar la página"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3933,7 +3908,7 @@
         {
           "fieldId": "slug",
           "settings": {
-            "helpText": "URL de la página principal. Mantener como '/'"
+            "helpText": "URL de la página de inicio "
           },
           "widgetId": "slugEditor",
           "widgetNamespace": "builtin"
@@ -3941,7 +3916,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título SEO de la página. Incluye palabras clave importantes, máximo 60 caracteres"
+            "helpText": "Título de la página para SEO"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3949,7 +3924,7 @@
         {
           "fieldId": "description",
           "settings": {
-            "helpText": "Meta descripción SEO. Describe la página de forma atractiva, 150-160 caracteres"
+            "helpText": "Descripción de la página para SEO"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3957,7 +3932,7 @@
         {
           "fieldId": "googleTagManager",
           "settings": {
-            "helpText": "ID de Google Tag Manager (formato: GTM-XXXXXX) para análisis"
+            "helpText": "Google Tag Manager ejemplo: GTM-595RCG85"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -3965,7 +3940,7 @@
         {
           "fieldId": "valeiaChat",
           "settings": {
-            "helpText": "Activa el widget de chat de ValeIA en la página",
+            "helpText": "Activa o desactiva el chat de ValeIa",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -3983,7 +3958,7 @@
         {
           "fieldId": "customTheme",
           "settings": {
-            "helpText": "Tema personalizado con colores y estilos específicos, Si se selecciona, anulará el tema predefinido",
+            "helpText": "Tema personalizado. Si se selecciona, anulará el tema predefinido",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -3993,7 +3968,7 @@
         {
           "fieldId": "sections",
           "settings": {
-            "helpText": "Secciones que compondrán la página. Arrastra para reordenar según necesites, puedes duplicarlas segun Necesidad",
+            "helpText": "Secciones de la página y su orden",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -4004,7 +3979,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "helpText": "Controla la visibilidad de la página",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4060,7 +4035,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección FAQ. Generalmente 'Preguntas Frecuentes' o similar"
+            "helpText": "Título de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4068,7 +4043,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Texto introductorio que anima a los usuarios a explorar las FAQ"
+            "helpText": "Subtítulo o descripción de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4076,7 +4051,7 @@
         {
           "fieldId": "faqs",
           "settings": {
-            "helpText": "Lista de preguntas frecuentes. Organízalas por relevancia o tema",
+            "helpText": "Lista de preguntas frecuentes",
             "bulkEditing": false,
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
@@ -4087,18 +4062,13 @@
         {
           "fieldId": "columns",
           "settings": {
-            "helpText": "Número de columnas para mostrar las FAQ. 1 para lista simple, 2 para dos columnas"
+            "helpText": "selecciona el numero de columnas en las que se mostraran las Preguntas"
           },
           "widgetId": "radio",
           "widgetNamespace": "builtin"
         },
         {
           "fieldId": "isVisible",
-          "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
-            "trueLabel": "Yes",
-            "falseLabel": "No"
-          },
           "widgetId": "boolean",
           "widgetNamespace": "builtin"
         }
@@ -4151,7 +4121,7 @@
         {
           "fieldId": "question",
           "settings": {
-            "helpText": "Pregunta frecuente desde la perspectiva del usuario. Debe ser clara y directa"
+            "helpText": "Pregunta"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4159,7 +4129,7 @@
         {
           "fieldId": "answer",
           "settings": {
-            "helpText": "Respuesta clara y concisa. Evita jerga técnica y usa un lenguaje amigable"
+            "helpText": "Respuesta detallada"
           },
           "widgetId": "markdown",
           "widgetNamespace": "builtin"
@@ -4213,7 +4183,7 @@
         {
           "fieldId": "title",
           "settings": {
-            "helpText": "Título de la sección que introduce los partners o clientes"
+            "helpText": "Título de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4221,7 +4191,7 @@
         {
           "fieldId": "subtitle",
           "settings": {
-            "helpText": "Texto descriptivo que proporciona contexto sobre los partners mostrados"
+            "helpText": "Subtítulo o descripción de la sección"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4229,7 +4199,7 @@
         {
           "fieldId": "logos",
           "settings": {
-            "helpText": "Logos de partners. Preferiblemente SVG o PNG con fondo transparente. Altura recomendada: 60px",
+            "helpText": "Lista de logos de los partners",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -4239,7 +4209,7 @@
         {
           "fieldId": "displayMode",
           "settings": {
-            "helpText": "'grid' para mostrar en cuadrícula fija, 'scroll' para carrusel automático"
+            "helpText": "Selecciona un Modo de visualización de los logos"
           },
           "widgetId": "dropdown",
           "widgetNamespace": "builtin"
@@ -4247,7 +4217,7 @@
         {
           "fieldId": "scrollSpeed",
           "settings": {
-            "helpText": "Velocidad del carrusel (1-100). Solo aplica si Display Mode es 'scroll'"
+            "helpText": "Define la velocidad de desplazamiento para el modo scroll (Default: 15)"
           },
           "widgetId": "numberEditor",
           "widgetNamespace": "builtin"
@@ -4255,7 +4225,7 @@
         {
           "fieldId": "height",
           "settings": {
-            "helpText": "Altura en píxeles para todos los logos. Mantener consistencia visual"
+            "helpText": "Alto en píxeles para todos los logos (Default: 60)"
           },
           "widgetId": "numberEditor",
           "widgetNamespace": "builtin"
@@ -4263,7 +4233,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "helpText": "Controla la visibilidad de la sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4345,7 +4315,7 @@
         {
           "fieldId": "accentColor",
           "settings": {
-            "helpText": "OPCIONAL, Color HEX (ej: #FF0000) para destacar visualmente este beneficio. Usar colores que contrasten bien con el fondo, Si no se especifica, se usará el color principal"
+            "helpText": "Color hexadecimal para elementos distintivos para el caso de uso (ejemplo negro: #000000)"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4478,7 +4448,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "helpText": "Controla la visibilidad de la sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4598,7 +4568,7 @@
         {
           "fieldId": "ctaText",
           "settings": {
-            "helpText": "Texto para el botón principal de llamada a la acción. Ejemplo: 'Ver más', 'Descubrir'"
+            "helpText": "Texto del botón de llamada a la acción"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4614,7 +4584,7 @@
         {
           "fieldId": "isVisible",
           "settings": {
-            "helpText": "Determina si la sección debe mostrarse en la página. Útil para activar o desactivar temporalmente esta sección",
+            "helpText": "Controla la visibilidad de la sección",
             "trueLabel": "Yes",
             "falseLabel": "No"
           },
@@ -4833,7 +4803,7 @@
         {
           "fieldId": "accentColor",
           "settings": {
-            "helpText": "OPCIONAL, Color HEX (ej: #FF0000) para destacar visualmente este beneficio. Usar colores que contrasten bien con el fondo, Si no se especifica, se usará el color principal"
+            "helpText": "Color hexadecimal (ej: #FF0000) para destacar visualmente este beneficio. Usar colores que contrasten bien con el fondo"
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4913,7 +4883,7 @@
         {
           "fieldId": "accentColor",
           "settings": {
-            "helpText": "Color secundario para gradientes. Si no se especifica, se usará el color principal"
+            "helpText": "\"Color secundario para gradientes (formato: #RRGGBB). Si no se especifica, se usará el color principal\""
           },
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
@@ -4953,7 +4923,7 @@
         {
           "fieldId": "preview",
           "settings": {
-            "helpText": "Vista previa del tema personalizado, agrega pantallazo del tema",
+            "helpText": "Vista previa del tema personalizado",
             "showLinkEntityAction": true,
             "showCreateEntityAction": true
           },
@@ -5502,6 +5472,122 @@
             "id": "6jlrlv1l95yr"
           }
         },
+        "id": "CoJl2LCDSLbCxCMfXPtG9",
+        "type": "Entry",
+        "createdAt": "2025-01-09T00:32:37.941Z",
+        "updatedAt": "2025-01-14T01:47:22.224Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 18,
+        "publishedAt": "2025-01-14T01:47:22.224Z",
+        "firstPublishedAt": "2025-01-09T00:33:58.631Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 6,
+        "version": 19,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "processSection"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/CoJl2LCDSLbCxCMfXPtG9"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Titulo de los Features"
+        },
+        "subtitle": {
+          "en-US": "Subtitulo de los Features"
+        },
+        "steps": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "2fdZ6AgT0FjhWN3rEcSOvH"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "6W03OaX8V5856anGGwoJCp"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "5cfOv53S5UcqBtKq1oEaet"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "8CGoECGhh83xUQkMEr6n6"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "56ezVmEcq0l4fb1O1wjWK2"
+              }
+            }
+          ]
+        },
+        "isVisible": {
+          "en-US": true
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
         "id": "2fdZ6AgT0FjhWN3rEcSOvH",
         "type": "Entry",
         "createdAt": "2025-01-09T00:33:00.312Z",
@@ -5569,6 +5655,83 @@
         },
         "ctaUrl": {
           "en-US": "https://www.google.com/"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "6W03OaX8V5856anGGwoJCp",
+        "type": "Entry",
+        "createdAt": "2025-01-09T00:33:32.270Z",
+        "updatedAt": "2025-01-13T23:45:45.301Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 17,
+        "publishedAt": "2025-01-13T23:45:45.301Z",
+        "firstPublishedAt": "2025-01-09T00:33:48.774Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 6,
+        "version": 18,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "processStep"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/6W03OaX8V5856anGGwoJCp"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Titullo del Paso 2"
+        },
+        "description": {
+          "en-US": "Descripcion del paso 2"
+        },
+        "icon": {
+          "en-US": "ArrowRightCircle"
         }
       }
     },
@@ -6104,7 +6267,85 @@
           "en-US": "sunsetLight"
         },
         "sections": {
-          "en-US": []
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "6uPofJWScUwDX8MWcL8lJ9"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "3pUJoADu4BICpFpVFlDCXc"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "65ZMOlE8Mn40dl3u8iTlk9"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "27GzaI5VEY5KR7LeHwHmhp"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "CoJl2LCDSLbCxCMfXPtG9"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "4PEXOwYSeDbnllVonW1VsR"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "2hB1Yd5NwnALhNfdlcwftZ"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "4eKGrYIunknXlF26GMmwBZ"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "7DT20IeXuXt82yuoX6PgDN"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "Zc4kzZ77tVVvAagBO9p3b"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "16Pa13cn5IQArwwxPl6SOa"
+              }
+            }
+          ]
         },
         "isVisible": {
           "en-US": true
@@ -6528,6 +6769,243 @@
             "id": "6jlrlv1l95yr"
           }
         },
+        "id": "5cfOv53S5UcqBtKq1oEaet",
+        "type": "Entry",
+        "createdAt": "2025-01-14T00:57:18.687Z",
+        "updatedAt": "2025-01-14T00:57:37.342Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 4,
+        "publishedAt": "2025-01-14T00:57:37.342Z",
+        "firstPublishedAt": "2025-01-14T00:57:37.342Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 5,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "processStep"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/5cfOv53S5UcqBtKq1oEaet"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Feature 3"
+        },
+        "description": {
+          "en-US": "Descricion feature 3"
+        },
+        "icon": {
+          "en-US": "ArrowRightCircle"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "8CGoECGhh83xUQkMEr6n6",
+        "type": "Entry",
+        "createdAt": "2025-01-14T00:58:08.205Z",
+        "updatedAt": "2025-01-14T06:16:44.731Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 12,
+        "publishedAt": "2025-01-14T06:16:44.731Z",
+        "firstPublishedAt": "2025-01-14T00:58:26.905Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 5,
+        "version": 13,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "processStep"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/8CGoECGhh83xUQkMEr6n6"
+      },
+      "fields": {
+        "title": {
+          "en-US": "feature 4"
+        },
+        "description": {
+          "en-US": "descripcion 4dlkfsldf s\nfsdfsddfsdfsdfsgd\nrghd\nh\nfgh\nfghfjfgjgfjg"
+        },
+        "icon": {
+          "en-US": "Activity"
+        },
+        "ctaText": {
+          "en-US": "Ver Mas"
+        },
+        "ctaUrl": {
+          "en-US": "https://www.antevenio.com/blog/5-tipos-de-hero-images-para-landing-pages/"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "56ezVmEcq0l4fb1O1wjWK2",
+        "type": "Entry",
+        "createdAt": "2025-01-14T00:59:30.619Z",
+        "updatedAt": "2025-01-14T00:59:46.420Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 3,
+        "publishedAt": "2025-01-14T00:59:46.420Z",
+        "firstPublishedAt": "2025-01-14T00:59:46.420Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 4,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "processStep"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/56ezVmEcq0l4fb1O1wjWK2"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Feature 5"
+        },
+        "description": {
+          "en-US": "descripcion 5"
+        },
+        "icon": {
+          "en-US": "AlarmCheck"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
         "id": "67sXXqaA5JXoTUCocYOfa8",
         "type": "Entry",
         "createdAt": "2025-01-14T01:11:13.509Z",
@@ -6817,6 +7295,544 @@
             "id": "6jlrlv1l95yr"
           }
         },
+        "id": "2hB1Yd5NwnALhNfdlcwftZ",
+        "type": "Entry",
+        "createdAt": "2025-01-15T16:59:55.804Z",
+        "updatedAt": "2025-01-15T18:38:40.210Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 5,
+        "publishedAt": "2025-01-15T18:38:40.210Z",
+        "firstPublishedAt": "2025-01-15T17:04:52.777Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 2,
+        "version": 6,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "useCasesSection"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/2hB1Yd5NwnALhNfdlcwftZ"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Caso de uso"
+        },
+        "subtitle": {
+          "en-US": "subtitulo de caso de uso "
+        },
+        "cases": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "5m5mLrijsRtZVuuqkztjXM"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "1QouMIaxQnyrWM94sPUKpJ"
+              }
+            }
+          ]
+        },
+        "isVisible": {
+          "en-US": true
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "5m5mLrijsRtZVuuqkztjXM",
+        "type": "Entry",
+        "createdAt": "2025-01-15T17:00:19.113Z",
+        "updatedAt": "2025-01-29T22:27:52.471Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 27,
+        "publishedAt": "2025-01-29T22:27:52.471Z",
+        "firstPublishedAt": "2025-01-15T17:01:07.707Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 8,
+        "version": 28,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "useCase"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/5m5mLrijsRtZVuuqkztjXM"
+      },
+      "fields": {
+        "name": {
+          "en-US": "Caso 1"
+        },
+        "description": {
+          "en-US": {
+            "data": {},
+            "content": [
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "value": "Descripcion",
+                    "nodeType": "text"
+                  },
+                  {
+                    "data": {},
+                    "marks": [],
+                    "value": " del CAso 1  ",
+                    "nodeType": "text"
+                  }
+                ],
+                "nodeType": "heading-1"
+              },
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "content": [
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "marks": [],
+                            "value": "primero",
+                            "nodeType": "text"
+                          }
+                        ],
+                        "nodeType": "paragraph"
+                      }
+                    ],
+                    "nodeType": "list-item"
+                  },
+                  {
+                    "data": {},
+                    "content": [
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "marks": [],
+                            "value": "segundo",
+                            "nodeType": "text"
+                          }
+                        ],
+                        "nodeType": "paragraph"
+                      },
+                      {
+                        "data": {},
+                        "content": [],
+                        "nodeType": "hr"
+                      }
+                    ],
+                    "nodeType": "list-item"
+                  }
+                ],
+                "nodeType": "unordered-list"
+              },
+              {
+                "data": {},
+                "content": [],
+                "nodeType": "hr"
+              },
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "content": [
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "content": [
+                              {
+                                "data": {},
+                                "marks": [],
+                                "value": "11",
+                                "nodeType": "text"
+                              }
+                            ],
+                            "nodeType": "paragraph"
+                          }
+                        ],
+                        "nodeType": "table-header-cell"
+                      },
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "content": [
+                              {
+                                "data": {},
+                                "marks": [],
+                                "value": "22",
+                                "nodeType": "text"
+                              }
+                            ],
+                            "nodeType": "paragraph"
+                          }
+                        ],
+                        "nodeType": "table-header-cell"
+                      }
+                    ],
+                    "nodeType": "table-row"
+                  },
+                  {
+                    "data": {},
+                    "content": [
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "content": [
+                              {
+                                "data": {},
+                                "marks": [],
+                                "value": "CSKCM",
+                                "nodeType": "text"
+                              }
+                            ],
+                            "nodeType": "paragraph"
+                          }
+                        ],
+                        "nodeType": "table-cell"
+                      },
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "content": [
+                              {
+                                "data": {},
+                                "marks": [],
+                                "value": "DASD",
+                                "nodeType": "text"
+                              }
+                            ],
+                            "nodeType": "paragraph"
+                          }
+                        ],
+                        "nodeType": "table-cell"
+                      }
+                    ],
+                    "nodeType": "table-row"
+                  },
+                  {
+                    "data": {},
+                    "content": [
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "content": [
+                              {
+                                "data": {},
+                                "marks": [],
+                                "value": "asfa",
+                                "nodeType": "text"
+                              }
+                            ],
+                            "nodeType": "paragraph"
+                          }
+                        ],
+                        "nodeType": "table-cell"
+                      },
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "content": [
+                              {
+                                "data": {},
+                                "marks": [],
+                                "value": "asda",
+                                "nodeType": "text"
+                              }
+                            ],
+                            "nodeType": "paragraph"
+                          }
+                        ],
+                        "nodeType": "table-cell"
+                      }
+                    ],
+                    "nodeType": "table-row"
+                  }
+                ],
+                "nodeType": "table"
+              },
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "marks": [],
+                    "value": "",
+                    "nodeType": "text"
+                  }
+                ],
+                "nodeType": "paragraph"
+              }
+            ],
+            "nodeType": "document"
+          }
+        },
+        "isActive": {
+          "en-US": true
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "1QouMIaxQnyrWM94sPUKpJ",
+        "type": "Entry",
+        "createdAt": "2025-01-15T18:37:44.820Z",
+        "updatedAt": "2025-01-16T02:12:41.896Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 62,
+        "publishedAt": "2025-01-16T02:12:41.896Z",
+        "firstPublishedAt": "2025-01-15T18:38:29.097Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 19,
+        "version": 63,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "useCase"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/1QouMIaxQnyrWM94sPUKpJ"
+      },
+      "fields": {
+        "name": {
+          "en-US": "Caso 2"
+        },
+        "description": {
+          "en-US": {
+            "data": {},
+            "content": [
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "value": "Lorem Ipsum",
+                    "nodeType": "text"
+                  },
+                  {
+                    "data": {},
+                    "marks": [],
+                    "value": " is simply dummy text of the printing ",
+                    "nodeType": "text"
+                  }
+                ],
+                "nodeType": "paragraph"
+              },
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "marks": [],
+                    "value": "and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum ",
+                    "nodeType": "text"
+                  }
+                ],
+                "nodeType": "paragraph"
+              }
+            ],
+            "nodeType": "document"
+          }
+        },
+        "icon": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "3ZU4GP7wCbxOvscthZkv1t"
+            }
+          }
+        },
+        "accentColor": {
+          "en-US": "#dfd915"
+        },
+        "image": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "3g3A8RbLZT0NFQ6Krava3k"
+            }
+          }
+        },
+        "imagePosition": {
+          "en-US": "bottom"
+        },
+        "imageWidth": {
+          "en-US": 400
+        },
+        "isActive": {
+          "en-US": true
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
         "id": "27GzaI5VEY5KR7LeHwHmhp",
         "type": "Entry",
         "createdAt": "2025-01-15T20:32:18.244Z",
@@ -6976,6 +7992,311 @@
         },
         "answer": {
           "en-US": "Respuesta\n\na \nla pregunta \n\n2"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "65ZMOlE8Mn40dl3u8iTlk9",
+        "type": "Entry",
+        "createdAt": "2025-01-16T22:00:56.144Z",
+        "updatedAt": "2025-01-30T03:04:16.362Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 43,
+        "publishedAt": "2025-01-30T03:04:16.362Z",
+        "firstPublishedAt": "2025-01-16T22:01:16.167Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 19,
+        "version": 44,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "benefitsSection"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/65ZMOlE8Mn40dl3u8iTlk9"
+      },
+      "fields": {
+        "title": {
+          "en-US": "TItulo Beneficios"
+        },
+        "subtitle": {
+          "en-US": "Subtitulo Beneficios"
+        },
+        "benefits": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "LPrcHJGWyvPc57vRvfQ3U"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "2egRkDy7En9TRuFOhmVwPh"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "2PWfxd2FHvqwvhiebrlHV0"
+              }
+            }
+          ]
+        },
+        "backgroundColor": {
+          "en-US": "#77f0fe"
+        },
+        "isVisible": {
+          "en-US": true
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "LPrcHJGWyvPc57vRvfQ3U",
+        "type": "Entry",
+        "createdAt": "2025-01-16T22:03:56.579Z",
+        "updatedAt": "2025-01-29T23:41:23.517Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 47,
+        "publishedAt": "2025-01-29T23:41:23.517Z",
+        "firstPublishedAt": "2025-01-16T22:04:16.215Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 11,
+        "version": 48,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "benefit"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/LPrcHJGWyvPc57vRvfQ3U"
+      },
+      "fields": {
+        "tabLabel": {
+          "en-US": "Venta express"
+        },
+        "title": {
+          "en-US": "Personaliza y vende rápido con GoLean 🚀"
+        },
+        "description": {
+          "en-US": "GoLean te permite lanzar tu negocio online en minutos con plantillas personalizables en Contentful. Modifica el contenido sin tocar código y optimiza tu tiempo de venta."
+        },
+        "features": {
+          "en-US": [
+            "Edita contenido sin programar",
+            "Integración rápida con Contentful",
+            "Diseños modernos y optimizados"
+          ]
+        },
+        "image": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "3g3A8RbLZT0NFQ6Krava3k"
+            }
+          }
+        },
+        "imagePosition": {
+          "en-US": "right"
+        },
+        "ctaText": {
+          "en-US": "Empieza ahora"
+        },
+        "ctaUrl": {
+          "en-US": "https://golean.io/"
+        },
+        "secondaryCtaText": {
+          "en-US": "Ver plantillas"
+        },
+        "secondaryCtaUrl": {
+          "en-US": "https://golean.io/templates"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "2egRkDy7En9TRuFOhmVwPh",
+        "type": "Entry",
+        "createdAt": "2025-01-16T22:07:27.195Z",
+        "updatedAt": "2025-01-29T19:22:33.393Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 13,
+        "publishedAt": "2025-01-29T19:22:33.393Z",
+        "firstPublishedAt": "2025-01-16T22:08:07.297Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 4,
+        "version": 14,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "benefit"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/2egRkDy7En9TRuFOhmVwPh"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Beneficio 2"
+        },
+        "description": {
+          "en-US": "What is Lorem Ipsum?\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+        },
+        "features": {
+          "en-US": [
+            "mas facilidad",
+            "rapidez"
+          ]
+        },
+        "image": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "3g3A8RbLZT0NFQ6Krava3k"
+            }
+          }
+        },
+        "imagePosition": {
+          "en-US": "left"
         }
       }
     },
@@ -7235,6 +8556,201 @@
             "id": "6jlrlv1l95yr"
           }
         },
+        "id": "pjjh4242MLPFkyjmJDGsE",
+        "type": "Entry",
+        "createdAt": "2025-01-21T20:38:16.151Z",
+        "updatedAt": "2025-01-21T21:22:29.613Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 50,
+        "publishedAt": "2025-01-21T21:22:29.613Z",
+        "firstPublishedAt": "2025-01-21T20:39:38.786Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 19,
+        "version": 51,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "customTheme"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/pjjh4242MLPFkyjmJDGsE"
+      },
+      "fields": {
+        "name": {
+          "en-US": "RED"
+        },
+        "primaryColor": {
+          "en-US": "#8751ed"
+        },
+        "accentColor": {
+          "en-US": "#0004ff"
+        },
+        "backgroundColor": {
+          "en-US": "#f3a6a6"
+        },
+        "textColor": {
+          "en-US": "#000000"
+        },
+        "style": {
+          "en-US": "gradient"
+        },
+        "borderRadius": {
+          "en-US": 5
+        },
+        "preview": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "3XkatzL1v5gEwUvgwYtj3N"
+            }
+          }
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "id": "2PWfxd2FHvqwvhiebrlHV0",
+        "type": "Entry",
+        "createdAt": "2025-01-29T21:35:33.465Z",
+        "updatedAt": "2025-01-29T21:51:00.920Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 11,
+        "publishedAt": "2025-01-29T21:51:00.920Z",
+        "firstPublishedAt": "2025-01-29T21:40:46.788Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "publishedCounter": 2,
+        "version": 12,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "fieldStatus": {
+          "*": {
+            "en-US": "published"
+          }
+        },
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "benefit"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/2PWfxd2FHvqwvhiebrlHV0"
+      },
+      "fields": {
+        "title": {
+          "en-US": "Beneficio 3"
+        },
+        "description": {
+          "en-US": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, "
+        },
+        "features": {
+          "en-US": [
+            "calidad precio "
+          ]
+        },
+        "image": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "3g3A8RbLZT0NFQ6Krava3k"
+            }
+          }
+        },
+        "imagePosition": {
+          "en-US": "right"
+        },
+        "ctaText": {
+          "en-US": "Ver Mas"
+        },
+        "ctaUrl": {
+          "en-US": "https://htmlcolorcodes.com/"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [],
+        "concepts": []
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
         "id": "75YKJ8dcWeJwQqKY2hBWz3",
         "type": "Entry",
         "createdAt": "2025-01-30T03:08:30.621Z",
@@ -7324,88 +8840,6 @@
           "en-US": "footer"
         }
       }
-    }
-  ],
-  "assets": [
-    {
-      "metadata": {
-        "tags": [],
-        "concepts": []
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "6jlrlv1l95yr"
-          }
-        },
-        "id": "3ZU4GP7wCbxOvscthZkv1t",
-        "type": "Asset",
-        "createdAt": "2025-01-08T21:56:36.322Z",
-        "updatedAt": "2025-01-13T15:22:49.714Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 18,
-        "publishedAt": "2025-01-13T15:22:49.714Z",
-        "firstPublishedAt": "2025-01-08T21:57:31.012Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 3,
-        "version": 19,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/assets/3ZU4GP7wCbxOvscthZkv1t"
-      },
-      "fields": {
-        "title": {
-          "en-US": "ValeIa"
-        },
-        "description": {
-          "en-US": "Logo de ValeIa"
-        },
-        "file": {
-          "en-US": {
-            "url": "//images.ctfassets.net/6jlrlv1l95yr/3ZU4GP7wCbxOvscthZkv1t/1633afc7daec443fa138c96cde0c8fed/logo.png",
-            "details": {
-              "size": 233390,
-              "image": {
-                "width": 6200,
-                "height": 2000
-              }
-            },
-            "fileName": "logo.png",
-            "contentType": "image/png"
-          }
-        }
-      }
     },
     {
       "metadata": {
@@ -7420,10 +8854,10 @@
             "id": "6jlrlv1l95yr"
           }
         },
-        "id": "5Qjyb8WctZSxiznLlHdZ4w",
-        "type": "Asset",
-        "createdAt": "2025-01-10T01:21:39.943Z",
-        "updatedAt": "2025-01-10T01:23:08.846Z",
+        "id": "3dS7QWvz5uL0ADbDWx3HxX",
+        "type": "Entry",
+        "createdAt": "2025-01-30T03:23:56.073Z",
+        "updatedAt": "2025-01-30T03:24:54.480Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -7431,9 +8865,9 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 5,
-        "publishedAt": "2025-01-10T01:23:08.846Z",
-        "firstPublishedAt": "2025-01-10T01:23:08.846Z",
+        "publishedVersion": 6,
+        "publishedAt": "2025-01-30T03:24:54.480Z",
+        "firstPublishedAt": "2025-01-30T03:24:54.480Z",
         "createdBy": {
           "sys": {
             "type": "Link",
@@ -7449,7 +8883,7 @@
           }
         },
         "publishedCounter": 1,
-        "version": 6,
+        "version": 7,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -7462,268 +8896,43 @@
             "en-US": "published"
           }
         },
-        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/assets/5Qjyb8WctZSxiznLlHdZ4w"
+        "automationTags": [],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "benefitsSection"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/entries/3dS7QWvz5uL0ADbDWx3HxX"
       },
       "fields": {
         "title": {
-          "en-US": "Activity"
+          "en-US": "Beneficios 2"
         },
-        "description": {
-          "en-US": "Icono Activity"
+        "subtitle": {
+          "en-US": "Subtitulo"
         },
-        "file": {
-          "en-US": {
-            "url": "//images.ctfassets.net/6jlrlv1l95yr/5Qjyb8WctZSxiznLlHdZ4w/e35738df7a0f8209559c6392f05de489/activity.png",
-            "details": {
-              "size": 376,
-              "image": {
-                "width": 24,
-                "height": 24
+        "benefits": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "5bDm3OABmBt47qpYtMYWUb"
               }
             },
-            "fileName": "activity.png",
-            "contentType": "image/png"
-          }
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [],
-        "concepts": []
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "6jlrlv1l95yr"
-          }
-        },
-        "id": "3g3A8RbLZT0NFQ6Krava3k",
-        "type": "Asset",
-        "createdAt": "2025-01-14T00:36:53.396Z",
-        "updatedAt": "2025-01-14T00:38:31.496Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 8,
-        "publishedAt": "2025-01-14T00:38:31.496Z",
-        "firstPublishedAt": "2025-01-14T00:38:31.496Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 9,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/assets/3g3A8RbLZT0NFQ6Krava3k"
-      },
-      "fields": {
-        "title": {
-          "en-US": "Imagen 1"
-        },
-        "description": {
-          "en-US": "descripcion"
-        },
-        "file": {
-          "en-US": {
-            "url": "//images.ctfassets.net/6jlrlv1l95yr/3g3A8RbLZT0NFQ6Krava3k/186db482dae1fbc0505a7448121b79bd/07R01.jpg",
-            "details": {
-              "size": 14841509,
-              "image": {
-                "width": 6500,
-                "height": 4200
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "LPrcHJGWyvPc57vRvfQ3U"
               }
-            },
-            "fileName": "07R01.jpg",
-            "contentType": "image/jpeg"
-          }
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [],
-        "concepts": []
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "6jlrlv1l95yr"
-          }
+            }
+          ]
         },
-        "id": "37TZo2cSgzbKRYdWSlamip",
-        "type": "Asset",
-        "createdAt": "2025-01-14T18:32:53.780Z",
-        "updatedAt": "2025-01-14T18:33:13.749Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 5,
-        "publishedAt": "2025-01-14T18:33:13.749Z",
-        "firstPublishedAt": "2025-01-14T18:33:13.749Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 6,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/assets/37TZo2cSgzbKRYdWSlamip"
-      },
-      "fields": {
-        "title": {
-          "en-US": "logo "
-        },
-        "description": {
-          "en-US": "descripcion"
-        },
-        "file": {
-          "en-US": {
-            "url": "//images.ctfassets.net/6jlrlv1l95yr/37TZo2cSgzbKRYdWSlamip/ed234eeed12e29f25da18f2a3c60cf92/Microlink_Logotipo-Principal_ColorTagline.png",
-            "details": {
-              "size": 9061,
-              "image": {
-                "width": 1073,
-                "height": 211
-              }
-            },
-            "fileName": "Microlink_Logotipo-Principal_ColorTagline.png",
-            "contentType": "image/png"
-          }
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [],
-        "concepts": []
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "6jlrlv1l95yr"
-          }
-        },
-        "id": "3XkatzL1v5gEwUvgwYtj3N",
-        "type": "Asset",
-        "createdAt": "2025-01-21T21:21:53.733Z",
-        "updatedAt": "2025-01-21T21:22:20.053Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 5,
-        "publishedAt": "2025-01-21T21:22:20.053Z",
-        "firstPublishedAt": "2025-01-21T21:22:20.053Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 6,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/6jlrlv1l95yr/environments/master/assets/3XkatzL1v5gEwUvgwYtj3N"
-      },
-      "fields": {
-        "title": {
-          "en-US": "Tema red"
-        },
-        "description": {
-          "en-US": "tema red prueba"
-        },
-        "file": {
-          "en-US": {
-            "url": "//images.ctfassets.net/6jlrlv1l95yr/3XkatzL1v5gEwUvgwYtj3N/8a82ab47e9218f9c0c3cebdf604ab072/image.png",
-            "details": {
-              "size": 557970,
-              "image": {
-                "width": 1638,
-                "height": 886
-              }
-            },
-            "fileName": "image.png",
-            "contentType": "image/png"
-          }
+        "isVisible": {
+          "en-US": true
         }
       }
     }
@@ -7776,6 +8985,62 @@
     }
   ],
   "webhooks": [
+    {
+      "name": "Netlify - Deploy a site",
+      "url": "https://api.netlify.com/build_hooks/679854b56daef31e71426b2e",
+      "httpBasicUsername": null,
+      "topics": [
+        "ContentType.publish",
+        "ContentType.unpublish",
+        "Entry.publish",
+        "Entry.unpublish",
+        "Asset.publish",
+        "Asset.unpublish"
+      ],
+      "filters": [
+        {
+          "equals": [
+            {
+              "doc": "sys.environment.sys.id"
+            },
+            "master"
+          ]
+        }
+      ],
+      "transformation": {
+        "contentType": "application/json"
+      },
+      "active": false,
+      "sys": {
+        "type": "WebhookDefinition",
+        "id": "346HKlkOoAsN3Q8CBPuSDj",
+        "version": 2,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "6jlrlv1l95yr"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "createdAt": "2025-01-28T03:53:44Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2jMmlSadkcJaP9vOQIjHfm"
+          }
+        },
+        "updatedAt": "2025-01-28T06:34:29Z"
+      },
+      "headers": []
+    },
     {
       "name": "actualización  ",
       "url": "https://charming-smakager-816fee.netlify.app/api/revalidate",

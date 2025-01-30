@@ -152,3 +152,14 @@ export async function getBlogCategories(): Promise<string[]> {
     return [];
   }
 }
+
+// Función para verificar la conexión con Contentful
+export async function checkContentfulConnection(): Promise<boolean> {
+  try {
+    await client.getSpace();
+    return true;
+  } catch (error) {
+    console.error("Error connecting to Contentful:", error);
+    return false;
+  }
+}
