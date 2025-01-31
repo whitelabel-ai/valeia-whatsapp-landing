@@ -132,6 +132,7 @@ export interface PartnersSection {
   displayMode: "grid" | "scroll";
   scrollSpeed?: number;
   height?: number;
+  backgroundColor?: string;
   isVisible: boolean;
 }
 

@@ -311,6 +311,12 @@ Fields:
   - Default: 60
   - **Help text**: "Altura en píxeles para todos los logos. Mantener consistencia visual"
 
+- "Background Color" (Short text)
+
+  - Optional
+  - Pattern: ^#([A-Fa-f0-9]{6})$
+  - **Help text**: "Color de fondo de la sección en formato HEX (#RRGGBB). Si no se especifica, se usará el color del tema"
+
 - "Is Visible" (Boolean)
   - Required
   - Default: true

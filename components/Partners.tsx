@@ -12,10 +12,11 @@ export function Partners({ content }: PartnersProps) {
     title,
     subtitle,
     logos,
-    isVisible,
     displayMode = "grid",
     scrollSpeed = 30,
     height = 60,
+    backgroundColor,
+    isVisible,
   } = content;
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -55,6 +56,28 @@ export function Partners({ content }: PartnersProps) {
 
   if (!isVisible || !logos?.length) return null;
 
+  if (!isVisible) return null;
+
+  // Función para generar el estilo del fondo basado en el tema y el color personalizado
+  const getBackgroundStyle = () => {
+    if (!backgroundColor) return {};
+
+    // Convertir el color hex a rgba para usarlo en gradientes
+    const hexToRgba = (hex: string, alpha: number) => {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
+    return {
+      background: `linear-gradient(135deg, 
+        ${hexToRgba(backgroundColor, 0.15)}, 
+        ${hexToRgba(backgroundColor, 0.05)}
+      )`,
+    };
+  };
+
   const renderLogos = () => {
     const logoElements = logos.map((logo, index) => (
       <div
@@ -88,7 +111,7 @@ export function Partners({ content }: PartnersProps) {
   };
 
   return (
-    <section className="py-24 relative bg-muted/50">
+    <section className="py-24 relative" style={getBackgroundStyle()}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
