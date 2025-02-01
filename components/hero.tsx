@@ -59,7 +59,7 @@ export function Hero({ content }: HeroProps) {
         <div className="absolute inset-0 gradient-bg" />
       )}
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative max-w-6xl">
         {image?.fields?.file?.url && imagePosition !== "background" ? (
           <div
             className={`w-full flex flex-col ${layoutClasses} items-center gap-8`}

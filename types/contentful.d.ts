@@ -172,7 +172,7 @@ export interface PricingSection {
 export interface Benefit {
   title: string;
   tabLabel: string;
-  description: string;
+  description: any;
   features?: string[];
   image?: ContentfulAsset;
   imagePosition?: "right" | "left";

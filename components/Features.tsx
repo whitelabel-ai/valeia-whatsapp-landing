@@ -85,7 +85,7 @@ export function Process({ content }: ProcessProps) {
         </div>
 
         {/* Grid principal para las filas completas */}
-        <div className={`${getGridLayout(3)} relative mb-8`}>
+        <div className={`${getGridLayout(3)} max-w-6xl mx-auto relative mb-8`}>
           {mainRows.map((step, index) => {
             const IconComponent = step.fields?.icon
               ? dynamic(

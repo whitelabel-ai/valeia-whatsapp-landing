@@ -149,7 +149,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
 
   return (
     <section className="py-12 md:py-24 relative">
-      <div className="container mx-auto px-4">
+      <div className="container max-w-6xl mx-auto px-4">
         <header className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
             {title}

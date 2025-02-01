@@ -20,7 +20,15 @@ export function Pricing({ content }: PricingProps) {
           <p className="text-foreground/80 max-w-2xl mx-auto">{subtitle}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          className={`grid gap-8 justify-center ${
+            plans.length === 1
+              ? "grid-cols-1 max-w-sm mx-auto"
+              : plans.length === 2
+                ? "grid-cols-1 md:grid-cols-2 max-w-sm mx-auto"
+                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+          }`}
+        >
           {plans.map((plan) => (
             <div
               key={plan.fields.name}
