@@ -44,7 +44,7 @@ export function Footer({ content, navigationPages }: FooterProps) {
 
   return (
     <footer className="card-gradient py-12">
-      <div className="container mx-auto px-4">
+      <div className="container max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
             {logo?.fields?.file?.url && (

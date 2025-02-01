@@ -23,7 +23,7 @@ export function Header({ content, navigationPages }: HeaderProps) {
 
   return (
     <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b pb-3 pt-4">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="container max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           {logo?.fields?.file?.url && (
             <img

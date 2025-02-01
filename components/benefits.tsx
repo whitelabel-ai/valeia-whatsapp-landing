@@ -20,11 +20,9 @@ export function Benefits({ content }: BenefitsProps) {
 
   if (!isVisible) return null;
 
-  // Función para generar el estilo del fondo basado en el tema y el color personalizado
   const getBackgroundStyle = () => {
     if (!backgroundColor) return {};
 
-    // Convertir el color hex a rgba para usarlo en gradientes
     const hexToRgba = (hex: string, alpha: number) => {
       const r = parseInt(hex.slice(1, 3), 16);
       const g = parseInt(hex.slice(3, 5), 16);
@@ -53,15 +51,15 @@ export function Benefits({ content }: BenefitsProps) {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          {/* Pestañas */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            <div className="card-gradient rounded-full p-1 flex gap-2">
+          {/* Tabs container with horizontal scroll on mobile */}
+          <div className="flex justify-start md:justify-center mb-8 overflow-x-auto pb-4 md:pb-0 md:overflow-x-visible px-4 -mx-4 md:mx-0 md:px-0">
+            <div className="card-gradient rounded-full p-1 flex gap-2 min-w-max">
               {benefits?.map((benefit, index) => (
                 <button
                   key={benefit.sys.id}
                   onClick={() => setActiveBenefit(index)}
                   className={cn(
-                    "px-6 py-2 rounded-full transition-all duration-300",
+                    "px-6 py-2 rounded-full transition-all duration-300 whitespace-nowrap",
                     activeBenefit === index
                       ? "bg-primary text-primary-foreground"
                       : "hover:bg-muted/50"
