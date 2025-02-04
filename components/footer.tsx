@@ -28,9 +28,27 @@ const SOCIAL_ICONS = {
   TikTok: Music2,
 };
 
+const SOCIAL_COLORS = {
+  Facebook: "#1877F2",
+  Twitter: "#1DA1F2",
+  Instagram: "#E1306C",
+  LinkedIn: "#0077B5",
+  YouTube: "#FF0000",
+  WhatsApp: "#25D366",
+  TikTok: "#000000",
+};
+
 export function Footer({ content, navigationPages }: FooterProps) {
-  const { logo, widthLogo, socialLinks, email, phone, copyright, isVisible } =
-    content;
+  const {
+    logo,
+    widthLogo,
+    socialLinks,
+    colorSocialLinks,
+    email,
+    phone,
+    copyright,
+    isVisible,
+  } = content;
 
   if (!isVisible) return null;
 
@@ -45,7 +63,7 @@ export function Footer({ content, navigationPages }: FooterProps) {
   return (
     <footer className="card-gradient py-12">
       <div className="container max-w-6xl mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
           <div>
             {logo?.fields?.file?.url && (
               <Link href="/" className="inline-block mb-6">
@@ -57,14 +75,19 @@ export function Footer({ content, navigationPages }: FooterProps) {
                       ? widthLogo
                       : 100
                   }
+                  className="mx-auto md:mx-0"
                 />
               </Link>
             )}
-            <div className="flex space-x-4">
+            <div className="flex justify-center md:justify-start space-x-4">
               {socialLinks?.map((link) => {
                 const Icon =
                   SOCIAL_ICONS[
                     link.fields.redSocial as keyof typeof SOCIAL_ICONS
+                  ];
+                const color =
+                  SOCIAL_COLORS[
+                    link.fields.redSocial as keyof typeof SOCIAL_COLORS
                   ];
                 return link.fields?.url ? (
                   <a
@@ -72,10 +95,22 @@ export function Footer({ content, navigationPages }: FooterProps) {
                     href={link.fields.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground/60 hover:text-primary transition-colors"
+                    className="group relative"
                     title={link.fields.redSocial}
                   >
-                    <Icon className="h-5 w-5" />
+                    <div className="p-2 rounded-full transition-all duration-300 hover:bg-foreground/10 ">
+                      <Icon
+                        className={`h-6 w-6 transition-all duration-300 group-hover:scale-110 ${
+                          colorSocialLinks
+                            ? ""
+                            : "text-foreground/60 group-hover:text-foreground"
+                        }`}
+                        style={colorSocialLinks ? { color } : {}}
+                      />
+                    </div>
+                    <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-foreground/60 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      {link.fields.redSocial}
+                    </span>
                   </a>
                 ) : null;
               })}

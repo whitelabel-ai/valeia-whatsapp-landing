@@ -263,6 +263,7 @@ export interface FooterSection {
   logo: ContentfulAsset;
   widthLogo: number;
   socialLinks: ContentfulEntry<SocialLink>[];
+  colorSocialLinks: boolean;
   email: string;
   phone: string;
   copyright: string;

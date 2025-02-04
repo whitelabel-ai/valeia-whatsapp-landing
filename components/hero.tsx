@@ -81,7 +81,7 @@ export function Hero({ content }: HeroProps) {
                     {description}
                   </p>
                   {ctaUrl && ctaText && (
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" className="w-full md:w-auto">
                       <Link href={ctaUrl}>{ctaText}</Link>
                     </Button>
                   )}

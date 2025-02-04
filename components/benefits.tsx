@@ -89,7 +89,14 @@ export function Benefits({ content }: BenefitsProps) {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          <div className="flex justify-start md:justify-center mb-8 overflow-x-auto pb-4 md:pb-0 md:overflow-x-visible px-4 -mx-4 md:mx-0 md:px-0">
+          <div
+            className={cn(
+              "flex mb-8 overflow-x-auto pb-4 md:pb-0 md:overflow-x-visible px-4 -mx-4 md:mx-0 md:px-0",
+              validBenefits.length <= 2
+                ? "justify-center"
+                : "justify-start md:justify-center"
+            )}
+          >
             <div className="card-gradient rounded-full p-1 flex gap-2 min-w-max">
               {validBenefits.map((benefit, index) => (
                 <button
@@ -196,6 +203,7 @@ export function Benefits({ content }: BenefitsProps) {
                                   ? { backgroundColor: accentColor }
                                   : undefined
                               }
+                              className="w-full md:w-auto"
                             >
                               <Link href={benefit.fields.ctaUrl}>
                                 {benefit.fields.ctaText}
@@ -204,7 +212,11 @@ export function Benefits({ content }: BenefitsProps) {
                           )}
                           {benefit.fields.secondaryCtaText &&
                             benefit.fields.secondaryCtaUrl && (
-                              <Button variant="outline" asChild>
+                              <Button
+                                variant="outline"
+                                asChild
+                                className="w-full md:w-auto"
+                              >
                                 <Link href={benefit.fields.secondaryCtaUrl}>
                                   {benefit.fields.secondaryCtaText}
                                 </Link>
@@ -228,7 +240,7 @@ export function Benefits({ content }: BenefitsProps) {
                           height: `${imageHeight}px`,
                         }}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-background/70 to-background/60 rounded-xl backdrop-blur-[5px]">
+                        <div className="">
                           <div className="absolute inset-0 rounded-xl overflow-hidden">
                             <img
                               src={`https:${benefit.fields.image.fields.file.url}`}

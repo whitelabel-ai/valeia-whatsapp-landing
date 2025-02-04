@@ -68,6 +68,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
             ? `min(${videoHeight}px, ${maxMobileHeight}px)`
             : "auto",
           maxHeight: "70vh",
+          maxWidth: "100%",
         }}
       >
         <iframe
@@ -89,7 +90,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
           </h3>
         )}
         {description && (
-          <div className="prose prose-invert max-w-none mb-8">
+          <div className="prose prose-invert w-full max-w-none mb-8">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={defaultMarkdownComponents}
@@ -99,8 +100,8 @@ export function ProductDemo({ content }: ProductDemoProps) {
           </div>
         )}
         {ctaText && ctaUrl && (
-          <div className="flex">
-            <Button asChild size="lg">
+          <div className="w-full flex justify-center md:justify-start">
+            <Button asChild size="lg" className="w-full md:w-auto">
               <Link href={ctaUrl}>{ctaText}</Link>
             </Button>
           </div>
@@ -109,13 +110,13 @@ export function ProductDemo({ content }: ProductDemoProps) {
     );
 
     const videoContent = (
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full flex justify-center items-center  px-4 md:px-0">
         <div className="w-full max-w-4xl">{embedVideo()}</div>
       </div>
     );
 
     const textContentContainer = (
-      <div className="w-full md:w-1/2 flex justify-center items-center">
+      <div className="w-full md:w-1/2 flex justify-center items-center px-6 md:px-6">
         {textContent}
       </div>
     );
