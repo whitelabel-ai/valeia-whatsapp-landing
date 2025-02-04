@@ -37,6 +37,37 @@ export function UseCases({ content }: UseCasesProps) {
     return positions[imagePosition];
   };
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Nuevos handlers para el swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const delta = touchEnd - touchStart;
+    const swipeThreshold = 50; // Ajusta este valor para la sensibilidad del swipe
+
+    if (delta < -swipeThreshold) {
+      // Swipe izquierda (siguiente caso)
+      setCurrentSlide((prev) => Math.min(prev + 1, activeCases.length - 1));
+    } else if (delta > swipeThreshold) {
+      // Swipe derecha (caso anterior)
+      setCurrentSlide((prev) => Math.max(prev - 1, 0));
+    }
+
+    // Resetear valores
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   const handleSlideChange = (index: number) => {
     setCurrentSlide(index);
     setSelectedCase(activeCases[index].sys.id);
@@ -186,6 +217,9 @@ export function UseCases({ content }: UseCasesProps) {
                 style={{
                   transform: `translateX(-${currentSlide * 100}%)`,
                 }}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 {activeCases.map((useCase, index) => (
                   <div key={useCase.sys.id} className="min-w-full">

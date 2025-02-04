@@ -176,7 +176,7 @@ export interface Benefit {
   features?: string[];
   image?: ContentfulAsset;
   imagePosition?: "right" | "left";
-  imageWidth?: number;
+  imageHeight?: number;
   imageAspectRatio?: "16:9" | "4:3" | "1:1" | "9:16" | "auto";
   imageFit?: "Ajustar" | "Rellenar" | "Expandir";
   ctaText?: string;

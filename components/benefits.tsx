@@ -120,6 +120,9 @@ export function Benefits({ content }: BenefitsProps) {
               const imagePosition = benefit.fields.imagePosition || "right";
               const aspectRatio = benefit.fields.imageAspectRatio || "4:3";
               const imageFit = benefit.fields.imageFit || "Rellenar";
+              const imageHeight = benefit.fields.imageHeight || 300;
+
+              const isVertical = aspectRatio === "9:16";
 
               return (
                 <motion.div
@@ -134,9 +137,13 @@ export function Benefits({ content }: BenefitsProps) {
                     className={cn(
                       "grid gap-8 md:gap-12 items-center justify-center",
                       imagePosition === "right"
-                        ? "md:grid-cols-[1fr,1.2fr]"
-                        : "md:grid-cols-[1.2fr,1fr]",
-                      "grid-cols-1" // Add this to ensure single column on mobile
+                        ? isVertical
+                          ? "md:grid-cols-[2fr,1fr]"
+                          : "md:grid-cols-[1fr,1.2fr]"
+                        : isVertical
+                          ? "md:grid-cols-[1fr,2fr]"
+                          : "md:grid-cols-[1.2fr,1fr]",
+                      "grid-cols-1"
                     )}
                   >
                     {/* Content Side */}
@@ -213,14 +220,12 @@ export function Benefits({ content }: BenefitsProps) {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.1, delay: 0.2 }}
                         className={cn(
-                          "relative w-full max-w-full h-full flex items-center justify-center place-self-center",
+                          "relative w-full flex items-center justify-center place-self-center",
                           getAspectRatioClass(aspectRatio),
-                          "order-last" // Always put image last on mobile
+                          "order-last"
                         )}
                         style={{
-                          width: benefit.fields.imageWidth
-                            ? `min(${benefit.fields.imageWidth}px, 100%)`
-                            : "100%",
+                          height: `${imageHeight}px`,
                         }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-background/70 to-background/60 rounded-xl backdrop-blur-[5px]">
