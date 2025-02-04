@@ -15,10 +15,10 @@ export default async function NotFound() {
   }
 
   const headerSection = landingPage.sections.find(
-    (section) => section.sys.contentType.sys.id === "headerSection"
+    (section) => section.sys.contentType?.sys.id === "headerSection"
   );
   const footerSection = landingPage.sections.find(
-    (section) => section.sys.contentType.sys.id === "footerSection"
+    (section) => section.sys.contentType?.sys.id === "footerSection"
   );
 
   return (

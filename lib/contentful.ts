@@ -1,6 +1,5 @@
 import { createClient } from "contentful";
 import { DynamicPage, LandingPage } from "@/types/contentful";
-import { Document } from "@contentful/rich-text-types";
 
 let client: ReturnType<typeof createClient> | null = null;
 

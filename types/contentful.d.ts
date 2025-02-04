@@ -108,9 +108,9 @@ export interface LandingPage {
 
 export interface HeaderSection {
   logo: ContentfulAsset;
-  widthLogo: number;
-  ctaText: string;
-  ctaUrl: string;
+  widthLogo?: number;
+  ctaText?: string;
+  ctaUrl?: string;
 }
 
 export interface HeroSection {
@@ -154,12 +154,12 @@ export interface ProcessSection {
 export interface PricingPlan {
   name: string;
   price: string;
-  description: string;
-  features: string[];
-  highlightedText: boolean;
+  description?: string;
+  features?: string[];
+  highlightedText?: boolean;
   promotionalText?: string;
-  payLinkText: string;
-  payLink: string;
+  payLinkText?: string;
+  payLink?: string;
 }
 
 export interface PricingSection {
@@ -176,6 +176,9 @@ export interface Benefit {
   features?: string[];
   image?: ContentfulAsset;
   imagePosition?: "right" | "left";
+  imageWidth?: number;
+  imageAspectRatio?: "16:9" | "4:3" | "1:1" | "9:16" | "auto";
+  imageFit?: "Ajustar" | "Rellenar" | "Expandir";
   ctaText?: string;
   ctaUrl?: string;
   secondaryCtaText?: string;
@@ -185,7 +188,7 @@ export interface Benefit {
 export interface BenefitsSection {
   title: string;
   subtitle?: string;
-  benefits: ContentfulEntry<Benefit>[];
+  benefits?: ContentfulEntry<Benefit>[];
   isVisible: boolean;
   backgroundColor?: string;
   accentColor?: string;
@@ -195,7 +198,7 @@ export interface ProductDemoSection {
   title: string;
   subtitle?: string;
   descriptionTitle?: string;
-  description?: string;
+  description?: any;
   videoUrl: string;
   videoPosition: "right" | "left" | "bottom" | "top";
   aspectRatio: "16:9" | "4:3" | "1:1" | "9:16";
@@ -213,7 +216,7 @@ export interface UseCase {
   accentColor?: string;
   imagePosition?: "right" | "left" | "top" | "bottom" | "background";
   imageWidth?: number;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 export interface UseCasesSection {
@@ -224,14 +227,14 @@ export interface UseCasesSection {
 }
 
 export interface FAQ {
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
 }
 
 export interface FaqSection {
   title: string;
   subtitle: string;
-  faqs: ContentfulEntry<FAQ>[];
+  faqs?: ContentfulEntry<FAQ>[];
   columns?: number;
   isVisible: boolean;
 }

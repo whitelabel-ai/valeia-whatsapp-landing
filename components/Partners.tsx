@@ -56,13 +56,9 @@ export function Partners({ content }: PartnersProps) {
 
   if (!isVisible || !logos?.length) return null;
 
-  if (!isVisible) return null;
-
-  // Función para generar el estilo del fondo basado en el tema y el color personalizado
   const getBackgroundStyle = () => {
     if (!backgroundColor) return {};
 
-    // Convertir el color hex a rgba para usarlo en gradientes
     const hexToRgba = (hex: string, alpha: number) => {
       const r = parseInt(hex.slice(1, 3), 16);
       const g = parseInt(hex.slice(3, 5), 16);
@@ -79,7 +75,13 @@ export function Partners({ content }: PartnersProps) {
   };
 
   const renderLogos = () => {
-    const logoElements = logos.map((logo, index) => (
+    const validLogos = logos.filter(
+      (logo) => logo?.fields?.file?.url && logo?.fields?.title
+    );
+
+    if (validLogos.length === 0) return null;
+
+    const logoElements = validLogos.map((logo, index) => (
       <div
         key={`logo-${logo.sys.id}-${index}`}
         className="flex items-center justify-center p-4 transition-transform hover:scale-105"
@@ -93,17 +95,10 @@ export function Partners({ content }: PartnersProps) {
       </div>
     ));
 
-    // For scroll mode, we create three sets of logos for smooth infinite scroll
     if (displayMode === "scroll") {
       return logoElements.concat(
-        logoElements.map((el, i) => ({
-          ...el,
-          key: `logo-scroll-1-${i}`,
-        })),
-        logoElements.map((el, i) => ({
-          ...el,
-          key: `logo-scroll-2-${i}`,
-        }))
+        logoElements.map((el, i) => ({ ...el, key: `logo-scroll-1-${i}` })),
+        logoElements.map((el, i) => ({ ...el, key: `logo-scroll-2-${i}` }))
       );
     }
 

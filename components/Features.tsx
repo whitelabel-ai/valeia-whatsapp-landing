@@ -2,6 +2,9 @@ import { ProcessSection } from "@/types/contentful";
 import dynamic from "next/dynamic";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { defaultMarkdownComponents } from "./ui/markdown-components";
 
 interface ProcessProps {
   content: ProcessSection;
@@ -10,8 +13,11 @@ interface ProcessProps {
 export function Process({ content }: ProcessProps) {
   const { title, subtitle, steps, isVisible } = content;
 
-  if (!isVisible) return null;
+  if (!isVisible || !steps || steps.length === 0) return null;
 
+  const validSteps = steps?.filter(
+    (step) => step.fields?.title && step.fields?.description
+  );
   const getGridLayout = (numItems: number) => {
     let baseClasses = "grid gap-8 ";
 
@@ -29,6 +35,7 @@ export function Process({ content }: ProcessProps) {
       case 6:
         return baseClasses + "md:grid-cols-2 lg:grid-cols-3";
       case 7:
+        return baseClasses + "md:grid-cols-2 lg:grid-cols-3";
       case 8:
         return baseClasses + "md:grid-cols-3 lg:grid-cols-4";
       default:
@@ -43,7 +50,7 @@ export function Process({ content }: ProcessProps) {
       case 2:
         return "max-w-4xl";
       default:
-        return "max-w-7xl";
+        return "max-w-6xl";
     }
   };
 
@@ -62,7 +69,7 @@ export function Process({ content }: ProcessProps) {
     };
   };
 
-  const { mainRows, remainingItems } = splitIntoRows(steps);
+  const { mainRows, remainingItems } = splitIntoRows(validSteps);
 
   // Función para obtener las clases de la grid de elementos sobrantes
   const getRemainingGridClasses = (numItems: number) => {
@@ -77,7 +84,7 @@ export function Process({ content }: ProcessProps) {
     <section id="proceso" className="py-24 relative">
       <div className="absolute inset-0 gradient-bg opacity-50" />
       <div
-        className={`container mx-auto px-4 ${getContainerWidth(steps.length)}`}
+        className={`container max-w-6xl mx-auto px-4 ${getContainerWidth(validSteps.length)}`}
       >
         <div className="text-center mb-16 relative">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
@@ -112,9 +119,14 @@ export function Process({ content }: ProcessProps) {
                   <h3 className="text-xl font-semibold mb-4">
                     {step.fields.title}
                   </h3>
-                  <p className="text-foreground/80 leading-relaxed">
-                    {step.fields.description}
-                  </p>
+                  <div className="prose prose-invert max-w-none mb-8">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={defaultMarkdownComponents}
+                    >
+                      {step.fields.description}
+                    </ReactMarkdown>
+                  </div>
                 </div>
                 {step.fields.ctaText && step.fields.ctaUrl && (
                   <div className="mt-6 pt-4 border-t border-border/10">
@@ -165,9 +177,14 @@ export function Process({ content }: ProcessProps) {
                     <h3 className="text-xl font-semibold mb-4">
                       {step.fields.title}
                     </h3>
-                    <p className="text-foreground/80 leading-relaxed">
-                      {step.fields.description}
-                    </p>
+                    <div className="prose prose-invert max-w-none mb-8">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={defaultMarkdownComponents}
+                      >
+                        {step.fields.description}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                   {step.fields.ctaText && step.fields.ctaUrl && (
                     <div className="mt-6 pt-4 border-t border-border/10">

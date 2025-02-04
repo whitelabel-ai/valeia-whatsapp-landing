@@ -2,6 +2,9 @@ import { Check } from "lucide-react";
 import { Button } from "./ui/button";
 import { PricingSection } from "@/types/contentful";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { defaultMarkdownComponents } from "./ui/markdown-components";
 
 interface PricingProps {
   content: PricingSection;
@@ -10,11 +13,17 @@ interface PricingProps {
 export function Pricing({ content }: PricingProps) {
   const { title, subtitle, plans, isVisible } = content;
 
-  if (!isVisible) return null;
+  if (!isVisible || !plans) return null;
+
+  const validPlans = plans.filter(
+    (plan) => plan.fields?.name && plan.fields?.price
+  );
+
+  if (validPlans.length === 0) return null;
 
   return (
     <section id="precios" className="py-24 relative">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           <p className="text-foreground/80 max-w-2xl mx-auto">{subtitle}</p>
@@ -22,14 +31,14 @@ export function Pricing({ content }: PricingProps) {
 
         <div
           className={`grid gap-8 justify-center ${
-            plans.length === 1
+            validPlans.length === 1
               ? "grid-cols-1 max-w-sm mx-auto"
-              : plans.length === 2
+              : validPlans.length === 2
                 ? "grid-cols-1 md:grid-cols-2 max-w-sm mx-auto"
                 : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
           }`}
         >
-          {plans.map((plan) => (
+          {validPlans.map((plan) => (
             <div
               key={plan.fields.name}
               className={`card-gradient rounded-lg p-6 flex flex-col justify-between relative ${
@@ -53,9 +62,14 @@ export function Pricing({ content }: PricingProps) {
                     {plan.fields.price}
                   </span>
                 </div>
-                <p className="text-foreground/80 mb-6 text-sm md:text-base">
-                  {plan.fields.description}
-                </p>
+                <div className="prose prose-invert max-w-none mb-8">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={defaultMarkdownComponents}
+                  >
+                    {plan.fields.description}
+                  </ReactMarkdown>
+                </div>
                 <ul className="space-y-3 mb-8">
                   {plan.fields.features?.map((feature, index) => (
                     <li key={index} className="flex items-start space-x-3">

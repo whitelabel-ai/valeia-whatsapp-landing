@@ -62,7 +62,7 @@ export default async function Home() {
     ]);
 
     // Si no hay landing page, mostrar mensaje
-    if (!landingPage) {
+    if (!landingPage || landingPage.isVisible === false) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-background">
           <div className="text-center p-8">
@@ -103,7 +103,7 @@ export default async function Home() {
       }
 
       const contentTypeId = section.sys.contentType.sys.id;
-      const sectionContent = section.fields;
+      const sectionContent = section?.fields;
 
       // Generamos una key única para cada sección usando el índice y el ID
       const sectionKey = `${contentTypeId}-${section.sys.id}-${index}`;

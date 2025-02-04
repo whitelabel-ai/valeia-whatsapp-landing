@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 interface BenefitsProps {
   content: BenefitsSection;
@@ -19,6 +20,12 @@ export function Benefits({ content }: BenefitsProps) {
   const [activeBenefit, setActiveBenefit] = useState(0);
 
   if (!isVisible) return null;
+
+  const validBenefits = benefits?.filter(
+    (benefit) => benefit.fields?.title && benefit.fields?.description
+  );
+
+  if (!validBenefits || validBenefits.length === 0) return null;
 
   const getBackgroundStyle = () => {
     if (!backgroundColor) return {};
@@ -38,6 +45,37 @@ export function Benefits({ content }: BenefitsProps) {
     };
   };
 
+  const getAspectRatioClass = (ratio?: string) => {
+    switch (ratio) {
+      case "16:9":
+        return "aspect-[16/9]";
+      case "4:3":
+        return "aspect-[4/3]";
+      case "1:1":
+        return "aspect-square";
+      case "9:16":
+        return "aspect-[9/16]";
+      case "auto":
+      default:
+        return "aspect-auto";
+    }
+  };
+
+  const getObjectFitClass = (fit?: string) => {
+    switch (fit) {
+      case "Ajustar":
+        return "object-contain";
+      case "Rellenar":
+        return "object-fill";
+      case "none":
+        return "object-none";
+      case "Expandir":
+        return "object-cover";
+      default:
+        return "object-none";
+    }
+  };
+
   return (
     <section className="py-24 relative" style={getBackgroundStyle()}>
       <div className="container max-w-6xl mx-auto px-4">
@@ -51,10 +89,9 @@ export function Benefits({ content }: BenefitsProps) {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          {/* Tabs container with horizontal scroll on mobile */}
           <div className="flex justify-start md:justify-center mb-8 overflow-x-auto pb-4 md:pb-0 md:overflow-x-visible px-4 -mx-4 md:mx-0 md:px-0">
             <div className="card-gradient rounded-full p-1 flex gap-2 min-w-max">
-              {benefits?.map((benefit, index) => (
+              {validBenefits.map((benefit, index) => (
                 <button
                   key={benefit.sys.id}
                   onClick={() => setActiveBenefit(index)}
@@ -76,12 +113,13 @@ export function Benefits({ content }: BenefitsProps) {
             </div>
           </div>
 
-          {/* Content Area */}
           <AnimatePresence mode="wait">
-            {benefits?.map((benefit, index) => {
+            {validBenefits.map((benefit, index) => {
               if (index !== activeBenefit) return null;
 
               const imagePosition = benefit.fields.imagePosition || "right";
+              const aspectRatio = benefit.fields.imageAspectRatio || "4:3";
+              const imageFit = benefit.fields.imageFit || "Rellenar";
 
               return (
                 <motion.div
@@ -90,26 +128,28 @@ export function Benefits({ content }: BenefitsProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.2 }}
-                  className="card-gradient rounded-lg p-12"
+                  className="card-gradient rounded-lg p-6 md:p-12"
                 >
                   <div
                     className={cn(
-                      "grid gap-12 items-center",
+                      "grid gap-8 md:gap-12 items-center justify-center",
                       imagePosition === "right"
                         ? "md:grid-cols-[1fr,1.2fr]"
-                        : "md:grid-cols-[1.2fr,1fr]"
+                        : "md:grid-cols-[1.2fr,1fr]",
+                      "grid-cols-1" // Add this to ensure single column on mobile
                     )}
                   >
                     {/* Content Side */}
-                    <div className="flex flex-col justify-between h-full space-y-6 ">
+                    <div className="flex flex-col justify-between h-full space-y-6">
                       <div>
-                        <h3 className="text-2xl font-bold mb-4 ">
+                        <h3 className="text-2xl font-bold mb-4">
                           {benefit.fields.title}
                         </h3>
-                        <p className="text-foreground/80 text-lg">
-                          {benefit.fields.description}
-                        </p>
-
+                        <div className="prose prose-invert max-w-none">
+                          {documentToReactComponents(
+                            benefit.fields.description
+                          )}
+                        </div>
                         {/* Features List */}
                         {benefit.fields.features &&
                           benefit.fields.features.length > 0 && (
@@ -137,7 +177,6 @@ export function Benefits({ content }: BenefitsProps) {
                             </ul>
                           )}
                       </div>
-
                       {/* CTA Buttons */}
                       {(benefit.fields.ctaText ||
                         benefit.fields.secondaryCtaText) && (
@@ -167,7 +206,6 @@ export function Benefits({ content }: BenefitsProps) {
                         </div>
                       )}
                     </div>
-
                     {/* Image Side */}
                     {benefit.fields.image && (
                       <motion.div
@@ -175,21 +213,28 @@ export function Benefits({ content }: BenefitsProps) {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.1, delay: 0.2 }}
                         className={cn(
-                          "relative aspect-[4/3] w-full",
-                          imagePosition === "left"
-                            ? "order-first"
-                            : "order-last"
+                          "relative w-full max-w-full h-full flex items-center justify-center place-self-center",
+                          getAspectRatioClass(aspectRatio),
+                          "order-last" // Always put image last on mobile
                         )}
+                        style={{
+                          width: benefit.fields.imageWidth
+                            ? `min(${benefit.fields.imageWidth}px, 100%)`
+                            : "100%",
+                        }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-background/70 to-background/60 rounded-xl backdrop-blur-[5px]">
-                          <div className="absolute inset-0 border rounded-xl">
+                          <div className="absolute inset-0 rounded-xl overflow-hidden">
                             <img
                               src={`https:${benefit.fields.image.fields.file.url}`}
                               alt={
                                 benefit.fields.image.fields.title ||
                                 benefit.fields.title
                               }
-                              className="w-full h-full object-cover rounded-xl"
+                              className={cn(
+                                "w-full h-full transition-transform duration-300 group-hover:scale-105",
+                                getObjectFitClass(imageFit)
+                              )}
                             />
                           </div>
                         </div>

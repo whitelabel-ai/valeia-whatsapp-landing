@@ -14,19 +14,18 @@ type ImagePosition = "right" | "left" | "top" | "bottom" | "background";
 export function UseCases({ content }: UseCasesProps) {
   const { title, subtitle, cases, isVisible } = content;
   const [selectedCase, setSelectedCase] = useState(
-    cases.find((c) => c.fields.isActive)?.sys.id || cases[0]?.sys.id
+    cases.find((c) => c.fields.isActive)?.sys.id || cases[0].sys.id
   );
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   if (!isVisible) return null;
 
-  const activeCases = cases.filter((c) => c.fields.isActive);
+  const activeCases = cases.filter((c) => c.fields?.isActive);
   const selectedCaseData = cases.find((c) => c.sys.id === selectedCase)?.fields;
 
-  // Compute image width with default if not provided
   const computedImageWidth = (width: number | undefined) =>
     typeof width === "number" && width > 0 ? width : 400;
 
-  // Determine layout classes based on image position
   const getLayoutClasses = (imagePosition: ImagePosition = "right") => {
     const positions = {
       right: "flex-row-reverse items-center",
@@ -38,9 +37,70 @@ export function UseCases({ content }: UseCasesProps) {
     return positions[imagePosition];
   };
 
+  const handleSlideChange = (index: number) => {
+    setCurrentSlide(index);
+    setSelectedCase(activeCases[index].sys.id);
+  };
+
+  const CaseContent = ({ caseData }: { caseData: any }) => (
+    <motion.div
+      className={`card-gradient rounded-lg p-6 relative overflow-hidden ${
+        caseData.imagePosition === "background" ? "min-h-[400px]" : ""
+      }`}
+      style={
+        caseData.image?.fields?.file?.url &&
+        caseData.imagePosition === "background"
+          ? {
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https:${caseData.image.fields.file.url})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : {}
+      }
+    >
+      <h3 className="text-2xl font-bold mb-6 relative z-10">{caseData.name}</h3>
+
+      {caseData.image?.fields?.file?.url ? (
+        caseData.imagePosition === "background" ? (
+          <div className="prose prose-invert max-w-none relative z-10">
+            <div className="text-foreground/80">
+              {documentToReactComponents(caseData.description)}
+            </div>
+          </div>
+        ) : (
+          <div
+            className={`flex ${getLayoutClasses(
+              caseData.imagePosition as ImagePosition
+            )} gap-6`}
+          >
+            <img
+              src={`https:${caseData.image.fields.file.url}`}
+              alt={caseData.image.fields.title || "Case Image"}
+              className="rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl"
+              style={{
+                width: computedImageWidth(caseData.imageWidth),
+              }}
+            />
+            <div className="prose prose-invert max-w-none flex-1">
+              <div className="text-foreground/80">
+                {documentToReactComponents(caseData.description)}
+              </div>
+            </div>
+          </div>
+        )
+      ) : (
+        <div className="prose prose-invert max-w-none">
+          <div className="text-foreground/80">
+            {documentToReactComponents(caseData.description)}
+          </div>
+        </div>
+      )}
+    </motion.div>
+  );
+
   return (
     <section className="py-24 relative max-w-6xl mx-auto">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           {subtitle && (
@@ -48,8 +108,8 @@ export function UseCases({ content }: UseCasesProps) {
           )}
         </div>
 
-        <div className="grid md:grid-cols-12 gap-8">
-          {/* Case list */}
+        {/* Desktop Layout */}
+        <div className="hidden md:grid md:grid-cols-12 gap-8">
           <div className="md:col-span-4 space-y-2">
             {activeCases.map((useCase) => (
               <button
@@ -95,7 +155,6 @@ export function UseCases({ content }: UseCasesProps) {
             ))}
           </div>
 
-          {/* Selected case content */}
           <div className="md:col-span-8">
             <AnimatePresence mode="wait">
               {selectedCaseData && (
@@ -105,78 +164,50 @@ export function UseCases({ content }: UseCasesProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
-                  className={`card-gradient rounded-lg p-6 relative overflow-hidden ${
-                    selectedCaseData.imagePosition === "background"
-                      ? "min-h-[400px]"
-                      : ""
-                  }`}
-                  style={
-                    selectedCaseData.image?.fields?.file?.url &&
-                    selectedCaseData.imagePosition === "background"
-                      ? {
-                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https:${selectedCaseData.image.fields.file.url})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                        }
-                      : {}
-                  }
                 >
-                  {/* Title always at the top */}
-                  <h3 className="text-2xl font-bold mb-6 relative z-10">
-                    {selectedCaseData.name}
-                  </h3>
-
-                  {selectedCaseData.image?.fields?.file?.url ? (
-                    selectedCaseData.imagePosition === "background" ? (
-                      // Content for background image
-                      <div className="prose prose-invert max-w-none relative z-10">
-                        <div className="text-foreground/80">
-                          {documentToReactComponents(
-                            selectedCaseData.description
-                          )}
-                        </div>
-                      </div>
-                    ) : (
-                      // Content with positioned image
-                      <div
-                        className={`flex ${getLayoutClasses(
-                          selectedCaseData.imagePosition as ImagePosition
-                        )} gap-6`}
-                      >
-                        <img
-                          src={`https:${selectedCaseData.image.fields.file.url}`}
-                          alt={
-                            selectedCaseData.image.fields.title || "Case Image"
-                          }
-                          className="rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl"
-                          style={{
-                            width: computedImageWidth(
-                              selectedCaseData.imageWidth
-                            ),
-                          }}
-                        />
-                        <div className="prose prose-invert max-w-none flex-1">
-                          <div className="text-foreground/80">
-                            {documentToReactComponents(
-                              selectedCaseData.description
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  ) : (
-                    // Content without image
-                    <div className="prose prose-invert max-w-none">
-                      <div className="text-foreground/80">
-                        {documentToReactComponents(
-                          selectedCaseData.description
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <CaseContent caseData={selectedCaseData} />
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Mobile Layout with Slider */}
+        <div className="md:hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              className="overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{
+                  transform: `translateX(-${currentSlide * 100}%)`,
+                }}
+              >
+                {activeCases.map((useCase, index) => (
+                  <div key={useCase.sys.id} className="min-w-full">
+                    <CaseContent caseData={useCase.fields} />
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Dots Navigation */}
+          <div className="flex justify-center gap-2 mt-6">
+            {activeCases.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleSlideChange(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  currentSlide === index ? "bg-primary w-4" : "bg-primary/30"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
