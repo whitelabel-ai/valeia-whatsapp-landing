@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { UseCasesSection } from "@/types/contentful";
 
@@ -10,6 +10,7 @@ interface UseCasesProps {
 }
 
 type ImagePosition = "right" | "left" | "top" | "bottom" | "background";
+type SlideDirection = "left" | "right";
 
 export function UseCases({ content }: UseCasesProps) {
   const { title, subtitle, cases, isVisible } = content;
@@ -17,6 +18,7 @@ export function UseCases({ content }: UseCasesProps) {
     cases.find((c) => c.fields.isActive)?.sys.id || cases[0].sys.id
   );
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState<SlideDirection>("left");
 
   if (!isVisible) return null;
 
@@ -37,40 +39,61 @@ export function UseCases({ content }: UseCasesProps) {
     return positions[imagePosition];
   };
 
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  // Nuevos handlers para el swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const delta = touchEnd - touchStart;
-    const swipeThreshold = 50; // Ajusta este valor para la sensibilidad del swipe
-
-    if (delta < -swipeThreshold) {
-      // Swipe izquierda (siguiente caso)
-      setCurrentSlide((prev) => Math.min(prev + 1, activeCases.length - 1));
-    } else if (delta > swipeThreshold) {
-      // Swipe derecha (caso anterior)
-      setCurrentSlide((prev) => Math.max(prev - 1, 0));
-    }
-
-    // Resetear valores
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
-
   const handleSlideChange = (index: number) => {
+    // Determinar la dirección del cambio
+    setDirection(index > currentSlide ? "left" : "right");
     setCurrentSlide(index);
     setSelectedCase(activeCases[index].sys.id);
+  };
+
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const SWIPE_THRESHOLD = 50;
+    const SWIPE_VELOCITY = 0.5;
+
+    if (
+      Math.abs(info.offset.x) > SWIPE_THRESHOLD ||
+      Math.abs(info.velocity.x) > SWIPE_VELOCITY
+    ) {
+      if (info.offset.x > 0 || info.velocity.x > 0) {
+        // Swipe derecha (caso anterior)
+        if (currentSlide > 0) {
+          setDirection("right");
+          setCurrentSlide((prev) => prev - 1);
+          setSelectedCase(activeCases[currentSlide - 1].sys.id);
+        }
+      } else {
+        // Swipe izquierda (siguiente caso)
+        if (currentSlide < activeCases.length - 1) {
+          setDirection("left");
+          setCurrentSlide((prev) => prev + 1);
+          setSelectedCase(activeCases[currentSlide + 1].sys.id);
+        }
+      }
+    }
+  };
+
+  const slideVariants = {
+    enter: (direction: SlideDirection) => {
+      return {
+        x: direction === "left" ? "100%" : "-100%",
+        opacity: 0,
+      };
+    },
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: SlideDirection) => {
+      return {
+        zIndex: 0,
+        x: direction === "left" ? "-100%" : "100%",
+        opacity: 0,
+      };
+    },
   };
 
   const CaseContent = ({ caseData }: { caseData: any }) => (
@@ -187,13 +210,14 @@ export function UseCases({ content }: UseCasesProps) {
           </div>
 
           <div className="md:col-span-8">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" custom={direction}>
               {selectedCaseData && (
                 <motion.div
                   key={selectedCase}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  custom={direction}
+                  initial={{ opacity: 0, x: direction === "left" ? 100 : -100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: direction === "left" ? -100 : 100 }}
                   transition={{ duration: 0.3 }}
                 >
                   <CaseContent caseData={selectedCaseData} />
@@ -203,30 +227,26 @@ export function UseCases({ content }: UseCasesProps) {
           </div>
         </div>
 
-        {/* Mobile Layout with Slider */}
+        {/* Mobile Layout with Swipe */}
         <div className="md:hidden">
-          <AnimatePresence mode="wait">
+          <AnimatePresence initial={false} mode="popLayout">
             <motion.div
-              className="overflow-hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              key={currentSlide}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
             >
-              <motion.div
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{
-                  transform: `translateX(-${currentSlide * 100}%)`,
-                }}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                {activeCases.map((useCase, index) => (
-                  <div key={useCase.sys.id} className="min-w-full">
-                    <CaseContent caseData={useCase.fields} />
-                  </div>
-                ))}
-              </motion.div>
+              <CaseContent caseData={activeCases[currentSlide].fields} />
             </motion.div>
           </AnimatePresence>
 
