@@ -1996,7 +1996,7 @@
         "id": "useCase",
         "type": "ContentType",
         "createdAt": "2025-01-30T22:29:37.896Z",
-        "updatedAt": "2025-02-04T18:01:45.334Z",
+        "updatedAt": "2025-02-04T21:41:08.640Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -2004,8 +2004,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 23,
-        "publishedAt": "2025-02-04T18:01:45.334Z",
+        "publishedVersion": 27,
+        "publishedAt": "2025-02-04T21:41:08.640Z",
         "firstPublishedAt": "2025-01-30T22:29:45.053Z",
         "createdBy": {
           "sys": {
@@ -2021,8 +2021,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 12,
-        "version": 24,
+        "publishedCounter": 14,
+        "version": 28,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -2127,8 +2127,13 @@
           "required": false,
           "validations": [
             {
+              "size": {
+                "max": 7
+              }
+            },
+            {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6})?$",
                 "flags": null
               }
             }
@@ -2323,7 +2328,7 @@
         "id": "benefitsSection",
         "type": "ContentType",
         "createdAt": "2025-01-30T22:29:37.905Z",
-        "updatedAt": "2025-02-03T17:24:45.305Z",
+        "updatedAt": "2025-02-04T21:45:02.632Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -2331,8 +2336,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 13,
-        "publishedAt": "2025-02-03T17:24:45.305Z",
+        "publishedVersion": 15,
+        "publishedAt": "2025-02-04T21:45:02.632Z",
         "firstPublishedAt": "2025-01-30T22:29:46.930Z",
         "createdBy": {
           "sys": {
@@ -2348,8 +2353,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 7,
-        "version": 14,
+        "publishedCounter": 8,
+        "version": 16,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -2433,7 +2438,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+                "pattern": "^#([A-Fa-f0-9]{6})?$",
                 "flags": null
               }
             }
@@ -2951,7 +2956,7 @@
         "id": "customTheme",
         "type": "ContentType",
         "createdAt": "2025-01-30T22:29:37.930Z",
-        "updatedAt": "2025-02-03T17:24:47.775Z",
+        "updatedAt": "2025-02-04T21:44:10.500Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -2959,8 +2964,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 13,
-        "publishedAt": "2025-02-03T17:24:47.775Z",
+        "publishedVersion": 15,
+        "publishedAt": "2025-02-04T21:44:10.500Z",
         "firstPublishedAt": "2025-01-30T22:29:47.397Z",
         "createdBy": {
           "sys": {
@@ -2976,8 +2981,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 7,
-        "version": 14,
+        "publishedCounter": 8,
+        "version": 16,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -3028,7 +3033,7 @@
           "validations": [
             {
               "regexp": {
-                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "pattern": "^#([A-Fa-f0-9]{6})?$",
                 "flags": null
               }
             }
@@ -4477,7 +4482,7 @@
             "linkType": "Space"
           }
         },
-        "version": 24,
+        "version": 28,
         "createdAt": "2025-01-30T22:29:45.222Z",
         "createdBy": {
           "sys": {
@@ -4486,7 +4491,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2025-02-04T18:01:46.066Z",
+        "updatedAt": "2025-02-04T21:41:09.997Z",
         "updatedBy": {
           "sys": {
             "id": "2jMmlSadkcJaP9vOQIjHfm",
@@ -4676,7 +4681,7 @@
             "linkType": "Space"
           }
         },
-        "version": 14,
+        "version": 16,
         "createdAt": "2025-01-30T22:29:47.069Z",
         "createdBy": {
           "sys": {
@@ -4685,7 +4690,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2025-02-03T17:24:53.151Z",
+        "updatedAt": "2025-02-04T21:45:03.517Z",
         "updatedBy": {
           "sys": {
             "id": "2jMmlSadkcJaP9vOQIjHfm",
@@ -5063,7 +5068,7 @@
             "linkType": "Space"
           }
         },
-        "version": 14,
+        "version": 16,
         "createdAt": "2025-01-30T22:29:47.564Z",
         "createdBy": {
           "sys": {
@@ -5072,7 +5077,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2025-02-03T17:24:53.164Z",
+        "updatedAt": "2025-02-04T21:44:11.177Z",
         "updatedBy": {
           "sys": {
             "id": "2jMmlSadkcJaP9vOQIjHfm",
@@ -5166,83 +5171,6 @@
     }
   ],
   "entries": [
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "2fsEormLvm3VfkiJYXeIpA",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:01.747Z",
-        "updatedAt": "2025-02-03T17:25:08.653Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:08.653Z",
-        "firstPublishedAt": "2025-02-03T17:25:08.653Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "socialLink"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/2fsEormLvm3VfkiJYXeIpA"
-      },
-      "fields": {
-        "redSocial": {
-          "en-US": "YouTube"
-        },
-        "url": {
-          "en-US": "https://wa.me/3228854498"
-        }
-      }
-    },
     {
       "metadata": {
         "tags": [
@@ -5519,83 +5447,6 @@
             "id": "t3bukehnj9w6"
           }
         },
-        "id": "2dKkHnrvk9m8RxBPQajRhO",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:02.049Z",
-        "updatedAt": "2025-02-03T17:25:09.434Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:09.434Z",
-        "firstPublishedAt": "2025-02-03T17:25:09.434Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "socialLink"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/2dKkHnrvk9m8RxBPQajRhO"
-      },
-      "fields": {
-        "redSocial": {
-          "en-US": "Facebook"
-        },
-        "url": {
-          "en-US": "https://www.facebook.com/login/"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
         "id": "7DT20IeXuXt82yuoX6PgDN",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:02.279Z",
@@ -5753,260 +5604,6 @@
         },
         "ctaUrl": {
           "en-US": "https://UrlParaCompra"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "2yWYwA1tYzuQ7p6Mr8tzIV",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:02.304Z",
-        "updatedAt": "2025-02-03T17:25:11.625Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:11.625Z",
-        "firstPublishedAt": "2025-02-03T17:25:11.625Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "socialLink"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/2yWYwA1tYzuQ7p6Mr8tzIV"
-      },
-      "fields": {
-        "redSocial": {
-          "en-US": "Twitter"
-        },
-        "url": {
-          "en-US": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "5s94gTQby6EOovwgIoCZjO",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:03.364Z",
-        "updatedAt": "2025-02-03T17:25:11.928Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:11.928Z",
-        "firstPublishedAt": "2025-02-03T17:25:11.928Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "pricingPlan"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/5s94gTQby6EOovwgIoCZjO"
-      },
-      "fields": {
-        "name": {
-          "en-US": "Plan 2"
-        },
-        "price": {
-          "en-US": "100 USD"
-        },
-        "description": {
-          "en-US": "Descripcion plan 2\n\n__text in bold__"
-        },
-        "features": {
-          "en-US": [
-            "feature 1",
-            "feature 2",
-            "feature 3",
-            "features 4"
-          ]
-        },
-        "payLinkText": {
-          "en-US": "PAGAR"
-        },
-        "payLink": {
-          "en-US": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F"
-        },
-        "highlightedText": {
-          "en-US": false
-        },
-        "promotionalText": {
-          "en-US": "¡El más vendido del 2024!"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "0bfhDil6cPuvgTOCDoarR",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:03.370Z",
-        "updatedAt": "2025-02-03T17:25:12.624Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:12.624Z",
-        "firstPublishedAt": "2025-02-03T17:25:12.624Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "socialLink"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/0bfhDil6cPuvgTOCDoarR"
-      },
-      "fields": {
-        "redSocial": {
-          "en-US": "Instagram"
-        },
-        "url": {
-          "en-US": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F"
         }
       }
     },
@@ -6198,370 +5795,6 @@
             "id": "t3bukehnj9w6"
           }
         },
-        "id": "22nDWi711aWARsY7SCOnYh",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:03.422Z",
-        "updatedAt": "2025-02-03T17:25:13.396Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:13.396Z",
-        "firstPublishedAt": "2025-02-03T17:25:13.396Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "dynamicPage"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/22nDWi711aWARsY7SCOnYh"
-      },
-      "fields": {
-        "title": {
-          "en-US": "About"
-        },
-        "slug": {
-          "en-US": "blog1"
-        },
-        "featuredImage": {
-          "en-US": {
-            "sys": {
-              "type": "Link",
-              "linkType": "Asset",
-              "id": "3g3A8RbLZT0NFQ6Krava3k"
-            }
-          }
-        },
-        "content": {
-          "en-US": {
-            "data": {
-            },
-            "content": [
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "What Is an About Us Page?",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "heading-2"
-              },
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "An About Us page exists to share a business’ story and history and provide a deeper connection with customers.",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              },
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "Consumers want to know the team behind the brand they are supporting. An About Us page provides the perfect real estate to pull back the curtain and reveal who is working behind the scenes.",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              },
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "Most importantly, though, an About Us page facilitates trust between the consumer and the business.",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              },
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "More than ",
-                    "nodeType": "text"
-                  },
-                  {
-                    "data": {
-                      "uri": "https://www.marketingcharts.com/brand-related/brand-loyalty-109127"
-                    },
-                    "content": [
-                      {
-                        "data": {
-                        },
-                        "marks": [
-                        ],
-                        "value": "33%",
-                        "nodeType": "text"
-                      }
-                    ],
-                    "nodeType": "hyperlink"
-                  },
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": " of consumers say that “trust” is a core factor when deciding which businesses to support.",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              },
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "With an About Us page, you can begin to form an emotional relationship with customers and ",
-                    "nodeType": "text"
-                  },
-                  {
-                    "data": {
-                      "uri": "https://kinsta.com/blog/wordpress-social-media-plugins/"
-                    },
-                    "content": [
-                      {
-                        "data": {
-                        },
-                        "marks": [
-                        ],
-                        "value": "engage with them",
-                        "nodeType": "text"
-                      }
-                    ],
-                    "nodeType": "hyperlink"
-                  },
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": " on a deeper level.",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              },
-              {
-                "data": {
-                },
-                "content": [
-                  {
-                    "data": {
-                    },
-                    "marks": [
-                    ],
-                    "value": "So how can you create one that resonates? Let’s look at some of the components you need to include in your About Us page",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              }
-            ],
-            "nodeType": "document"
-          }
-        },
-        "isVisible": {
-          "en-US": true
-        },
-        "location": {
-          "en-US": "blog"
-        },
-        "author": {
-          "en-US": "Pedro"
-        },
-        "publishDate": {
-          "en-US": "2025-01-16T00:00-05:00"
-        },
-        "tags": {
-          "en-US": [
-            "prueba"
-          ]
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "67sXXqaA5JXoTUCocYOfa8",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:03.435Z",
-        "updatedAt": "2025-02-03T17:25:14.099Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:14.099Z",
-        "firstPublishedAt": "2025-02-03T17:25:14.099Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "pricingPlan"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/67sXXqaA5JXoTUCocYOfa8"
-      },
-      "fields": {
-        "name": {
-          "en-US": "Plan 3"
-        },
-        "price": {
-          "en-US": "100 USD"
-        },
-        "description": {
-          "en-US": "descripcion del plan\n\nsldknas\n\ns\nadsda\nasd\nad"
-        },
-        "features": {
-          "en-US": [
-            "feature 1",
-            "feature 2",
-            "feature 3"
-          ]
-        },
-        "payLinkText": {
-          "en-US": "PAGAR"
-        },
-        "payLink": {
-          "en-US": "https://www.notion.so/Easy-templates-17a3741c09ed8051ad74ffde57350ecb"
-        },
-        "highlightedText": {
-          "en-US": true
-        },
-        "promotionalText": {
-          "en-US": "¡El más vendido del 2024!"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
         "id": "3g5CCnD7F16VdmHkAqScdf",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:03.447Z",
@@ -6642,7 +5875,7 @@
         "id": "1QouMIaxQnyrWM94sPUKpJ",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:04.332Z",
-        "updatedAt": "2025-02-03T17:32:33.658Z",
+        "updatedAt": "2025-02-04T21:59:34.228Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -6650,8 +5883,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:16.194Z",
+        "publishedVersion": 3,
+        "publishedAt": "2025-02-04T21:59:34.228Z",
         "firstPublishedAt": "2025-02-03T17:25:16.194Z",
         "createdBy": {
           "sys": {
@@ -6667,8 +5900,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 1,
-        "version": 3,
+        "publishedCounter": 2,
+        "version": 4,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -6678,7 +5911,7 @@
         },
         "fieldStatus": {
           "*": {
-            "en-US": "changed"
+            "en-US": "published"
           }
         },
         "automationTags": [
@@ -6940,98 +6173,6 @@
         },
         "description": {
           "en-US": "Cada landing está estructurada con principios de conversión probados. Optimiza tu tráfico y maximiza tus resultados sin esfuerzo adicional.\n\nDiseños probados que aumentan la tasa de conversión."
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "2M1aL1QyMjNlbrGSeggHEd",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:04.342Z",
-        "updatedAt": "2025-02-03T17:25:14.470Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:14.470Z",
-        "firstPublishedAt": "2025-02-03T17:25:14.470Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "pricingPlan"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/2M1aL1QyMjNlbrGSeggHEd"
-      },
-      "fields": {
-        "name": {
-          "en-US": "Plan 4"
-        },
-        "price": {
-          "en-US": "150 USD"
-        },
-        "description": {
-          "en-US": "zldfnzldcad"
-        },
-        "payLinkText": {
-          "en-US": "PAGAR"
-        },
-        "payLink": {
-          "en-US": "https://www.antevenio.com/blog/5-tipos-de-hero-images-para-landing-pages/"
-        },
-        "highlightedText": {
-          "en-US": true
-        },
-        "promotionalText": {
-          "en-US": "este es mejor"
         }
       }
     },
@@ -7577,7 +6718,7 @@
         "id": "4xEgSmz045c9Gaywf2UFfV",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:05.302Z",
-        "updatedAt": "2025-02-04T17:56:11.881Z",
+        "updatedAt": "2025-02-04T21:42:01.592Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -7585,8 +6726,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:17.323Z",
+        "publishedVersion": 7,
+        "publishedAt": "2025-02-04T21:42:01.592Z",
         "firstPublishedAt": "2025-02-03T17:25:17.323Z",
         "createdBy": {
           "sys": {
@@ -7602,8 +6743,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 1,
-        "version": 6,
+        "publishedCounter": 2,
+        "version": 8,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -7613,7 +6754,7 @@
         },
         "fieldStatus": {
           "*": {
-            "en-US": "changed"
+            "en-US": "published"
           }
         },
         "automationTags": [
@@ -7632,7 +6773,7 @@
           "en-US": "Nosotros"
         },
         "slug": {
-          "en-US": "/nosotros"
+          "en-US": "nosotros"
         },
         "featuredImage": {
           "en-US": {
@@ -8260,86 +7401,6 @@
             "id": "t3bukehnj9w6"
           }
         },
-        "id": "63souxagrZwSsJPTpjo0uR",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:06.411Z",
-        "updatedAt": "2025-02-03T17:25:20.333Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:20.333Z",
-        "firstPublishedAt": "2025-02-03T17:25:20.333Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "benefitsSection"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/63souxagrZwSsJPTpjo0uR"
-      },
-      "fields": {
-        "title": {
-          "en-US": "beneficios"
-        },
-        "subtitle": {
-          "en-US": "beneficios 2 "
-        },
-        "isVisible": {
-          "en-US": true
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
         "id": "2PWfxd2FHvqwvhiebrlHV0",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:06.414Z",
@@ -8490,101 +7551,6 @@
         },
         "secondaryCtaUrl": {
           "en-US": "https://htmlcolorcodes.com/"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "1ngjAE2uML0WYoqZyOvSG0",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:06.419Z",
-        "updatedAt": "2025-02-03T17:25:20.642Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:20.642Z",
-        "firstPublishedAt": "2025-02-03T17:25:20.642Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "benefit"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/1ngjAE2uML0WYoqZyOvSG0"
-      },
-      "fields": {
-        "tabLabel": {
-          "en-US": "Esto esta genial!"
-        },
-        "title": {
-          "en-US": "lo mas vakno"
-        },
-        "image": {
-          "en-US": {
-            "sys": {
-              "type": "Link",
-              "linkType": "Asset",
-              "id": "3npfxYgK807IewrwNxCt1B"
-            }
-          }
-        },
-        "imagePosition": {
-          "en-US": "right"
-        },
-        "ctaText": {
-          "en-US": "Hazlo ya!"
-        },
-        "ctaUrl": {
-          "en-US": "https://github.com/sisors2025/golean"
         }
       }
     },
@@ -8957,7 +7923,7 @@
         "id": "7vsW1xNZwegSJZIEijwEoi",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:06.452Z",
-        "updatedAt": "2025-02-04T17:47:44.634Z",
+        "updatedAt": "2025-02-04T21:49:17.719Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -8965,8 +7931,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 7,
-        "publishedAt": "2025-02-04T17:47:44.634Z",
+        "publishedVersion": 10,
+        "publishedAt": "2025-02-04T21:49:17.719Z",
         "firstPublishedAt": "2025-02-03T17:34:06.927Z",
         "createdBy": {
           "sys": {
@@ -8982,8 +7948,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 3,
-        "version": 8,
+        "publishedCounter": 4,
+        "version": 11,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -9371,83 +8337,6 @@
             "id": "t3bukehnj9w6"
           }
         },
-        "id": "3vjFqvJ2yrWMfMISmaHtjI",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:07.314Z",
-        "updatedAt": "2025-02-03T17:25:23.833Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:23.833Z",
-        "firstPublishedAt": "2025-02-03T17:25:23.833Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "socialLink"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/3vjFqvJ2yrWMfMISmaHtjI"
-      },
-      "fields": {
-        "redSocial": {
-          "en-US": "TikTok"
-        },
-        "url": {
-          "en-US": "https://tiktok.com/@golean.lat"
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
         "id": "yoDqgu3POwdZiCdd5OYTR",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:07.317Z",
@@ -9525,101 +8414,10 @@
             "id": "t3bukehnj9w6"
           }
         },
-        "id": "2IlN1uMzqU7XvS8Dk3bIu7",
-        "type": "Entry",
-        "createdAt": "2025-02-03T17:25:07.320Z",
-        "updatedAt": "2025-02-03T17:25:24.273Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2025-02-03T17:25:24.273Z",
-        "firstPublishedAt": "2025-02-03T17:25:24.273Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "benefitsSection"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/2IlN1uMzqU7XvS8Dk3bIu7"
-      },
-      "fields": {
-        "title": {
-          "en-US": "Casos de Exito"
-        },
-        "subtitle": {
-          "en-US": "Los mejores casos de exito"
-        },
-        "benefits": {
-          "en-US": [
-            {
-              "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "1ngjAE2uML0WYoqZyOvSG0"
-              }
-            }
-          ]
-        },
-        "isVisible": {
-          "en-US": true
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
         "id": "6Go9dRoP21ZDimgmWxCDJR",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:07.333Z",
-        "updatedAt": "2025-02-04T20:29:06.404Z",
+        "updatedAt": "2025-02-04T21:57:37.359Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -9627,8 +8425,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 21,
-        "publishedAt": "2025-02-04T20:28:47.504Z",
+        "publishedVersion": 25,
+        "publishedAt": "2025-02-04T21:57:37.359Z",
         "firstPublishedAt": "2025-02-03T17:25:24.713Z",
         "createdBy": {
           "sys": {
@@ -9644,8 +8442,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 8,
-        "version": 23,
+        "publishedCounter": 10,
+        "version": 26,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -9655,7 +8453,7 @@
         },
         "fieldStatus": {
           "*": {
-            "en-US": "changed"
+            "en-US": "published"
           }
         },
         "automationTags": [
@@ -9683,7 +8481,7 @@
           "en-US": "Crea landing pages modulares y personalizadas en minutos con Golean. Disfruta de una interfaz intuitiva, control total y flexibilidad sin necesidad de desarrolladores. Optimiza tu presencia online y lanza campañas digitales de forma rápida y eficiente."
         },
         "valeiaChat": {
-          "en-US": true
+          "en-US": false
         },
         "theme": {
           "en-US": "oceanDark"
@@ -9878,7 +8676,7 @@
         "id": "16Pa13cn5IQArwwxPl6SOa",
         "type": "Entry",
         "createdAt": "2025-02-03T17:25:08.355Z",
-        "updatedAt": "2025-02-04T17:34:42.386Z",
+        "updatedAt": "2025-02-04T21:57:13.122Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -9886,8 +8684,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 5,
-        "publishedAt": "2025-02-04T17:34:42.386Z",
+        "publishedVersion": 8,
+        "publishedAt": "2025-02-04T21:57:13.122Z",
         "firstPublishedAt": "2025-02-03T17:25:25.597Z",
         "createdBy": {
           "sys": {
@@ -9903,8 +8701,8 @@
             "id": "2jMmlSadkcJaP9vOQIjHfm"
           }
         },
-        "publishedCounter": 3,
-        "version": 6,
+        "publishedCounter": 4,
+        "version": 9,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -9947,7 +8745,7 @@
               "sys": {
                 "type": "Link",
                 "linkType": "Entry",
-                "id": "3vjFqvJ2yrWMfMISmaHtjI"
+                "id": "7vPXScURF1kNWjA5pIcwbq"
               }
             }
           ]
@@ -10333,10 +9131,10 @@
             "id": "t3bukehnj9w6"
           }
         },
-        "id": "2DoqMZ3d2zS1RBCahiFNJj",
+        "id": "7vPXScURF1kNWjA5pIcwbq",
         "type": "Entry",
-        "createdAt": "2025-02-04T14:25:45.005Z",
-        "updatedAt": "2025-02-04T14:26:17.550Z",
+        "createdAt": "2025-02-04T21:54:02.062Z",
+        "updatedAt": "2025-02-04T21:57:02.684Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -10344,9 +9142,9 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 4,
-        "publishedAt": "2025-02-04T14:26:17.550Z",
-        "firstPublishedAt": "2025-02-04T14:26:17.550Z",
+        "publishedVersion": 8,
+        "publishedAt": "2025-02-04T21:57:02.684Z",
+        "firstPublishedAt": "2025-02-04T21:57:02.684Z",
         "createdBy": {
           "sys": {
             "type": "Link",
@@ -10362,7 +9160,7 @@
           }
         },
         "publishedCounter": 1,
-        "version": 5,
+        "version": 9,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -10381,120 +9179,17 @@
           "sys": {
             "type": "Link",
             "linkType": "ContentType",
-            "id": "benefitsSection"
+            "id": "socialLink"
           }
         },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/2DoqMZ3d2zS1RBCahiFNJj"
+        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/7vPXScURF1kNWjA5pIcwbq"
       },
       "fields": {
-        "title": {
-          "en-US": "customer"
+        "redSocial": {
+          "en-US": "TikTok"
         },
-        "subtitle": {
-          "en-US": "Custumer 1"
-        },
-        "benefits": {
-          "en-US": [
-            {
-              "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "2PWfxd2FHvqwvhiebrlHV0"
-              }
-            }
-          ]
-        },
-        "isVisible": {
-          "en-US": true
-        }
-      }
-    },
-    {
-      "metadata": {
-        "tags": [
-        ],
-        "concepts": [
-        ]
-      },
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "id": "6DbZnG1C6mkncGgEbniq07",
-        "type": "Entry",
-        "createdAt": "2025-02-04T17:51:41.317Z",
-        "updatedAt": "2025-02-04T17:52:17.192Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 6,
-        "publishedAt": "2025-02-04T17:52:17.192Z",
-        "firstPublishedAt": "2025-02-04T17:52:17.192Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 7,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "fieldStatus": {
-          "*": {
-            "en-US": "published"
-          }
-        },
-        "automationTags": [
-        ],
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "landingPage"
-          }
-        },
-        "urn": "crn:contentful:::content:spaces/t3bukehnj9w6/environments/master/entries/6DbZnG1C6mkncGgEbniq07"
-      },
-      "fields": {
-        "internalName": {
-          "en-US": "startups"
-        },
-        "slug": {
-          "en-US": "/startups"
-        },
-        "title": {
-          "en-US": "seo estartup"
-        },
-        "description": {
-          "en-US": "descripcion estartup"
-        },
-        "valeiaChat": {
-          "en-US": true
-        },
-        "isVisible": {
-          "en-US": true
+        "url": {
+          "en-US": "https://tiktok.com/@golean.lat"
         }
       }
     }
@@ -11253,63 +9948,6 @@
           "key": "x-contentful-signature",
           "value": "5(?0@@sziSK[w}vAhmzZxXPy"
         }
-      ]
-    },
-    {
-      "name": "Netlify - Deploy a site",
-      "url": "https://api.netlify.com/build_hooks/679854b56daef31e71426b2e",
-      "httpBasicUsername": null,
-      "topics": [
-        "ContentType.publish",
-        "ContentType.unpublish",
-        "Entry.publish",
-        "Entry.unpublish",
-        "Asset.publish",
-        "Asset.unpublish"
-      ],
-      "filters": [
-        {
-          "equals": [
-            {
-              "doc": "sys.environment.sys.id"
-            },
-            "master"
-          ]
-        }
-      ],
-      "transformation": {
-        "contentType": "application/json"
-      },
-      "active": false,
-      "sys": {
-        "type": "WebhookDefinition",
-        "id": "346HKlkOoAsN3Q8CBPuSDj",
-        "version": 0,
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "t3bukehnj9w6"
-          }
-        },
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "createdAt": "2025-01-30T22:50:29Z",
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "2jMmlSadkcJaP9vOQIjHfm"
-          }
-        },
-        "updatedAt": "2025-01-30T22:50:29Z"
-      },
-      "headers": [
       ]
     }
   ],
