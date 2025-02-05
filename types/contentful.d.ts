@@ -95,6 +95,7 @@ export interface CustomTheme {
 
 export interface LandingPage {
   internalName: string;
+  favicon?: ContentfulAsset;
   slug: string;
   title: string;
   description: string;
@@ -104,6 +105,7 @@ export interface LandingPage {
   valeiaChat?: boolean;
   sections: Array<ContentfulEntry<any>>;
   isVisible: boolean;
+  sys: ContentfulSys;
 }
 
 export interface HeaderSection {

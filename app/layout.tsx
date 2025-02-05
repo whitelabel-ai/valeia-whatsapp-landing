@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import Script from "next/script";
 import { themeConfigs } from "@/lib/theme-config";
 import { hexToHSL, generateGradients } from "@/lib/color-utils";
+import { generateOrganizationSchema } from "@/lib/schema";
+import { CanonicalUrl } from "@/components/seo/canonical";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
     if (!landingPage) {
       return {
-        title: "Scof.ai - Soluciones de Automatización con IA",
-        description:
-          "Automatizamos tareas repetitivas y optimizamos tu flujo de trabajo con Inteligencia Artificial",
+        title: "Página en construcción",
+        description: "Estamos experimentando dificultades técnicas.",
       };
     }
 
@@ -29,23 +30,54 @@ export async function generateMetadata(): Promise<Metadata> {
       ? `https:${headerSection.fields.logo.fields.file.url}`
       : "";
 
+    const faviconUrl = landingPage.favicon?.fields?.file?.url
+      ? `https:${landingPage.favicon.fields.file.url}`
+      : logoUrl;
+
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+
     return {
       title: landingPage.title,
       description: landingPage.description,
-      metadataBase: new URL(
-        process.env.NEXT_PUBLIC_DOMAIN ||
-          "agregar la variable de entorno NEXT_PUBLIC_DOMAIN"
-      ),
-      icons: {
-        icon: logoUrl,
-        shortcut: logoUrl,
-        apple: logoUrl,
+      metadataBase: new URL(domain || "http://localhost:3000"),
+      alternates: {
+        canonical: domain,
       },
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+      icons: {
+        icon: [
+          { url: faviconUrl, sizes: "16x16", type: "image/png" },
+          { url: faviconUrl, sizes: "32x32", type: "image/png" },
+          { url: faviconUrl, sizes: "96x96", type: "image/png" },
+        ],
+        shortcut: faviconUrl,
+        apple: [{ url: faviconUrl, sizes: "180x180", type: "image/png" }],
+        other: [
+          {
+            rel: "mask-icon",
+            url: faviconUrl,
+            color: "#000000",
+          },
+        ],
+      },
+      manifest: "/site.webmanifest",
       openGraph: {
         title: landingPage.title,
         description: landingPage.description,
         type: "website",
         locale: "es",
+        url: domain,
+        siteName: landingPage.title,
         images: [
           {
             url: logoUrl,
@@ -60,10 +92,13 @@ export async function generateMetadata(): Promise<Metadata> {
         title: landingPage.title,
         description: landingPage.description,
         images: [logoUrl],
+        creator: "@yourtwitterhandle",
+      },
+      verification: {
+        google: "your-google-site-verification",
       },
     };
   } catch (error) {
-    // Si hay un error, retornamos metadata por defecto
     return {
       title: "Error - Sitio en Mantenimiento",
       description: "Estamos experimentando dificultades técnicas.",
@@ -140,6 +175,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
+        <CanonicalUrl />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateOrganizationSchema(landingPage)),
+          }}
+        />
         {gtmId && (
           <Script id="google-tag-manager" strategy="afterInteractive">
             {`
