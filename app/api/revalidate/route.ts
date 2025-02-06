@@ -118,8 +118,13 @@ export async function POST(request: NextRequest) {
 
     // Revalidar todas las rutas necesarias
     for (const path of pathsToRevalidate) {
+      console.log(`🔄 [Webhook] Revalidando: ${path}`);
+
+      // 🔥 Intenta revalidar con y sin "/" final
       revalidatePath(path);
-      console.log("✅ [Webhook] Ruta revalidada:", path);
+      revalidatePath(`${path}/`);
+
+      console.log(`✅ [Webhook] Revalidado: ${path}`);
     }
 
     return NextResponse.json(
