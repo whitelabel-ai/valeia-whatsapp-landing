@@ -74,7 +74,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (signature !== webhookSecret) {
+    console.log(
+      "🔍 [Debug] Signature recibida:",
+      JSON.stringify(signature, null, 2)
+    );
+    console.log(
+      "🔍 [Debug] Webhook secret esperado:",
+      JSON.stringify(webhookSecret, null, 2)
+    );
+
+    if (
+      !signature ||
+      !webhookSecret ||
+      signature.trim() !== webhookSecret.trim()
+    ) {
       console.error("⛔ [Webhook] Error: Firma inválida");
       return NextResponse.json({ message: "Firma inválida" }, { status: 401 });
     }

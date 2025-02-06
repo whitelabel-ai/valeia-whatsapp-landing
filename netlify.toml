@@ -1,0 +1,4 @@
+[[headers]]
+  for = "/api/revalidate"
+  [headers.values]
+    X-Contentful-Signature = "*"
