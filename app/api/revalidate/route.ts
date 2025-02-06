@@ -118,13 +118,30 @@ export async function POST(request: NextRequest) {
 
     // Revalidar todas las rutas necesarias
     for (const path of pathsToRevalidate) {
-      console.log(`🔄 [Webhook] Revalidando: ${path}`);
+      console.log(`🔄 [Webhook] Intentando revalidar manualmente: ${path}`);
 
-      // 🔥 Intenta revalidar con y sin "/" final
-      revalidatePath(path);
-      revalidatePath(`${path}/`);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DOMAIN}/api/revalidate?path=${path}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
-      console.log(`✅ [Webhook] Revalidado: ${path}`);
+        if (response.ok) {
+          console.log(`✅ [Webhook] Revalidación exitosa para: ${path}`);
+        } else {
+          console.error(
+            `❌ [Webhook] Falló la revalidación para: ${path}, Status: ${response.status}`
+          );
+        }
+      } catch (error) {
+        console.error(
+          `🔥 [Webhook] Error al intentar revalidar ${path}:`,
+          error
+        );
+      }
     }
 
     return NextResponse.json(
