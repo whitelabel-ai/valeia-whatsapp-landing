@@ -1,21 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
+import { getNavigationPages } from "@/lib/contentful";
 
-// Helper function to get the path to revalidate based on Contentful entry
-function getPathToRevalidate(
+// Helper function to get the paths to revalidate based on Contentful entry
+async function getPathsToRevalidate(
   contentType: string,
-  slug: string | undefined
-): string {
+  slug: string | undefined,
+  payload: any
+): Promise<string[]> {
+  const paths: string[] = [];
+
+  // Siempre revalidar la página principal
+  paths.push("/");
+
   switch (contentType) {
     case "dynamicPage":
-      return slug ? `/${slug}` : "/";
-    case "landingPage":
-      return "/";
+      if (slug) {
+        paths.push(`/${slug}`);
+      }
+      break;
+    case "landingPage": {
+      // Si se actualizó el tema o customTheme, revalidar todas las rutas
+      const hasThemeChanges =
+        payload.fields?.theme || payload.fields?.customTheme;
+      if (hasThemeChanges) {
+        console.log("🎨 [Webhook] Detectados cambios en el tema");
+        try {
+          // Obtener todas las páginas dinámicas
+          const navigationPages = await getNavigationPages();
+          navigationPages.forEach((page) => {
+            if (page.slug) {
+              paths.push(`/${page.slug}`);
+              // Si es una página de blog, también revalidar la ruta del blog
+              if (page.location === "blog") {
+                paths.push("/blog");
+                paths.push(`/blog/${page.slug}`);
+              }
+            }
+          });
+        } catch (error) {
+          console.error("❌ [Webhook] Error obteniendo páginas:", error);
+        }
+      }
+      break;
+    }
     case "blogPost":
-      return slug ? `/blog/${slug}` : "/blog";
-    default:
-      return "/";
+      if (slug) {
+        paths.push(`/blog/${slug}`);
+        paths.push("/blog");
+      }
+      break;
   }
+
+  // Eliminar duplicados y filtrar rutas vacías
+  return [...new Set(paths)].filter(Boolean);
 }
 
 export async function POST(request: NextRequest) {
@@ -29,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET;
     if (!webhookSecret) {
-      console.error("🚨 [Webhook] Error: Secreto del webhook no configurado");
+      console.error("🚨 [Webhook] Error: Dominio del webhook no configurado");
       return NextResponse.json(
         { message: "Secreto del webhook no configurado" },
         { status: 500 }
@@ -71,21 +109,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const path = getPathToRevalidate(contentType, slug);
-    console.log("🛤️ [Webhook] Ruta a revalidar:", path);
+    const pathsToRevalidate = await getPathsToRevalidate(
+      contentType,
+      slug,
+      payload
+    );
+    console.log("🛤️ [Webhook] Rutas a revalidar:", pathsToRevalidate);
 
-    revalidatePath(path);
-    console.log("✅ [Webhook] Ruta revalidada:", path);
-
-    if (path !== "/") {
-      revalidatePath("/");
-      console.log("🔄 [Webhook] También se revalidó la ruta raíz: /");
+    // Revalidar todas las rutas necesarias
+    for (const path of pathsToRevalidate) {
+      revalidatePath(path);
+      console.log("✅ [Webhook] Ruta revalidada:", path);
     }
 
     return NextResponse.json(
       {
         message: "Revalidación exitosa",
-        revalidated: path,
+        revalidated: pathsToRevalidate,
       },
       { status: 200 }
     );

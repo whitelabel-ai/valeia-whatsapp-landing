@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [landingPage, navigationPages, blogResponse] = await Promise.all([
     getLandingPage(),
     getNavigationPages(),
-    getBlogs(1, 100), // Ajusta el límite según tus necesidades
+    getBlogs(1, 100),
   ]);
 
   const routes: MetadataRoute.Sitemap = [];
@@ -22,13 +22,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   });
 
-  // Páginas de navegación
-  navigationPages?.forEach((page) => {
+  // Páginas de navegación (excluyendo blog y legal)
+  const standardPages = navigationPages?.filter(
+    (page) => !["blog", "legal"].includes(page.location || "")
+  );
+
+  standardPages?.forEach((page) => {
     routes.push({
       url: `${baseUrl}/${page.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
+    });
+  });
+
+  // Páginas legales
+  const legalPages = navigationPages?.filter(
+    (page) => page.location === "legal"
+  );
+
+  legalPages?.forEach((page) => {
+    routes.push({
+      url: `${baseUrl}/${page.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
     });
   });
 
