@@ -118,6 +118,8 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
           leadMagnetId: selectedLeadMagnet,
           ...formData,
         }),
+        redirect: "follow",
+        mode: "no-cors",
       });
 
       if (!response.ok) throw new Error("Error al enviar el formulario");
