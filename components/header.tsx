@@ -9,21 +9,75 @@ import { HeaderSection, DynamicPage } from "@/types/contentful";
 interface HeaderProps {
   content: HeaderSection;
   navigationPages: DynamicPage[];
+  currentLandingSlug?: string;
 }
 
-export function Header({ content, navigationPages }: HeaderProps) {
+export function Header({
+  content,
+  navigationPages,
+  currentLandingSlug = "/",
+}: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logo, ctaText, ctaUrl, widthLogo } = content;
 
-  // Filtrar las páginas de navegación excluyendo el blog
-  const headerPages = navigationPages.filter(
-    (page) => page.location === "header" && page.isVisible && page.slug
-  );
+  // Function to clean URLs by removing duplicated segments
+  const cleanUrl = (url: string) => {
+    if (!url || url === "/") return "/";
+
+    const segments = url.split("/").filter((segment) => segment !== "");
+    const uniqueSegments = segments.reduce((acc: string[], segment) => {
+      if (!acc.includes(segment)) {
+        acc.push(segment);
+      }
+      return acc;
+    }, []);
+
+    return "/" + uniqueSegments.join("/");
+  };
+
+  // Filter navigation pages based on parent landing page
+  const headerPages = navigationPages.filter((page) => {
+    if (page.location !== "header" || !page.isVisible) return false;
+
+    // Show global pages (no parent) only on root landing
+    if (!page.parentLandingSlug) {
+      return currentLandingSlug === "/";
+    }
+
+    // Show landing-specific pages only on their parent landing
+    return page.parentLandingSlug === currentLandingSlug;
+  });
+
+  const getPageUrl = (page: DynamicPage) => {
+    if (!page.parentLandingSlug || page.parentLandingSlug === "/") {
+      return `/${page.slug}`;
+    }
+
+    // Split the parent landing slug and the page slug into segments
+    const parentSegments = page.parentLandingSlug
+      .split("/")
+      .filter((segment) => segment !== "");
+    const pageSlug = page.slug;
+
+    // Remove duplicated segments
+    const uniqueSegments = parentSegments.reduce((acc: string[], segment) => {
+      if (!acc.includes(segment) && segment !== pageSlug) {
+        acc.push(segment);
+      }
+      return acc;
+    }, []);
+
+    // Combine unique segments with the page slug
+    return "/" + [...uniqueSegments, pageSlug].join("/");
+  };
+
+  // Clean the currentLandingSlug for the logo link
+  const cleanedLandingSlug = cleanUrl(currentLandingSlug);
 
   return (
     <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b pb-3 pt-4">
       <div className="container max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href={cleanedLandingSlug} className="flex items-center space-x-2">
           {logo?.fields?.file?.url && (
             <img
               src={`https:${logo.fields.file.url}`}
@@ -39,7 +93,7 @@ export function Header({ content, navigationPages }: HeaderProps) {
           {headerPages.map((page) => (
             <Link
               key={page.slug}
-              href={`/${page.slug}`}
+              href={getPageUrl(page)}
               className="text-foreground/80 hover:text-foreground"
             >
               {page.label}
@@ -52,6 +106,7 @@ export function Header({ content, navigationPages }: HeaderProps) {
           >
             Blog
           </Link>
+
           {ctaUrl && (
             <Button asChild>
               <a href={ctaUrl} target="_blank" rel="noopener noreferrer">
@@ -72,19 +127,19 @@ export function Header({ content, navigationPages }: HeaderProps) {
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 w-full bg-background border-b">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            {/* Agregar el link al blog en el menú móvil */}
-            <Link
-              href="/blog"
-              className="text-foreground/80 hover:text-foreground"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Blog
-            </Link>
-
+            {currentLandingSlug === "/" && (
+              <Link
+                href="/blog"
+                className="text-foreground/80 hover:text-foreground"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
+              </Link>
+            )}
             {headerPages.map((page) => (
               <Link
                 key={page.slug}
-                href={`/${page.slug}`}
+                href={getPageUrl(page)}
                 className="text-foreground/80 hover:text-foreground"
                 onClick={() => setIsMenuOpen(false)}
               >

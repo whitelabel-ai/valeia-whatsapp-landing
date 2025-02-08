@@ -68,7 +68,10 @@ export async function checkContentfulConnection(): Promise<{
     };
   }
 }
-export async function getLandingPage(): Promise<LandingPage | null> {
+
+export async function getLandingPage(
+  slug: string = "/"
+): Promise<LandingPage | null> {
   if (!client) {
     throw new Error(
       clientSetup.error || "Error de configuración de Contentful"
@@ -78,7 +81,7 @@ export async function getLandingPage(): Promise<LandingPage | null> {
   try {
     const response = await client.getEntries({
       content_type: "landingPage",
-      "fields.slug": "/",
+      "fields.slug": slug,
       limit: 1,
       include: 4,
     });
@@ -86,7 +89,20 @@ export async function getLandingPage(): Promise<LandingPage | null> {
     if (response.items.length === 0) {
       return null;
     }
-    return response.items[0].fields as unknown as LandingPage;
+    const landingPage = response.items[0].fields as unknown as LandingPage;
+
+    // Add parentLandingSlug to dynamic pages if they exist
+    if (landingPage.dynamicPages) {
+      landingPage.dynamicPages = landingPage.dynamicPages.map((page) => ({
+        ...page,
+        fields: {
+          ...page.fields,
+          parentLandingSlug: landingPage.slug,
+        },
+      }));
+    }
+
+    return landingPage;
   } catch (error) {
     console.error("Error al obtener la landing page:", error);
     throw error;
@@ -94,22 +110,45 @@ export async function getLandingPage(): Promise<LandingPage | null> {
 }
 
 export async function getDynamicPage(
-  slug: string
+  slug: string,
+  parentSlug?: string
 ): Promise<DynamicPage | null> {
+  if (!client) {
+    throw new Error(
+      clientSetup.error || "Error de configuración de Contentful"
+    );
+  }
+
   try {
-    const response = await client?.getEntries({
+    // First try to find the page in the parent landing page
+    if (parentSlug) {
+      const parentLanding = await getLandingPage(parentSlug);
+      if (parentLanding?.dynamicPages) {
+        const dynamicPage = parentLanding.dynamicPages.find(
+          (page) => page.fields.slug === slug
+        );
+        if (dynamicPage) {
+          return {
+            ...dynamicPage.fields,
+            parentLandingSlug: parentLanding.slug,
+          } as DynamicPage;
+        }
+      }
+    }
+
+    // If not found in parent landing or no parent specified, look for global pages
+    const response = await client.getEntries({
       content_type: "dynamicPage",
       "fields.slug": slug,
       limit: 1,
       include: 2,
     });
 
-    if (response?.items.length === 0) {
+    if (response.items.length === 0) {
       return null;
     }
 
-    const page = response?.items[0].fields as unknown as DynamicPage;
-    return { ...page };
+    return response.items[0].fields as unknown as DynamicPage;
   } catch (error) {
     console.error("Error fetching dynamic page:", error);
     return null;
@@ -141,15 +180,30 @@ export async function getNavigationPages(): Promise<DynamicPage[]> {
   }
 
   try {
-    const response = await client.getEntries({
-      content_type: "dynamicPage",
-      "fields.isVisible": true,
-      "fields.location[exists]": true,
+    // Get all landing pages to collect their dynamic pages
+    const landingPagesResponse = await client.getEntries({
+      content_type: "landingPage",
+      include: 4,
     });
 
-    return response.items.map((item) => ({
-      ...item.fields,
-    })) as unknown as DynamicPage[];
+    const landingPages = landingPagesResponse.items.map(
+      (item) => item.fields as unknown as LandingPage
+    );
+
+    // Collect and process dynamic pages from landing pages
+    const landingPageDynamicPages: DynamicPage[] = [];
+    landingPages.forEach((landing) => {
+      if (landing.dynamicPages) {
+        const pages = landing.dynamicPages.map((page) => ({
+          ...page.fields,
+          parentLandingSlug: landing.slug,
+        })) as DynamicPage[];
+        landingPageDynamicPages.push(...pages);
+      }
+    });
+
+    // Return combined pages
+    return [...landingPageDynamicPages];
   } catch (error) {
     console.error("Error al obtener las páginas de navegación:", error);
     throw error;

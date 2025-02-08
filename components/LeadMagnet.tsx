@@ -157,7 +157,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
         }
       } else {
         // Swipe izquierda (siguiente)
-        if (currentPage < Math.ceil(leadMagnets.length / 3) - 1) {
+        if (currentPage < Math.ceil(leadMagnets.length) - 1) {
           setDirection("left");
           setCurrentPage((prev) => prev + 1);
         }
@@ -186,53 +186,78 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
     const leadMagnet = leadMagnets[0];
     const imagePosition = leadMagnet.fields.imagePosition || "right";
 
-    return (
-      <div className="card-gradient rounded-lg p-8">
-        <div
-          className={cn(
-            "flex flex-col gap-8",
-            imagePosition === "right" ? "md:flex-row" : "md:flex-row-reverse"
-          )}
-        >
-          <div className="flex-1 flex flex-col justify-center">
-            <h3 className="text-2xl font-bold mb-4">
-              {leadMagnet.fields.title}
-            </h3>
-            <div className="prose prose-invert max-w-none mb-6">
-              {documentToReactComponents(leadMagnet.fields.description)}
-            </div>
-
-            {leadMagnet.fields.features &&
-              leadMagnet.fields.features.length > 0 && (
-                <ul className="space-y-3 mb-6">
-                  {leadMagnet.fields.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-foreground/80">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-            <Button
-              onClick={() => handleOpenModal(leadMagnet.sys.id)}
-              className="w-full md:w-auto"
-            >
-              {leadMagnet.fields.ctaText}
-            </Button>
+    const ContentSection = () => (
+      <div className="flex flex-col justify-between h-full space-y-6">
+        <div className="space-y-6">
+          <h3 className="text-2xl md:text-3xl font-bold">
+            {leadMagnet.fields.title}
+          </h3>
+          <div className="prose prose-invert max-w-none">
+            {documentToReactComponents(leadMagnet.fields.description)}
           </div>
 
-          {leadMagnet.fields.image && (
-            <div className="flex-1">
-              <img
-                src={`https:${leadMagnet.fields.image.fields.file.url}`}
-                alt={leadMagnet.fields.image.fields.title}
-                className={cn(
-                  "w-full h-full rounded-lg",
-                  getObjectFitClass(leadMagnet.fields.imageFit)
-                )}
-              />
-            </div>
+          {leadMagnet.fields.features &&
+            leadMagnet.fields.features.length > 0 && (
+              <ul className="space-y-4">
+                {leadMagnet.fields.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="mt-1">
+                      <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    </div>
+                    <span className="text-foreground/80">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+        </div>
+
+        <div className="flex flex-wrap gap-4 pt-4">
+          <Button
+            onClick={() => handleOpenModal(leadMagnet.sys.id)}
+            className="w-full md:w-auto"
+          >
+            {leadMagnet.fields.ctaText}
+          </Button>
+        </div>
+      </div>
+    );
+
+    const ImageSection = () =>
+      leadMagnet.fields.image && (
+        <div className="relative aspect-square md:aspect-[1.2/1] rounded-xl overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={`https:${leadMagnet.fields.image.fields.file.url}`}
+              alt={leadMagnet.fields.image.fields.title}
+              className={cn(
+                "w-full h-full rounded-lg",
+                getObjectFitClass(leadMagnet.fields.imageFit)
+              )}
+            />
+          </div>
+        </div>
+      );
+
+    return (
+      <div className="card-gradient rounded-lg p-6 md:p-12">
+        <div
+          className={cn(
+            "grid gap-8 md:gap-12 items-center",
+            imagePosition === "right"
+              ? "md:grid-cols-[1fr,1.2fr]"
+              : "md:grid-cols-[1.2fr,1fr]"
+          )}
+        >
+          {imagePosition === "right" ? (
+            <>
+              <ContentSection />
+              <ImageSection />
+            </>
+          ) : (
+            <>
+              <ImageSection />
+              <ContentSection />
+            </>
           )}
         </div>
       </div>
@@ -248,11 +273,9 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
       (currentPage + 1) * itemsPerPage
     );
 
-    // Función para obtener las clases del grid basadas en el número de tarjetas visibles
     const getGridClasses = () => {
       if (isMobile) return "grid-cols-1 max-w-md mx-auto";
 
-      // En escritorio, ajustar el grid según el número de tarjetas visibles
       switch (visibleLeadMagnets.length) {
         case 1:
           return "md:grid-cols-1 max-w-sm mx-auto";
@@ -287,7 +310,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
               {visibleLeadMagnets.map((leadMagnet) => (
                 <div
                   key={leadMagnet.sys.id}
-                  className="card-gradient rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                  className="card-gradient rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg flex flex-col"
                 >
                   {leadMagnet.fields.image && (
                     <div className="relative aspect-[16/9]">
@@ -301,11 +324,11 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
                       />
                     </div>
                   )}
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-semibold mb-4">
                       {leadMagnet.fields.title}
                     </h3>
-                    <div className="prose prose-invert max-w-none mb-6">
+                    <div className="prose prose-invert max-w-none mb-6 flex-grow">
                       {documentToReactComponents(leadMagnet.fields.description)}
                     </div>
 
@@ -328,7 +351,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
 
                     <Button
                       onClick={() => handleOpenModal(leadMagnet.sys.id)}
-                      className="w-full"
+                      className="w-full mt-auto"
                     >
                       {leadMagnet.fields.ctaText}
                     </Button>
@@ -396,7 +419,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
 
   return (
     <section className="py-24 relative" style={getBackgroundStyle()}>
-      <div className="container mx-auto px-4">
+      <div className="container max-w-6xl mx-auto  px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           <p className="text-foreground/80 max-w-2xl mx-auto">{subtitle}</p>

@@ -93,6 +93,7 @@ export interface CustomTheme {
   preview?: ContentfulAsset;
 }
 
+// Update the LandingPage interface to include dynamicPages
 export interface LandingPage {
   internalName: string;
   favicon?: ContentfulAsset;
@@ -104,8 +105,26 @@ export interface LandingPage {
   googleTagManager?: string;
   valeiaChat?: boolean;
   sections: Array<ContentfulEntry<any>>;
+  dynamicPages?: Array<ContentfulEntry<DynamicPage>>;
   isVisible: boolean;
   sys: ContentfulSys;
+}
+
+// Update the DynamicPage interface
+export interface DynamicPage {
+  title: string;
+  seoDescription?: string;
+  slug: string;
+  content: any;
+  featuredImage?: ContentfulAsset;
+  isVisible: boolean;
+  label?: string;
+  location: "header" | "footer" | "blog" | "legal" | null;
+  author?: string;
+  publishDate?: string;
+  tags?: string[];
+  parentLandingSlug?: string;
+  sys?: ContentfulSys;
 }
 
 export interface HeaderSection {
@@ -312,17 +331,4 @@ interface RichTextContent {
     nodeType: string;
   }>;
   nodeType: string;
-}
-
-export interface DynamicPage {
-  title: string;
-  slug: string;
-  content: any;
-  featuredImage?: ContentfulAsset;
-  isVisible: boolean;
-  label?: string;
-  location: "header" | "footer" | "blog" | "legal" | null;
-  author?: string;
-  publishDate?: string;
-  tags?: string[];
 }

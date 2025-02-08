@@ -159,7 +159,7 @@ export function Benefits({ content }: BenefitsProps) {
                         <h3 className="text-2xl font-bold mb-4">
                           {benefit.fields.title}
                         </h3>
-                        <div className="prose prose-invert max-w-none">
+                        <div className="prose prose-invert max-w-none mb-6">
                           {documentToReactComponents(
                             benefit.fields.description
                           )}
@@ -167,7 +167,7 @@ export function Benefits({ content }: BenefitsProps) {
                         {/* Features List */}
                         {benefit.fields.features &&
                           benefit.fields.features.length > 0 && (
-                            <ul className="space-y-3 mt-4">
+                            <ul className="space-y-3 mt-6">
                               {benefit.fields.features.map((feature, idx) => (
                                 <li
                                   key={idx}
@@ -175,7 +175,7 @@ export function Benefits({ content }: BenefitsProps) {
                                 >
                                   <div className="mt-1">
                                     <Check
-                                      className="h-5 w-5"
+                                      className="h-5 w-5 text-primary mt-0.5 flex-shrink-0"
                                       style={
                                         accentColor
                                           ? { color: accentColor }

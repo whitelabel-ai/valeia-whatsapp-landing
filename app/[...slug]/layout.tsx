@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getLandingPage } from "@/lib/contentful";
@@ -6,18 +6,20 @@ import { Metadata } from "next";
 import Script from "next/script";
 import { themeConfigs } from "@/lib/theme-config";
 import { hexToHSL, generateGradients } from "@/lib/color-utils";
-import {
-  generateOrganizationSchema,
-  generateWebSiteSchema,
-} from "@/lib/schema";
+import { generateOrganizationSchema } from "@/lib/schema";
 import { CanonicalUrl } from "@/components/seo/canonical";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string[] };
+}): Promise<Metadata> {
   try {
-    const landingPage = await getLandingPage();
-
+    const fullSlug = params.slug.join("/");
+    const landingPage = await getLandingPage(fullSlug);
+    console.log("landingPage", landingPage);
     if (!landingPage) {
       return {
         title: "Página en construcción",
@@ -44,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: landingPage.description,
       metadataBase: new URL(domain || "http://localhost:3000"),
       alternates: {
-        canonical: domain,
+        canonical: `${domain}/${fullSlug}`,
       },
       robots: {
         index: true,
@@ -79,7 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
         description: landingPage.description,
         type: "website",
         locale: "es",
-        url: domain,
+        url: `${domain}/${fullSlug}`,
         siteName: landingPage.title,
         images: [
           {
@@ -111,12 +113,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
 interface RootLayoutProps {
   children: React.ReactNode;
+  params: { slug: string[] };
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params,
+}: RootLayoutProps) {
   let landingPage;
   try {
-    landingPage = await getLandingPage();
+    const fullSlug = params.slug.join("/");
+    landingPage = await getLandingPage(fullSlug);
   } catch (error) {
     return (
       <html lang="es" suppressHydrationWarning>
@@ -151,7 +158,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     );
   }
 
-  const gtmId = landingPage?.googleTagManager;
   const valeiaChat = landingPage?.valeiaChat || false;
 
   // Determinar el tema a usar
@@ -190,37 +196,19 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   }
 
   const borderRadius = landingPage?.customTheme?.fields?.borderRadius || 8;
-
-  // Generate schemas
-  const organizationSchema = generateOrganizationSchema(landingPage);
-  const websiteSchema = generateWebSiteSchema(landingPage);
-
-  // Combine schemas into an array if both exist
-  const schemas = [organizationSchema, websiteSchema].filter(Boolean);
-  const schemaString = JSON.stringify(
-    schemas.length === 1 ? schemas[0] : schemas
-  );
+  const schema = generateOrganizationSchema(landingPage);
 
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
         <CanonicalUrl />
-        {schemas.length > 0 && (
+        {schema && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: schemaString }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(schema),
+            }}
           />
-        )}
-        {gtmId && (
-          <Script id="google-tag-manager" strategy="afterInteractive">
-            {`
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
-            `}
-          </Script>
         )}
         <style
           dangerouslySetInnerHTML={{
@@ -245,16 +233,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className={inter.className}>
-        {gtmId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-            />
-          </noscript>
-        )}
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
