@@ -228,6 +228,31 @@ export interface UseCasesSection {
   isVisible: boolean;
 }
 
+export interface LeadMagnet {
+  title: string;
+  description: any; // Rich text
+  image: ContentfulAsset;
+  imagePosition?: "right" | "left";
+  imageFit?: "Ajustar" | "Rellenar" | "Expandir";
+  features?: string[];
+  ctaText: string;
+}
+
+export interface LeadMagnetSection {
+  title: string;
+  subtitle: string;
+  leadMagnets: ContentfulEntry<LeadMagnet>[];
+  titleModal: string;
+  subtitleModal: string;
+  ctaTextModal: string;
+  fieldsToCapture: string[];
+  submitEndpoint: string;
+  confirmationTitle: string;
+  confirmationMessage: string;
+  backgroundColor?: string;
+  isVisible: boolean;
+}
+
 export interface FAQ {
   question?: string;
   answer?: string;

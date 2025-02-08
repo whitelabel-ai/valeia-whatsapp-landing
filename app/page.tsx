@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero";
+import { LeadMagnetSection } from "@/components/LeadMagnet";
 import { Partners } from "@/components/Partners";
 import { Process } from "@/components/Features";
 import { Pricing } from "@/components/pricing";
@@ -120,6 +121,10 @@ export default async function Home() {
           );
         case "heroSection":
           return <Hero key={sectionKey} content={sectionContent} />;
+        case "leadMagnetSection":
+          return (
+            <LeadMagnetSection key={sectionKey} content={sectionContent} />
+          );
         case "partnersSection":
           return <Partners key={sectionKey} content={sectionContent} />;
         case "processSection":

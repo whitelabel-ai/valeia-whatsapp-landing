@@ -696,3 +696,112 @@ Fields:
 - "Preview" (Media - Image)
   - Optional
   - **Help text**: "Vista previa del tema personalizado para referencia"
+
+# 📢 Lead Magnet Section
+
+**Content Type ID:** `leadMagnetSection` **Nombre para mostrar:** "Lead Magnet Section" **Descripción:** Sección para captura de leads con un recurso descargable destacado.
+
+Fields:
+
+- "Title" (Short text)
+
+  - Required
+  - **Help text**: "Título principal que destaca el valor del recurso"
+
+- "Subtitle" (Long text)
+
+  - Required
+  - **Help text**: "Subtítulo que explica el beneficio principal del recurso"
+
+- "Lead Magnet" (Reference - Single Lead Magnet)
+
+  - Required
+  - **Help text**: "Recurso descargable a ofrecer"
+
+- "Title Modal" (Short text)
+
+  - Required
+  - **Help text**: "Título del formulario de descarga"
+
+- "Subtitle Modal" (Long text)
+
+  - Required
+  - **Help text**: "Texto explicativo del formulario"
+
+- "Cta Text Modal" (Short text)
+
+  - Required
+  - Default: "Descargar ahora"
+  - **Help text**: "Texto del botón de envío"
+
+- "Fields To Capture" (Short text - List)
+
+  - Required
+  - Validations: [nombre, email, teléfono, empresa, cargo, país]
+  - **Help text**: "Campos del formulario. 'email' siempre incluido"
+
+- "Submit Endpoint" (Short text)
+
+  - Required
+  - Pattern: ^https?://.\*$
+  - **Help text**: "URL para envío del formulario (POST)"
+
+- "Confirmation Title" (Short text)
+
+  - Required
+  - Default: "¡Gracias!"
+  - **Help text**: "Título del mensaje de confirmación"
+
+- "Confirmation Message" (Long text)
+
+  - Required
+  - **Help text**: "Mensaje mostrado tras enviar el formulario"
+
+- "Background Color" (Short text)
+
+  - Optional
+  - Pattern: ^#([A-Fa-f0-9]{6})?$
+  - **Help text**: "Color de fondo en formato HEX (#RRGGBB)"
+
+- "Is Visible" (Boolean)
+  - Required
+  - Default: true
+  - **Help text**: "Controla la visibilidad de la sección"
+
+# 📢 Lead Magnet
+
+**Content Type ID:** `leadMagnet` **Nombre para mostrar:** "Lead Magnet" **Descripción:** Recurso descargable con sus características y beneficios.
+
+Fields:
+
+- "Title" (Short text)
+
+  - Required
+  - **Help text**: "Título del recurso"
+
+- "Description" (Rich text)
+
+  - Required
+  - **Help text**: "Descripción detallada del recurso"
+
+- "Image" (Media - Image)
+
+  - Required
+  - **Help text**: "Imagen del recurso. Recomendado: 800x600px"
+
+- "Image Position" (Short text)
+
+  - Optional
+  - Default: "right"
+  - Validations: [right, left]
+  - **Help text**: "Posición de la imagen respecto al texto"
+
+- "Features" (Short text - List)
+
+  - Optional
+  - **Help text**: "Lista de características o beneficios clave del recurso"
+
+- "Cta Text" (Short text)
+  - Required
+  - Default: "Descargar ahora"
+  - **Help text**: "Texto del botón de descarga"

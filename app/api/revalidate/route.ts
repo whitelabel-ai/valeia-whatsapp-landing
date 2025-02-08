@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getNavigationPages } from "@/lib/contentful";
 
 // Helper function to get the paths to revalidate based on Contentful entry
@@ -19,15 +20,18 @@ async function getPathsToRevalidate(
       }
       break;
     case "landingPage": {
+      // Si se actualizó el tema o customTheme, revalidar todas las rutas
       const hasThemeChanges =
         payload.fields?.theme || payload.fields?.customTheme;
       if (hasThemeChanges) {
         console.log("🎨 [Webhook] Detectados cambios en el tema");
         try {
+          // Obtener todas las páginas dinámicas
           const navigationPages = await getNavigationPages();
           navigationPages.forEach((page) => {
             if (page.slug) {
               paths.push(`/${page.slug}`);
+              // Si es una página de blog, también revalidar la ruta del blog
               if (page.location === "blog") {
                 paths.push("/blog");
                 paths.push(`/blog/${page.slug}`);
@@ -48,6 +52,7 @@ async function getPathsToRevalidate(
       break;
   }
 
+  // Eliminar duplicados y filtrar rutas vacías
   return [...new Set(paths)].filter(Boolean);
 }
 
@@ -56,6 +61,23 @@ export async function POST(request: NextRequest) {
     console.log("🟢 [Webhook] Solicitud recibida");
     const rawBody = await request.text();
     console.log("📦 [Webhook] Cuerpo recibido:", rawBody);
+
+    const signature = request.headers.get("x-contentful-signature");
+    console.log("🔑 [Webhook] Firma recibida:", signature);
+
+    const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      console.error("🚨 [Webhook] Error: Dominio del webhook no configurado");
+      return NextResponse.json(
+        { message: "Secreto del webhook no configurado" },
+        { status: 500 }
+      );
+    }
+
+    if (signature !== webhookSecret) {
+      console.error("⛔ [Webhook] Error: Firma inválida");
+      return NextResponse.json({ message: "Firma inválida" }, { status: 401 });
+    }
 
     let payload;
     try {
@@ -96,30 +118,8 @@ export async function POST(request: NextRequest) {
 
     // Revalidar todas las rutas necesarias
     for (const path of pathsToRevalidate) {
-      console.log(`🔄 [Webhook] Intentando revalidar manualmente: ${path}`);
-
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/revalidate?path=${path}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-          }
-        );
-
-        if (response.ok) {
-          console.log(`✅ [Webhook] Revalidación exitosa para: ${path}`);
-        } else {
-          console.error(
-            `❌ [Webhook] Falló la revalidación para: ${path}, Status: ${response.status}`
-          );
-        }
-      } catch (error) {
-        console.error(
-          `🔥 [Webhook] Error al intentar revalidar ${path}:`,
-          error
-        );
-      }
+      revalidatePath(path);
+      console.log("✅ [Webhook] Ruta revalidada:", path);
     }
 
     return NextResponse.json(
