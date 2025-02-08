@@ -19,7 +19,7 @@ export async function generateMetadata({
   try {
     const fullSlug = params.slug.join("/");
     const landingPage = await getLandingPage(fullSlug);
-    console.log("landingPage", landingPage);
+
     if (!landingPage) {
       return {
         title: "Página en construcción",
