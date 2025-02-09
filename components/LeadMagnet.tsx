@@ -87,8 +87,8 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
     }
   };
 
-  const handleOpenModal = (leadMagnetId: string) => {
-    setSelectedLeadMagnet(leadMagnetId);
+  const handleOpenModal = (leadMagnet: string) => {
+    setSelectedLeadMagnet(leadMagnet);
     setIsModalOpen(true);
   };
 
@@ -113,21 +113,27 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
     try {
       const response = await fetch(submitEndpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // Agregamos los headers necesarios para CORS
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+          Connection: "keep-alive",
+        },
+        redirect: "follow", // Importante para sheets
+        mode: "no-cors", // Crítico para sheets
         body: JSON.stringify({
           leadMagnetId: selectedLeadMagnet,
           ...formData,
         }),
-        redirect: "follow",
-        mode: "no-cors",
       });
 
-      if (!response.ok) throw new Error("Error al enviar el formulario");
-
+      // Como estamos usando no-cors, no podemos verificar response.ok
+      // Asumimos éxito y mostramos el mensaje de confirmación
       setIsSuccess(true);
       toast({
-        title: "¡Éxito!",
-        description: "Formulario enviado correctamente",
+        title: confirmationTitle || "¡Éxito!", // Usamos el título de Contentful
+        description: confirmationMessage || "Formulario enviado correctamente", // Usamos el mensaje de Contentful
       });
     } catch (error) {
       toast({
@@ -135,6 +141,8 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
         description: "No se pudo enviar el formulario",
         variant: "destructive",
       });
+      // No cerramos el modal en caso de error
+      setIsSuccess(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -215,7 +223,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
 
         <div className="flex flex-wrap gap-4 pt-4">
           <Button
-            onClick={() => handleOpenModal(leadMagnet.sys.id)}
+            onClick={() => handleOpenModal(leadMagnet.fields.title)}
             className="w-full md:w-auto"
           >
             {leadMagnet.fields.ctaText}
