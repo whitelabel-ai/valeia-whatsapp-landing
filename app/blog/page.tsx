@@ -12,6 +12,9 @@ import { Footer } from "@/components/footer";
 import { DynamicPage } from "@/types/contentful";
 import { Metadata } from "next";
 
+// Configurar revalidación cada 24 horas
+export const revalidate = 86400; // 24 horas en segundos
+
 // Generar metadata dinámica para SEO
 export async function generateMetadata(): Promise<Metadata> {
   const recentBlogs = await getRecentBlogs(1);
@@ -27,38 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Configurar revalidación cada 24 horas
-export const revalidate = 86400; // 24 horas en segundos
-
-// Loading component
-function LoadingState() {
-  return (
-    <div className="animate-pulse">
-      <div className="h-8 bg-muted rounded w-1/4 mb-12"></div>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 space-y-8">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="card-gradient rounded-lg p-6">
-              <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
-              <div className="h-40 bg-muted rounded mb-4"></div>
-              <div className="h-4 bg-muted rounded w-1/2"></div>
-            </div>
-          ))}
-        </div>
-        <div className="lg:col-span-4">
-          <div className="card-gradient rounded-lg p-6">
-            <div className="h-6 bg-muted rounded w-1/2 mb-4"></div>
-            <div className="space-y-2">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-4 bg-muted rounded"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+// Generar la página estáticamente
+export const dynamic = "force-static";
 
 export default async function BlogPage() {
   const [blogs, categories, recentBlogs, landingPage, navigationPages] =

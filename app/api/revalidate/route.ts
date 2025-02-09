@@ -10,6 +10,7 @@ async function getAllPaths(): Promise<string[]> {
 
     // Siempre incluir la ruta principal
     paths.add("/");
+    paths.add("/blog");
 
     // Inicializar cliente de Contentful
     const client = createClient({

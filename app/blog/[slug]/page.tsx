@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import {
   getDynamicPage,
   getLandingPage,
@@ -12,8 +11,13 @@ import { Footer } from "@/components/footer";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, MARKS, INLINES } from "@contentful/rich-text-types";
 
+// Configurar revalidación cada 24 horas
 export const revalidate = 86400;
 
+// Forzar generación estática
+export const dynamic = "force-static";
+
+// Generar todas las rutas estáticamente en build time
 export async function generateStaticParams() {
   const { blogs } = await getBlogs();
   return blogs.map((blog) => ({
