@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { createClient } from "contentful";
-import { getNavigationPages } from "@/lib/contentful";
 
 // Función para obtener todas las rutas posibles del sitio
 async function getAllPaths(): Promise<string[]> {
@@ -9,9 +8,8 @@ async function getAllPaths(): Promise<string[]> {
     console.log("🔍 [Webhook] Obteniendo todas las rutas del sitio");
     const paths = new Set<string>();
 
-    // Siempre incluir la ruta principal y blog
+    // Siempre incluir la ruta principal
     paths.add("/");
-    paths.add("/blog");
 
     // Inicializar cliente de Contentful
     const client = createClient({
@@ -19,72 +17,44 @@ async function getAllPaths(): Promise<string[]> {
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
     });
 
-    // Obtener todas las páginas dinámicas de tipo blog
-    const blogPagesResponse = await client.getEntries({
-      content_type: "dynamicPage",
-      "fields.location": "blog",
-    });
-
-    console.log(
-      `📚 [Webhook] Encontradas ${blogPagesResponse.items.length} páginas de blog`
-    );
-
-    // Procesar páginas de blog
-    blogPagesResponse.items.forEach((blogPage: any) => {
-      if (blogPage.fields.isVisible && blogPage.fields.slug) {
-        paths.add(`/blog/${blogPage.fields.slug}`);
-      }
-    });
-
-    // Obtener todas las landing pages
+    // Obtener todas las landing pages con sus páginas dinámicas
     const landingPagesResponse = await client.getEntries({
       content_type: "landingPage",
-      include: 4,
+      include: 4, // Incluir referencias anidadas
     });
 
     console.log(
-      `📑 [Webhook] Encontradas ${landingPagesResponse.items.length} landing pages`
+      `📑 [Webhook] Procesando ${landingPagesResponse.items.length} landing pages`
     );
 
-    // Procesar cada landing page y sus páginas dinámicas
-    for (const landing of landingPagesResponse.items) {
-      const landingFields = landing.fields as any;
+    // Procesar cada landing page y todas sus páginas dinámicas
+    landingPagesResponse.items.forEach((landing: any) => {
+      const landingFields = landing.fields;
 
-      // Agregar ruta de la landing page
+      // Agregar la ruta de la landing page si no es la principal
       if (landingFields.slug && landingFields.slug !== "/") {
         paths.add(`/${landingFields.slug}`);
       }
 
-      // Procesar páginas dinámicas de la landing
+      // Procesar todas las páginas dinámicas de esta landing
       if (landingFields.dynamicPages) {
         landingFields.dynamicPages.forEach((page: any) => {
-          if (page.fields.isVisible) {
-            paths.add(
-              `/${landingFields.slug}/${page.fields.slug}`.replace(/\/+/g, "/")
-            );
+          const pageFields = page.fields;
+
+          // Si es una página de blog
+          if (pageFields.location === "blog") {
+            paths.add("/blog"); // Asegurar que la ruta principal del blog existe
+            paths.add(`/blog/${pageFields.slug}`);
+          }
+          // Si es una página dinámica normal
+          else if (pageFields.slug) {
+            const fullPath =
+              landingFields.slug === "/"
+                ? `/${pageFields.slug}`
+                : `/${landingFields.slug}/${pageFields.slug}`;
+            paths.add(fullPath.replace(/\/+/g, "/"));
           }
         });
-      }
-    }
-
-    // Obtener todas las páginas de navegación
-    const navigationPages = await getNavigationPages();
-    console.log(
-      `🧭 [Webhook] Encontradas ${navigationPages.length} páginas de navegación`
-    );
-
-    // Procesar páginas de navegación
-    navigationPages.forEach((page) => {
-      if (page.isVisible && page.slug) {
-        if (page.location === "blog") {
-          paths.add(`/blog/${page.slug}`);
-        } else if (page.parentLandingSlug) {
-          paths.add(
-            `/${page.parentLandingSlug}/${page.slug}`.replace(/\/+/g, "/")
-          );
-        } else {
-          paths.add(`/${page.slug}`);
-        }
       }
     });
 
@@ -92,18 +62,7 @@ async function getAllPaths(): Promise<string[]> {
     paths.add("/sitemap.xml");
     paths.add("/robots.txt");
 
-    // Revalidar rutas individuales de blog y la página principal de blog
-    if (
-      payload?.sys?.contentType?.sys?.id === "dynamicPage" &&
-      payload?.fields?.location?.["en-US"] === "blog"
-    ) {
-      paths.add("/blog");
-      if (payload?.fields?.slug?.["en-US"]) {
-        paths.add(`/blog/${payload.fields.slug["en-US"]}`);
-      }
-    }
-
-    console.log(`🎯 [Webhook] Total de rutas encontradas: ${paths.size}`);
+    console.log("🎯 [Webhook] Rutas encontradas:", Array.from(paths));
     return Array.from(paths);
   } catch (error) {
     console.error("❌ [Webhook] Error obteniendo rutas:", error);
@@ -130,7 +89,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (signature !== webhookSecret) {
-      console.error("⛔ [Webhook] Error: Firma inválida o no coincide");
+      console.error("⛔ [Webhook] Error: Firma inválida");
       return NextResponse.json({ message: "Firma inválida" }, { status: 401 });
     }
 
@@ -138,26 +97,17 @@ export async function POST(request: NextRequest) {
     try {
       payload = JSON.parse(rawBody);
     } catch (parseError) {
-      console.error(
-        "❌ [Webhook] Error: No se pudo analizar el JSON del payload",
-        parseError
-      );
+      console.error("❌ [Webhook] Error: JSON inválido", parseError);
       return NextResponse.json(
         { message: "JSON del payload inválido", error: String(parseError) },
         { status: 400 }
       );
     }
 
-    console.log(
-      "📄 [Webhook] Payload procesado:",
-      JSON.stringify(payload, null, 2)
-    );
-
-    // Obtener todas las rutas posibles
+    // Obtener y revalidar todas las rutas
     const pathsToRevalidate = await getAllPaths();
-    console.log("🛤️ [Webhook] Rutas a revalidar:", pathsToRevalidate);
+    console.log("🛤️ [Webhook] Revalidando rutas:", pathsToRevalidate);
 
-    // Revalidar todas las rutas
     for (const path of pathsToRevalidate) {
       revalidatePath(path);
       console.log("✅ [Webhook] Ruta revalidada:", path);
