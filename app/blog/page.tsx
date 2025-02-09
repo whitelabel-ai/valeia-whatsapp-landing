@@ -13,7 +13,7 @@ import { DynamicPage } from "@/types/contentful";
 import { Metadata } from "next";
 
 // Configurar revalidación cada 24 horas
-export const revalidate = 86400; // 24 horas en segundos
+export const revalidate = 60; // 24 horas en segundos
 
 // Generar metadata dinámica para SEO
 export async function generateMetadata(): Promise<Metadata> {
