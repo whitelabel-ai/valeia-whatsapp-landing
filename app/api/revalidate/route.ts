@@ -9,13 +9,31 @@ async function getAllPaths(): Promise<string[]> {
     console.log("🔍 [Webhook] Obteniendo todas las rutas del sitio");
     const paths = new Set<string>();
 
-    // Siempre incluir la ruta principal
+    // Siempre incluir la ruta principal y blog
     paths.add("/");
+    paths.add("/blog");
 
     // Inicializar cliente de Contentful
     const client = createClient({
       space: process.env.CONTENTFUL_SPACE_ID!,
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
+    });
+
+    // Obtener todas las páginas dinámicas de tipo blog
+    const blogPagesResponse = await client.getEntries({
+      content_type: "dynamicPage",
+      "fields.location": "blog",
+    });
+
+    console.log(
+      `📚 [Webhook] Encontradas ${blogPagesResponse.items.length} páginas de blog`
+    );
+
+    // Procesar páginas de blog
+    blogPagesResponse.items.forEach((blogPage: any) => {
+      if (blogPage.fields.isVisible && blogPage.fields.slug) {
+        paths.add(`/blog/${blogPage.fields.slug}`);
+      }
     });
 
     // Obtener todas las landing pages
@@ -59,7 +77,6 @@ async function getAllPaths(): Promise<string[]> {
     navigationPages.forEach((page) => {
       if (page.isVisible && page.slug) {
         if (page.location === "blog") {
-          paths.add("/blog");
           paths.add(`/blog/${page.slug}`);
         } else if (page.parentLandingSlug) {
           paths.add(
@@ -72,9 +89,19 @@ async function getAllPaths(): Promise<string[]> {
     });
 
     // Agregar rutas especiales
-    paths.add("/blog");
     paths.add("/sitemap.xml");
     paths.add("/robots.txt");
+
+    // Revalidar rutas individuales de blog y la página principal de blog
+    if (
+      payload?.sys?.contentType?.sys?.id === "dynamicPage" &&
+      payload?.fields?.location?.["en-US"] === "blog"
+    ) {
+      paths.add("/blog");
+      if (payload?.fields?.slug?.["en-US"]) {
+        paths.add(`/blog/${payload.fields.slug["en-US"]}`);
+      }
+    }
 
     console.log(`🎯 [Webhook] Total de rutas encontradas: ${paths.size}`);
     return Array.from(paths);
