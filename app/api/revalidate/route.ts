@@ -28,19 +28,20 @@ async function getAllPaths(landingSlug?: string): Promise<string[]> {
 
         // Agregar páginas dinámicas de esta landing
         if (landing.dynamicPages) {
-          landing.dynamicPages.forEach((page: any) => {
-            const pageFields = page.fields;
-            if (pageFields.location === "blog") {
-              paths.add("/blog");
-              paths.add(`/blog/${pageFields.slug}`);
-            } else {
-              const fullPath =
-                landingSlug === "/"
-                  ? `/${pageFields.slug}`
-                  : `/${landingSlug}/${pageFields.slug}`;
-              paths.add(fullPath.replace(/\/+/g, "/"));
-            }
-          });
+          Array.isArray(landing.dynamicPages) &&
+            landing.dynamicPages.forEach((page: any) => {
+              const pageFields = page.fields;
+              if (pageFields.location === "blog") {
+                paths.add("/blog");
+                paths.add(`/blog/${pageFields.slug}`);
+              } else {
+                const fullPath =
+                  landingSlug === "/"
+                    ? `/${pageFields.slug}`
+                    : `/${landingSlug}/${pageFields.slug}`;
+                paths.add(fullPath.replace(/\/+/g, "/"));
+              }
+            });
         }
 
         // Si es la landing principal ("/"), también revalidar el blog
