@@ -140,6 +140,7 @@ export async function getDynamicPage(
     const response = await client.getEntries({
       content_type: "dynamicPage",
       "fields.slug": slug,
+      "fields.location[ne]": "blog", // Añadimos esta línea para excluir blogs
       limit: 1,
       include: 4,
     });
