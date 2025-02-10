@@ -120,7 +120,23 @@ export async function getDynamicPage(
   }
 
   try {
-    // First try to find the page in the parent landing page
+    // Si estamos en la ruta /blog/[slug], buscamos específicamente blogs
+    if (parentSlug === "blog") {
+      const response = await client.getEntries({
+        content_type: "dynamicPage",
+        "fields.slug": slug,
+        "fields.location": "blog",
+        limit: 1,
+        include: 4,
+      });
+
+      if (response.items.length > 0) {
+        return response.items[0].fields as unknown as DynamicPage;
+      }
+      return null;
+    }
+
+    // Para otras rutas, mantenemos la exclusión de blogs
     if (parentSlug) {
       const parentLanding = await getLandingPage(parentSlug);
       if (parentLanding?.dynamicPages) {
@@ -136,11 +152,11 @@ export async function getDynamicPage(
       }
     }
 
-    // If not found in parent landing or no parent specified, look for global pages
+    // Búsqueda global excluyendo blogs
     const response = await client.getEntries({
       content_type: "dynamicPage",
       "fields.slug": slug,
-      "fields.location[ne]": "blog", // Añadimos esta línea para excluir blogs
+      "fields.location[ne]": "blog",
       limit: 1,
       include: 4,
     });
@@ -210,34 +226,28 @@ export async function getNavigationPages(): Promise<DynamicPage[]> {
     throw error;
   }
 }
+
 export async function getBlogs(
   page: number = 1,
   limit: number = 6
 ): Promise<{ blogs: DynamicPage[]; total: number }> {
   try {
-    const landingPage = await getLandingPage("/");
+    const response = await client?.getEntries({
+      content_type: "dynamicPage",
+      "fields.location": "blog",
+      "fields.isVisible": true,
+      limit,
+      skip: (page - 1) * limit,
+      include: 2,
+    });
 
-    if (!landingPage?.dynamicPages) {
-      return { blogs: [], total: 0 };
-    }
-
-    const allBlogs = landingPage.dynamicPages
-      .filter(
-        (page) => page.fields.location === "blog" && page.fields.isVisible
-      )
-      .map((page) => ({
-        ...page.fields,
-        parentLandingSlug: landingPage.slug,
-      })) as DynamicPage[];
-
-    // Aplicar paginación manualmente
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedBlogs = allBlogs.slice(startIndex, endIndex);
+    const blogs = response?.items.map((item) => ({
+      ...item.fields,
+    })) as unknown as DynamicPage[];
 
     return {
-      blogs: paginatedBlogs,
-      total: allBlogs.length,
+      blogs,
+      total: response?.total || 0,
     };
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -249,21 +259,17 @@ export async function getRecentBlogs(
   limit: number = 3
 ): Promise<DynamicPage[]> {
   try {
-    const landingPage = await getLandingPage("/");
+    const response = await client?.getEntries({
+      content_type: "dynamicPage",
+      "fields.location": "blog",
+      "fields.isVisible": true,
+      limit,
+      include: 2,
+    });
 
-    if (!landingPage?.dynamicPages) {
-      return [];
-    }
-
-    return landingPage.dynamicPages
-      .filter(
-        (page) => page.fields.location === "blog" && page.fields.isVisible
-      )
-      .map((page) => ({
-        ...page.fields,
-        parentLandingSlug: landingPage.slug,
-      }))
-      .slice(0, limit) as DynamicPage[];
+    return response?.items.map((item) => ({
+      ...item.fields,
+    })) as unknown as DynamicPage[];
   } catch (error) {
     console.error("Error fetching recent blogs:", error);
     return [];
@@ -272,20 +278,16 @@ export async function getRecentBlogs(
 
 export async function getBlogCategories(): Promise<string[]> {
   try {
-    const landingPage = await getLandingPage("/");
+    const response = await client?.getEntries({
+      content_type: "dynamicPage",
+      "fields.location": "blog",
+      "fields.isVisible": true,
+    });
 
-    if (!landingPage?.dynamicPages) {
-      return [];
-    }
-
-    const allTags = landingPage.dynamicPages
-      .filter(
-        (page) => page.fields.location === "blog" && page.fields.isVisible
-      )
-      .reduce((tags: string[], page) => {
-        const pageTags = page.fields.tags || [];
-        return [...tags, ...pageTags];
-      }, []);
+    const allTags = response?.items.reduce((tags: string[], item: any) => {
+      const itemTags = item.fields.tags || [];
+      return [...tags, ...itemTags];
+    }, []);
 
     return Array.from(new Set(allTags));
   } catch (error) {
