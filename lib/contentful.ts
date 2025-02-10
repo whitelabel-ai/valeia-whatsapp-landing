@@ -125,7 +125,7 @@ export async function getDynamicPage(
       const parentLanding = await getLandingPage(parentSlug);
       if (parentLanding?.dynamicPages) {
         const dynamicPage = parentLanding.dynamicPages.find(
-          (page) => page.fields.slug === slug
+          (page) => page.fields.slug === slug && page.fields.location !== "blog"
         );
         if (dynamicPage) {
           return {
