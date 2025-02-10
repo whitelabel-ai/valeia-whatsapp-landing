@@ -1,60 +1,87 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
+import { createClient } from "contentful";
 import { getNavigationPages } from "@/lib/contentful";
 
-// Helper function to get the paths to revalidate based on Contentful entry
-async function getPathsToRevalidate(
-  contentType: string,
-  slug: string | undefined,
-  payload: any
-): Promise<string[]> {
-  const paths: string[] = [];
+// Función para obtener todas las rutas posibles del sitio
+async function getAllPaths(): Promise<string[]> {
+  try {
+    console.log("🔍 [Webhook] Obteniendo todas las rutas del sitio");
+    const paths = new Set<string>();
 
-  // Siempre revalidar la página principal
-  paths.push("/");
-  paths.push("/blog");
+    // Siempre incluir la ruta principal
+    paths.add("/");
 
-  switch (contentType) {
-    case "dynamicPage":
-      if (slug) {
-        paths.push(`/${slug}`);
+    // Inicializar cliente de Contentful
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID!,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
+    });
+
+    // Obtener todas las landing pages
+    const landingPagesResponse = await client.getEntries({
+      content_type: "landingPage",
+      include: 4,
+    });
+
+    console.log(
+      `📑 [Webhook] Encontradas ${landingPagesResponse.items.length} landing pages`
+    );
+
+    // Procesar cada landing page y sus páginas dinámicas
+    for (const landing of landingPagesResponse.items) {
+      const landingFields = landing.fields as any;
+
+      // Agregar ruta de la landing page
+      if (landingFields.slug && landingFields.slug !== "/") {
+        paths.add(`/${landingFields.slug}`);
       }
-      break;
-    case "landingPage": {
-      // Si se actualizó el tema o customTheme, revalidar todas las rutas
-      const hasThemeChanges =
-        payload.fields?.theme || payload.fields?.customTheme;
-      if (hasThemeChanges) {
-        console.log("🎨 [Webhook] Detectados cambios en el tema");
-        try {
-          // Obtener todas las páginas dinámicas
-          const navigationPages = await getNavigationPages();
-          navigationPages.forEach((page) => {
-            if (page.slug) {
-              paths.push(`/${page.slug}`);
-              // Si es una página de blog, también revalidar la ruta del blog
-              if (page.location === "blog") {
-                paths.push("/blog");
-                paths.push(`/blog/${page.slug}`);
-              }
-            }
-          });
-        } catch (error) {
-          console.error("❌ [Webhook] Error obteniendo páginas:", error);
+
+      // Procesar páginas dinámicas de la landing
+      if (landingFields.dynamicPages) {
+        landingFields.dynamicPages.forEach((page: any) => {
+          if (page.fields.isVisible) {
+            paths.add(
+              `/${landingFields.slug}/${page.fields.slug}`.replace(/\/+/g, "/")
+            );
+          }
+        });
+      }
+    }
+
+    // Obtener todas las páginas de navegación
+    const navigationPages = await getNavigationPages();
+    console.log(
+      `🧭 [Webhook] Encontradas ${navigationPages.length} páginas de navegación`
+    );
+
+    // Procesar páginas de navegación
+    navigationPages.forEach((page) => {
+      if (page.isVisible && page.slug) {
+        if (page.location === "blog") {
+          paths.add("/blog");
+          paths.add(`/blog/${page.slug}`);
+        } else if (page.parentLandingSlug) {
+          paths.add(
+            `/${page.parentLandingSlug}/${page.slug}`.replace(/\/+/g, "/")
+          );
+        } else {
+          paths.add(`/${page.slug}`);
         }
       }
-      break;
-    }
-    case "blogPost":
-      if (slug) {
-        paths.push(`/blog/${slug}`);
-        paths.push("/blog");
-      }
-      break;
-  }
+    });
 
-  // Eliminar duplicados y filtrar rutas vacías
-  return [...new Set(paths)].filter(Boolean);
+    // Agregar rutas especiales
+    paths.add("/blog");
+    paths.add("/sitemap.xml");
+    paths.add("/robots.txt");
+
+    console.log(`🎯 [Webhook] Total de rutas encontradas: ${paths.size}`);
+    return Array.from(paths);
+  } catch (error) {
+    console.error("❌ [Webhook] Error obteniendo rutas:", error);
+    return ["/"];
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -68,7 +95,7 @@ export async function POST(request: NextRequest) {
 
     const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET;
     if (!webhookSecret) {
-      console.error("🚨 [Webhook] Error: Dominio del webhook no configurado");
+      console.error("🚨 [Webhook] Error: Secreto del webhook no configurado");
       return NextResponse.json(
         { message: "Secreto del webhook no configurado" },
         { status: 500 }
@@ -76,7 +103,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (signature !== webhookSecret) {
-      console.error("⛔ [Webhook] Error: Firma inválida");
+      console.error("⛔ [Webhook] Error: Firma inválida o no coincide");
       return NextResponse.json({ message: "Firma inválida" }, { status: 401 });
     }
 
@@ -99,25 +126,11 @@ export async function POST(request: NextRequest) {
       JSON.stringify(payload, null, 2)
     );
 
-    const contentType = payload.sys?.contentType?.sys?.id;
-    const slug = payload.fields?.slug?.[payload.sys?.locale || "en-US"];
-
-    if (!contentType) {
-      console.error("⚠️ [Webhook] Error: Falta contentType en el payload");
-      return NextResponse.json(
-        { message: "Falta contentType en el payload" },
-        { status: 400 }
-      );
-    }
-
-    const pathsToRevalidate = await getPathsToRevalidate(
-      contentType,
-      slug,
-      payload
-    );
+    // Obtener todas las rutas posibles
+    const pathsToRevalidate = await getAllPaths();
     console.log("🛤️ [Webhook] Rutas a revalidar:", pathsToRevalidate);
 
-    // Revalidar todas las rutas necesarias
+    // Revalidar todas las rutas
     for (const path of pathsToRevalidate) {
       revalidatePath(path);
       console.log("✅ [Webhook] Ruta revalidada:", path);

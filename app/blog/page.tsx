@@ -12,7 +12,7 @@ import { Footer } from "@/components/footer";
 import { DynamicPage } from "@/types/contentful";
 import { Metadata } from "next";
 
-export const revalidate = 120;
+export const revalidate = 60;
 
 // Generar metadata dinámica para SEO
 export async function generateMetadata(): Promise<Metadata> {
