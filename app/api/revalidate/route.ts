@@ -106,30 +106,6 @@ async function getAllPaths(landingSlug?: string): Promise<string[]> {
   }
 }
 
-async function revalidateWithRetry(path: string, retries = 3, delay = 2000) {
-  for (let i = 0; i < retries; i++) {
-    try {
-      console.log(`🔄 [Webhook] Intento ${i + 1} de revalidación para ${path}`);
-      revalidatePath(path);
-
-      // Esperar antes del siguiente intento
-      await new Promise((resolve) => setTimeout(resolve, delay));
-
-      // Revalidar de nuevo para asegurar
-      revalidatePath(path);
-      console.log(`✅ [Webhook] Revalidación exitosa para ${path}`);
-      return;
-    } catch (error) {
-      console.error(
-        `❌ [Webhook] Error en intento ${i + 1} para ${path}:`,
-        error
-      );
-      if (i === retries - 1) throw error;
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
     console.log("🟢 [Webhook] Solicitud recibida");
@@ -168,39 +144,34 @@ export async function POST(request: NextRequest) {
     const landingSlug = payload?.fields?.slug?.["en-US"] || undefined;
     const contentType = payload?.sys?.contentType?.sys?.id;
 
-    // Si es una entrada de blog o un cambio en la landing principal, forzar revalidación completa
-    const forceFullRevalidation =
-      contentType === "dynamicPage" ||
-      landingSlug === "/" ||
-      payload?.fields?.theme ||
-      payload?.fields?.customTheme;
+    // Si es una entrada de blog, forzar la revalidación de /blog
+    if (
+      contentType === "dynamicPage" &&
+      payload?.fields?.location?.["en-US"] === "blog"
+    ) {
+      console.log("📝 [Webhook] Detectada actualización de blog");
+    }
 
     // Obtener y revalidar las rutas afectadas
-    const pathsToRevalidate = await getAllPaths(
-      forceFullRevalidation ? undefined : landingSlug
-    );
+    const pathsToRevalidate = await getAllPaths(landingSlug);
     console.log("🛤️ [Webhook] Revalidando rutas:", pathsToRevalidate);
 
-    // Revalidar rutas principales primero
-    const priorityPaths = ["/", "/blog"];
-    const remainingPaths = pathsToRevalidate.filter(
-      (path) => !priorityPaths.includes(path)
-    );
-
-    // Revalidar rutas principales con múltiples intentos
-    for (const path of priorityPaths) {
-      await revalidateWithRetry(path, 3, 2000);
+    // Revalidar cada ruta dos veces para asegurar la actualización
+    for (const path of pathsToRevalidate) {
+      revalidatePath(path);
+      // Segunda revalidación después de un breve retraso
+      setTimeout(() => {
+        revalidatePath(path);
+      }, 4000);
+      console.log("✅ [Webhook] Ruta revalidada:", path);
     }
-
-    // Revalidar el resto de rutas
-    for (const path of remainingPaths) {
-      await revalidateWithRetry(path, 2, 1000);
+    // Si la landing modificada es la principal, revalidar /blog después de 5 segundos
+    if (landingSlug === "/") {
+      setTimeout(() => {
+        revalidatePath("/blog");
+        console.log("🔄 [Webhook] Segunda revalidación de /blog ejecutada");
+      }, 6000);
     }
-
-    // Revalidación final después de un delay
-    setTimeout(() => {
-      priorityPaths.forEach((path) => revalidatePath(path));
-    }, 5000);
 
     return NextResponse.json(
       {
