@@ -17,8 +17,7 @@ import {
 } from "@/lib/contentful";
 import { Metadata } from "next";
 
-export const revalidate = 300;
-
+export const revalidate = 120;
 export async function generateMetadata(): Promise<Metadata> {
   const connectionStatus = await checkContentfulConnection();
 

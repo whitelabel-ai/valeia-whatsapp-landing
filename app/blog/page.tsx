@@ -12,8 +12,7 @@ import { Footer } from "@/components/footer";
 import { DynamicPage } from "@/types/contentful";
 import { Metadata } from "next";
 
-// Configurar revalidación cada 24 horas
-export const revalidate = 60; // 24 horas en segundos
+export const revalidate = 60;
 
 // Generar metadata dinámica para SEO
 export async function generateMetadata(): Promise<Metadata> {

@@ -14,9 +14,6 @@ import { BLOCKS, MARKS, INLINES } from "@contentful/rich-text-types";
 // Configurar revalidación cada 24 horas
 export const revalidate = 86400;
 
-// Forzar generación estática
-export const dynamic = "force-static";
-
 // Generar todas las rutas estáticamente en build time
 export async function generateStaticParams() {
   const { blogs } = await getBlogs();

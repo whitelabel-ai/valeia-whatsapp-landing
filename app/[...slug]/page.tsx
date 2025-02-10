@@ -19,7 +19,7 @@ import { Benefits } from "@/components/benefits";
 import { Faq } from "@/components/faq";
 import { LeadMagnetSection } from "@/components/LeadMagnet";
 
-export const revalidate = 86400;
+export const revalidate = 120;
 
 export default async function DynamicPage({
   params,

@@ -1,51 +1,6 @@
 import { createClient } from "contentful";
 import { DynamicPage, LandingPage } from "@/types/contentful";
 
-// Cache implementation
-const CACHE_DURATION = 60 * 1000; // 1 minute cache
-interface CacheEntry<T> {
-  data: T;
-  timestamp: number;
-}
-
-class ContentfulCache {
-  private cache: Map<string, CacheEntry<any>>;
-
-  constructor() {
-    this.cache = new Map();
-  }
-
-  set<T>(key: string, data: T): void {
-    this.cache.set(key, {
-      data,
-      timestamp: Date.now(),
-    });
-  }
-
-  get<T>(key: string): T | null {
-    const entry = this.cache.get(key);
-    if (!entry) return null;
-
-    const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
-    if (isExpired) {
-      this.cache.delete(key);
-      return null;
-    }
-
-    return entry.data as T;
-  }
-
-  clear(): void {
-    this.cache.clear();
-  }
-
-  invalidate(key: string): void {
-    this.cache.delete(key);
-  }
-}
-
-const cache = new ContentfulCache();
-
 let client: ReturnType<typeof createClient> | null = null;
 
 // Validar credenciales de Contentful
@@ -123,20 +78,10 @@ export async function getLandingPage(
     );
   }
 
-  // Normalize slug to always start with "/"
-  const normalizedSlug = slug.startsWith("/") ? slug : `/${slug}`;
-  const cacheKey = `landing_${normalizedSlug}`;
-
-  // Check cache first
-  const cachedData = cache.get<LandingPage>(cacheKey);
-  if (cachedData) {
-    return cachedData;
-  }
-
   try {
     const response = await client.getEntries({
       content_type: "landingPage",
-      "fields.slug": normalizedSlug === "/" ? "/" : normalizedSlug.slice(1),
+      "fields.slug": slug,
       limit: 1,
       include: 4,
     });
@@ -144,10 +89,9 @@ export async function getLandingPage(
     if (response.items.length === 0) {
       return null;
     }
-
     const landingPage = response.items[0].fields as unknown as LandingPage;
 
-    // Process dynamic pages
+    // Add parentLandingSlug to dynamic pages if they exist
     if (landingPage.dynamicPages) {
       landingPage.dynamicPages = landingPage.dynamicPages.map((page) => ({
         ...page,
@@ -158,8 +102,6 @@ export async function getLandingPage(
       }));
     }
 
-    // Cache the result
-    cache.set(cacheKey, landingPage);
     return landingPage;
   } catch (error) {
     console.error("Error al obtener la landing page:", error);
@@ -177,12 +119,6 @@ export async function getDynamicPage(
     );
   }
 
-  const cacheKey = `dynamic_${parentSlug || "root"}_${slug}`;
-  const cachedData = cache.get<DynamicPage>(cacheKey);
-  if (cachedData) {
-    return cachedData;
-  }
-
   try {
     // First try to find the page in the parent landing page
     if (parentSlug) {
@@ -192,12 +128,10 @@ export async function getDynamicPage(
           (page) => page.fields.slug === slug
         );
         if (dynamicPage) {
-          const result = {
+          return {
             ...dynamicPage.fields,
             parentLandingSlug: parentLanding.slug,
           } as DynamicPage;
-          cache.set(cacheKey, result);
-          return result;
         }
       }
     }
@@ -214,23 +148,10 @@ export async function getDynamicPage(
       return null;
     }
 
-    const result = response.items[0].fields as unknown as DynamicPage;
-    cache.set(cacheKey, result);
-    return result;
+    return response.items[0].fields as unknown as DynamicPage;
   } catch (error) {
     console.error("Error fetching dynamic page:", error);
     return null;
-  }
-}
-
-// Función para invalidar el caché cuando se recibe un webhook
-export function invalidateCache(landingSlug?: string) {
-  if (landingSlug) {
-    // Invalidar solo la landing page específica y sus páginas relacionadas
-    cache.invalidate(`landing_${landingSlug}`);
-  } else {
-    // Si no se especifica slug, invalidar todo el caché
-    cache.clear();
   }
 }
 

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { createClient } from "contentful";
-import { invalidateCache } from "@/lib/contentful";
 
 async function getAllPaths(landingSlug?: string): Promise<string[]> {
   try {
@@ -138,9 +137,6 @@ export async function POST(request: NextRequest) {
 
     // Obtener el slug de la landing page que se actualizó
     const landingSlug = payload?.fields?.slug?.["en-US"] || undefined;
-
-    // Invalidar el caché para esta landing específica
-    invalidateCache(landingSlug);
 
     // Obtener y revalidar las rutas afectadas
     const pathsToRevalidate = await getAllPaths(landingSlug);
