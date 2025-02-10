@@ -13,8 +13,26 @@ async function getAllPaths(landingSlug?: string): Promise<string[]> {
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
     });
 
+    // Siempre revalidar la ruta principal y el blog
+    paths.add("/");
+    paths.add("/blog");
+
+    // Obtener todas las entradas de blog
+    const blogResponse = await client.getEntries({
+      content_type: "dynamicPage",
+      "fields.location": "blog",
+      limit: 1000,
+    });
+
+    // Agregar todas las rutas de blog
+    blogResponse.items.forEach((blog: any) => {
+      if (blog.fields.slug) {
+        paths.add(`/blog/${blog.fields.slug}`);
+      }
+    });
+
     if (landingSlug) {
-      // Si se especifica un slug, solo revalidar esa landing y sus páginas
+      // Si se especifica un slug, obtener esa landing específica
       const response = await client.getEntries({
         content_type: "landingPage",
         "fields.slug": landingSlug === "/" ? "/" : landingSlug,
@@ -42,49 +60,36 @@ async function getAllPaths(landingSlug?: string): Promise<string[]> {
               }
             });
         }
-
-        // Si es la landing principal ("/"), también revalidar el blog
-        if (landingSlug === "/") {
-          paths.add("/blog");
-          // Obtener y agregar todas las rutas de blog
-          const blogResponse = await client.getEntries({
-            content_type: "dynamicPage",
-            "fields.location": "blog",
-          });
-          blogResponse.items.forEach((blog: any) => {
-            paths.add(`/blog/${blog.fields.slug}`);
-          });
-        }
       }
     } else {
-      // Si no se especifica slug, revalidar todo
-      paths.add("/");
-      paths.add("/blog");
-
+      // Si no se especifica slug, obtener todas las landings
       const landingPagesResponse = await client.getEntries({
         content_type: "landingPage",
         include: 4,
+        limit: 1000,
       });
 
       landingPagesResponse.items.forEach((landing: any) => {
         const landingFields = landing.fields;
-        if (landingFields.slug !== "/") {
-          paths.add(`/${landingFields.slug}`);
-        }
+        if (landingFields.slug) {
+          paths.add(
+            landingFields.slug === "/" ? "/" : `/${landingFields.slug}`
+          );
 
-        if (landingFields.dynamicPages) {
-          landingFields.dynamicPages.forEach((page: any) => {
-            const pageFields = page.fields;
-            if (pageFields.location === "blog") {
-              paths.add(`/blog/${pageFields.slug}`);
-            } else {
-              const fullPath =
-                landingFields.slug === "/"
-                  ? `/${pageFields.slug}`
-                  : `/${landingFields.slug}/${pageFields.slug}`;
-              paths.add(fullPath.replace(/\/+/g, "/"));
-            }
-          });
+          if (landingFields.dynamicPages) {
+            landingFields.dynamicPages.forEach((page: any) => {
+              const pageFields = page.fields;
+              if (pageFields.location === "blog") {
+                paths.add(`/blog/${pageFields.slug}`);
+              } else {
+                const fullPath =
+                  landingFields.slug === "/"
+                    ? `/${pageFields.slug}`
+                    : `/${landingFields.slug}/${pageFields.slug}`;
+                paths.add(fullPath.replace(/\/+/g, "/"));
+              }
+            });
+          }
         }
       });
     }
@@ -97,7 +102,7 @@ async function getAllPaths(landingSlug?: string): Promise<string[]> {
     return Array.from(paths);
   } catch (error) {
     console.error("❌ [Webhook] Error obteniendo rutas:", error);
-    return ["/"];
+    return ["/", "/blog"];
   }
 }
 
@@ -137,13 +142,27 @@ export async function POST(request: NextRequest) {
 
     // Obtener el slug de la landing page que se actualizó
     const landingSlug = payload?.fields?.slug?.["en-US"] || undefined;
+    const contentType = payload?.sys?.contentType?.sys?.id;
+
+    // Si es una entrada de blog, forzar la revalidación de /blog
+    if (
+      contentType === "dynamicPage" &&
+      payload?.fields?.location?.["en-US"] === "blog"
+    ) {
+      console.log("📝 [Webhook] Detectada actualización de blog");
+    }
 
     // Obtener y revalidar las rutas afectadas
     const pathsToRevalidate = await getAllPaths(landingSlug);
     console.log("🛤️ [Webhook] Revalidando rutas:", pathsToRevalidate);
 
+    // Revalidar cada ruta dos veces para asegurar la actualización
     for (const path of pathsToRevalidate) {
       revalidatePath(path);
+      // Segunda revalidación después de un breve retraso
+      setTimeout(() => {
+        revalidatePath(path);
+      }, 5000);
       console.log("✅ [Webhook] Ruta revalidada:", path);
     }
 
