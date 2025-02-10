@@ -78,10 +78,13 @@ export async function getLandingPage(
     );
   }
 
+  // Normalize slug to always start with "/"
+  const normalizedSlug = slug.startsWith("/") ? slug : `/${slug}`;
+
   try {
     const response = await client.getEntries({
       content_type: "landingPage",
-      "fields.slug": slug,
+      "fields.slug": normalizedSlug === "/" ? "/" : normalizedSlug.slice(1),
       limit: 1,
       include: 4,
     });
@@ -89,9 +92,10 @@ export async function getLandingPage(
     if (response.items.length === 0) {
       return null;
     }
+
     const landingPage = response.items[0].fields as unknown as LandingPage;
 
-    // Add parentLandingSlug to dynamic pages if they exist
+    // Process dynamic pages
     if (landingPage.dynamicPages) {
       landingPage.dynamicPages = landingPage.dynamicPages.map((page) => ({
         ...page,
@@ -202,7 +206,6 @@ export async function getNavigationPages(): Promise<DynamicPage[]> {
       }
     });
 
-    // Return combined pages
     return [...landingPageDynamicPages];
   } catch (error) {
     console.error("Error al obtener las páginas de navegación:", error);
