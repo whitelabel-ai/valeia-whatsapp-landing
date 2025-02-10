@@ -1,59 +1,74 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { getNavigationPages } from "@/lib/contentful";
+import { createClient } from "contentful";
 
-// Helper function to get the paths to revalidate based on Contentful entry
-async function getPathsToRevalidate(
-  contentType: string,
-  slug: string | undefined,
-  payload: any
-): Promise<string[]> {
-  const paths: string[] = [];
+// Función para obtener todas las rutas posibles del sitio
+async function getAllPaths(): Promise<string[]> {
+  try {
+    console.log("🔍 [Webhook] Obteniendo todas las rutas del sitio");
+    const paths = new Set<string>();
 
-  // Siempre revalidar la página principal
-  paths.push("/");
+    // Siempre incluir la ruta principal
+    paths.add("/");
+    paths.add("/blog");
 
-  switch (contentType) {
-    case "dynamicPage":
-      if (slug) {
-        paths.push(`/${slug}`);
+    // Inicializar cliente de Contentful
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID!,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
+    });
+
+    // Obtener todas las landing pages con sus páginas dinámicas
+    const landingPagesResponse = await client.getEntries({
+      content_type: "landingPage",
+      include: 4, // Incluir referencias anidadas
+    });
+
+    console.log(
+      `📑 [Webhook] Procesando ${landingPagesResponse.items.length} landing pages`
+    );
+
+    // Procesar cada landing page y todas sus páginas dinámicas
+    landingPagesResponse.items.forEach((landing: any) => {
+      const landingFields = landing.fields;
+
+      // Agregar la ruta de la landing page si no es la principal
+      if (landingFields.slug && landingFields.slug !== "/") {
+        paths.add(`/${landingFields.slug}`);
       }
-      break;
-    case "landingPage": {
-      // Si se actualizó el tema o customTheme, revalidar todas las rutas
-      const hasThemeChanges =
-        payload.fields?.theme || payload.fields?.customTheme;
-      if (hasThemeChanges) {
-        console.log("🎨 [Webhook] Detectados cambios en el tema");
-        try {
-          // Obtener todas las páginas dinámicas
-          const navigationPages = await getNavigationPages();
-          navigationPages.forEach((page) => {
-            if (page.slug) {
-              paths.push(`/${page.slug}`);
-              // Si es una página de blog, también revalidar la ruta del blog
-              if (page.location === "blog") {
-                paths.push("/blog");
-                paths.push(`/blog/${page.slug}`);
-              }
-            }
-          });
-        } catch (error) {
-          console.error("❌ [Webhook] Error obteniendo páginas:", error);
-        }
+
+      // Procesar todas las páginas dinámicas de esta landing
+      if (landingFields.dynamicPages) {
+        landingFields.dynamicPages.forEach((page: any) => {
+          const pageFields = page.fields;
+
+          // Si es una página de blog, siempre usar el prefijo /blog/
+          if (pageFields.location === "blog") {
+            paths.add("/blog"); // Asegurar que la ruta principal del blog existe
+            paths.add(`/blog/${pageFields.slug}`);
+          }
+          // Si es una página dinámica normal (no blog)
+          else if (pageFields.slug) {
+            const fullPath =
+              landingFields.slug === "/"
+                ? `/${pageFields.slug}`
+                : `/${landingFields.slug}/${pageFields.slug}`;
+            paths.add(fullPath.replace(/\/+/g, "/"));
+          }
+        });
       }
-      break;
-    }
-    case "blogPost":
-      if (slug) {
-        paths.push(`/blog/${slug}`);
-        paths.push("/blog");
-      }
-      break;
+    });
+
+    // Agregar rutas especiales
+    paths.add("/sitemap.xml");
+    paths.add("/robots.txt");
+
+    console.log("🎯 [Webhook] Rutas encontradas:", Array.from(paths));
+    return Array.from(paths);
+  } catch (error) {
+    console.error("❌ [Webhook] Error obteniendo rutas:", error);
+    return ["/"];
   }
-
-  // Eliminar duplicados y filtrar rutas vacías
-  return [...new Set(paths)].filter(Boolean);
 }
 
 export async function POST(request: NextRequest) {
@@ -67,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET;
     if (!webhookSecret) {
-      console.error("🚨 [Webhook] Error: Dominio del webhook no configurado");
+      console.error("🚨 [Webhook] Error: Secreto del webhook no configurado");
       return NextResponse.json(
         { message: "Secreto del webhook no configurado" },
         { status: 500 }
@@ -83,49 +98,51 @@ export async function POST(request: NextRequest) {
     try {
       payload = JSON.parse(rawBody);
     } catch (parseError) {
-      console.error(
-        "❌ [Webhook] Error: No se pudo analizar el JSON del payload",
-        parseError
-      );
+      console.error("❌ [Webhook] Error: JSON inválido", parseError);
       return NextResponse.json(
         { message: "JSON del payload inválido", error: String(parseError) },
         { status: 400 }
       );
     }
 
-    console.log(
-      "📄 [Webhook] Payload procesado:",
-      JSON.stringify(payload, null, 2)
-    );
+    // Obtener y revalidar todas las rutas
+    const pathsToRevalidate = await getAllPaths();
+    console.log("🛤️ [Webhook] Revalidando rutas:", pathsToRevalidate);
 
-    const contentType = payload.sys?.contentType?.sys?.id;
-    const slug = payload.fields?.slug?.[payload.sys?.locale || "en-US"];
+    // Determinar si el cambio afecta al blog
+    const isBlogChange =
+      payload?.fields?.location?.["en-US"] === "blog" ||
+      payload?.sys?.contentType?.sys?.id === "dynamicPage";
 
-    if (!contentType) {
-      console.error("⚠️ [Webhook] Error: Falta contentType en el payload");
-      return NextResponse.json(
-        { message: "Falta contentType en el payload" },
-        { status: 400 }
-      );
-    }
+    // Revalidar rutas en orden específico
+    const revalidationOrder = [
+      "/", // Siempre revalidar la raíz primero
+      "/blog", // Luego el índice del blog
+      ...pathsToRevalidate.filter(
+        (path) =>
+          path !== "/" &&
+          path !== "/blog" &&
+          (isBlogChange
+            ? path.startsWith("/blog/")
+            : !path.startsWith("/blog/"))
+      ),
+    ];
 
-    const pathsToRevalidate = await getPathsToRevalidate(
-      contentType,
-      slug,
-      payload
-    );
-    console.log("🛤️ [Webhook] Rutas a revalidar:", pathsToRevalidate);
-
-    // Revalidar todas las rutas necesarias
-    for (const path of pathsToRevalidate) {
+    for (const path of revalidationOrder) {
       revalidatePath(path);
       console.log("✅ [Webhook] Ruta revalidada:", path);
     }
 
+    // Revalidación adicional después de un delay para asegurar consistencia
+    setTimeout(() => {
+      revalidatePath("/");
+      revalidatePath("/blog");
+    }, 2000);
+
     return NextResponse.json(
       {
         message: "Revalidación exitosa",
-        revalidated: pathsToRevalidate,
+        revalidated: revalidationOrder,
       },
       { status: 200 }
     );
