@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // Generar la página estáticamente
-export const dynamic = "force-static";
+//export const dynamic = "force-static";
 
 export default async function BlogPage() {
   const [blogs, categories, recentBlogs, landingPage, navigationPages] =

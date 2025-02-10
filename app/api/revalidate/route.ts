@@ -1,109 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { createClient } from "contentful";
+import { getNavigationPages } from "@/lib/contentful";
 
-async function getAllPaths(landingSlug?: string): Promise<string[]> {
-  try {
-    console.log("🔍 [Webhook] Obteniendo rutas para revalidar");
-    const paths = new Set<string>();
+// Helper function to get the paths to revalidate based on Contentful entry
+async function getPathsToRevalidate(
+  contentType: string,
+  slug: string | undefined,
+  payload: any
+): Promise<string[]> {
+  const paths: string[] = [];
 
-    // Inicializar cliente de Contentful
-    const client = createClient({
-      space: process.env.CONTENTFUL_SPACE_ID!,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-    });
+  // Siempre revalidar la página principal
+  paths.push("/");
+  paths.push("/blog");
 
-    // Siempre revalidar la ruta principal y el blog
-    paths.add("/");
-    paths.add("/blog");
-
-    // Obtener todas las entradas de blog
-    const blogResponse = await client.getEntries({
-      content_type: "dynamicPage",
-      "fields.location": "blog",
-      limit: 1000,
-    });
-
-    // Agregar todas las rutas de blog
-    blogResponse.items.forEach((blog: any) => {
-      if (blog.fields.slug) {
-        paths.add(`/blog/${blog.fields.slug}`);
+  switch (contentType) {
+    case "dynamicPage":
+      if (slug) {
+        paths.push(`/${slug}`);
       }
-    });
-
-    if (landingSlug) {
-      // Si se especifica un slug, obtener esa landing específica
-      const response = await client.getEntries({
-        content_type: "landingPage",
-        "fields.slug": landingSlug === "/" ? "/" : landingSlug,
-        include: 4,
-      });
-
-      if (response.items.length > 0) {
-        const landing = response.items[0].fields;
-        paths.add(landingSlug === "/" ? "/" : `/${landingSlug}`);
-
-        // Agregar páginas dinámicas de esta landing
-        if (landing.dynamicPages) {
-          Array.isArray(landing.dynamicPages) &&
-            landing.dynamicPages.forEach((page: any) => {
-              const pageFields = page.fields;
-              if (pageFields.location === "blog") {
-                paths.add("/blog");
-                paths.add(`/blog/${pageFields.slug}`);
-              } else {
-                const fullPath =
-                  landingSlug === "/"
-                    ? `/${pageFields.slug}`
-                    : `/${landingSlug}/${pageFields.slug}`;
-                paths.add(fullPath.replace(/\/+/g, "/"));
+      break;
+    case "landingPage": {
+      // Si se actualizó el tema o customTheme, revalidar todas las rutas
+      const hasThemeChanges =
+        payload.fields?.theme || payload.fields?.customTheme;
+      if (hasThemeChanges) {
+        console.log("🎨 [Webhook] Detectados cambios en el tema");
+        try {
+          // Obtener todas las páginas dinámicas
+          const navigationPages = await getNavigationPages();
+          navigationPages.forEach((page) => {
+            if (page.slug) {
+              paths.push(`/${page.slug}`);
+              // Si es una página de blog, también revalidar la ruta del blog
+              if (page.location === "blog") {
+                paths.push("/blog");
+                paths.push(`/blog/${page.slug}`);
               }
-            });
+            }
+          });
+        } catch (error) {
+          console.error("❌ [Webhook] Error obteniendo páginas:", error);
         }
       }
-    } else {
-      // Si no se especifica slug, obtener todas las landings
-      const landingPagesResponse = await client.getEntries({
-        content_type: "landingPage",
-        include: 4,
-        limit: 1000,
-      });
-
-      landingPagesResponse.items.forEach((landing: any) => {
-        const landingFields = landing.fields;
-        if (landingFields.slug) {
-          paths.add(
-            landingFields.slug === "/" ? "/" : `/${landingFields.slug}`
-          );
-
-          if (landingFields.dynamicPages) {
-            landingFields.dynamicPages.forEach((page: any) => {
-              const pageFields = page.fields;
-              if (pageFields.location === "blog") {
-                paths.add(`/blog/${pageFields.slug}`);
-              } else {
-                const fullPath =
-                  landingFields.slug === "/"
-                    ? `/${pageFields.slug}`
-                    : `/${landingFields.slug}/${pageFields.slug}`;
-                paths.add(fullPath.replace(/\/+/g, "/"));
-              }
-            });
-          }
-        }
-      });
+      break;
     }
-
-    // Agregar rutas especiales
-    paths.add("/sitemap.xml");
-    paths.add("/robots.txt");
-
-    console.log("🎯 [Webhook] Rutas a revalidar:", Array.from(paths));
-    return Array.from(paths);
-  } catch (error) {
-    console.error("❌ [Webhook] Error obteniendo rutas:", error);
-    return ["/", "/blog"];
+    case "blogPost":
+      if (slug) {
+        paths.push(`/blog/${slug}`);
+        paths.push("/blog");
+      }
+      break;
   }
+
+  // Eliminar duplicados y filtrar rutas vacías
+  return [...new Set(paths)].filter(Boolean);
 }
 
 export async function POST(request: NextRequest) {
@@ -117,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET;
     if (!webhookSecret) {
-      console.error("🚨 [Webhook] Error: Secreto del webhook no configurado");
+      console.error("🚨 [Webhook] Error: Dominio del webhook no configurado");
       return NextResponse.json(
         { message: "Secreto del webhook no configurado" },
         { status: 500 }
@@ -133,44 +84,43 @@ export async function POST(request: NextRequest) {
     try {
       payload = JSON.parse(rawBody);
     } catch (parseError) {
-      console.error("❌ [Webhook] Error: JSON inválido", parseError);
+      console.error(
+        "❌ [Webhook] Error: No se pudo analizar el JSON del payload",
+        parseError
+      );
       return NextResponse.json(
         { message: "JSON del payload inválido", error: String(parseError) },
         { status: 400 }
       );
     }
 
-    // Obtener el slug de la landing page que se actualizó
-    const landingSlug = payload?.fields?.slug?.["en-US"] || undefined;
-    const contentType = payload?.sys?.contentType?.sys?.id;
+    console.log(
+      "📄 [Webhook] Payload procesado:",
+      JSON.stringify(payload, null, 2)
+    );
 
-    // Si es una entrada de blog, forzar la revalidación de /blog
-    if (
-      contentType === "dynamicPage" &&
-      payload?.fields?.location?.["en-US"] === "blog"
-    ) {
-      console.log("📝 [Webhook] Detectada actualización de blog");
+    const contentType = payload.sys?.contentType?.sys?.id;
+    const slug = payload.fields?.slug?.[payload.sys?.locale || "en-US"];
+
+    if (!contentType) {
+      console.error("⚠️ [Webhook] Error: Falta contentType en el payload");
+      return NextResponse.json(
+        { message: "Falta contentType en el payload" },
+        { status: 400 }
+      );
     }
 
-    // Obtener y revalidar las rutas afectadas
-    const pathsToRevalidate = await getAllPaths(landingSlug);
-    console.log("🛤️ [Webhook] Revalidando rutas:", pathsToRevalidate);
+    const pathsToRevalidate = await getPathsToRevalidate(
+      contentType,
+      slug,
+      payload
+    );
+    console.log("🛤️ [Webhook] Rutas a revalidar:", pathsToRevalidate);
 
-    // Revalidar cada ruta dos veces para asegurar la actualización
+    // Revalidar todas las rutas necesarias
     for (const path of pathsToRevalidate) {
       revalidatePath(path);
-      // Segunda revalidación después de un breve retraso
-      setTimeout(() => {
-        revalidatePath(path);
-      }, 4000);
       console.log("✅ [Webhook] Ruta revalidada:", path);
-    }
-    // Si la landing modificada es la principal, revalidar /blog después de 5 segundos
-    if (landingSlug === "/") {
-      setTimeout(() => {
-        revalidatePath("/blog");
-        console.log("🔄 [Webhook] Segunda revalidación de /blog ejecutada");
-      }, 6000);
     }
 
     return NextResponse.json(
