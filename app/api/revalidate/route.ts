@@ -189,12 +189,12 @@ export async function POST(request: NextRequest) {
 
     // Revalidar rutas principales con múltiples intentos
     for (const path of priorityPaths) {
-      await revalidateWithRetry(path, 2, 2000);
+      await revalidateWithRetry(path, 3, 2000);
     }
 
     // Revalidar el resto de rutas
     for (const path of remainingPaths) {
-      await revalidateWithRetry(path, 2, 2000);
+      await revalidateWithRetry(path, 2, 1000);
     }
 
     // Revalidación final después de un delay
