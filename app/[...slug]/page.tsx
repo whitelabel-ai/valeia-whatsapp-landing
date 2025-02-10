@@ -108,7 +108,9 @@ export default async function DynamicPage({
 
   // Verificar que la página pertenece a la landing page padre
   const belongsToParent = parentLandingPage.dynamicPages?.some(
-    (dynamicPage) => dynamicPage.fields.slug === pageSlug
+    (dynamicPage) =>
+      dynamicPage.fields.slug === pageSlug &&
+      dynamicPage.fields.location !== "blog"
   );
 
   if (!belongsToParent && parentSlug !== "/") {

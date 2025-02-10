@@ -120,28 +120,12 @@ export async function getDynamicPage(
   }
 
   try {
-    // Si estamos en la ruta /blog/[slug], buscamos específicamente blogs
-    if (parentSlug === "blog") {
-      const response = await client.getEntries({
-        content_type: "dynamicPage",
-        "fields.slug": slug,
-        "fields.location": "blog",
-        limit: 1,
-        include: 4,
-      });
-
-      if (response.items.length > 0) {
-        return response.items[0].fields as unknown as DynamicPage;
-      }
-      return null;
-    }
-
-    // Para otras rutas, mantenemos la exclusión de blogs
+    // First try to find the page in the parent landing page
     if (parentSlug) {
       const parentLanding = await getLandingPage(parentSlug);
       if (parentLanding?.dynamicPages) {
         const dynamicPage = parentLanding.dynamicPages.find(
-          (page) => page.fields.slug === slug && page.fields.location !== "blog"
+          (page) => page.fields.slug === slug
         );
         if (dynamicPage) {
           return {
@@ -152,11 +136,10 @@ export async function getDynamicPage(
       }
     }
 
-    // Búsqueda global excluyendo blogs
+    // If not found in parent landing or no parent specified, look for global pages
     const response = await client.getEntries({
       content_type: "dynamicPage",
       "fields.slug": slug,
-      "fields.location[ne]": "blog",
       limit: 1,
       include: 4,
     });
