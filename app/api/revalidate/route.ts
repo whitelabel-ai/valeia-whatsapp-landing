@@ -105,44 +105,81 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Obtener y revalidar todas las rutas
+    // Obtener todas las rutas
     const pathsToRevalidate = await getAllPaths();
     console.log("🛤️ [Webhook] Revalidando rutas:", pathsToRevalidate);
 
     // Determinar si el cambio afecta al blog
     const isBlogChange =
       payload?.fields?.location?.["en-US"] === "blog" ||
-      payload?.sys?.contentType?.sys?.id === "dynamicPage";
+      (payload?.sys?.contentType?.sys?.id === "dynamicPage" &&
+        payload?.fields?.location?.["en-US"] === "blog");
 
-    // Revalidar rutas en orden específico
-    const revalidationOrder = [
-      "/", // Siempre revalidar la raíz primero
-      "/blog", // Luego el índice del blog
-      ...pathsToRevalidate.filter(
-        (path) =>
-          path !== "/" &&
-          path !== "/blog" &&
-          (isBlogChange
-            ? path.startsWith("/blog/")
-            : !path.startsWith("/blog/"))
-      ),
-    ];
+    // Separar las rutas por tipo
+    const blogPaths = pathsToRevalidate.filter((path) =>
+      path.startsWith("/blog/")
+    );
+    const nonBlogPaths = pathsToRevalidate.filter(
+      (path) => !path.startsWith("/blog/") && path !== "/" && path !== "/blog"
+    );
 
-    for (const path of revalidationOrder) {
-      revalidatePath(path);
-      console.log("✅ [Webhook] Ruta revalidada:", path);
-    }
+    // Función para revalidar con reintento
+    const revalidateWithRetry = async (path: string, retries = 3) => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          revalidatePath(path);
+          console.log("✅ [Webhook] Ruta revalidada:", path);
+          break;
+        } catch (error) {
+          console.error(
+            `❌ [Webhook] Error revalidando ${path}, intento ${i + 1}:`,
+            error
+          );
+          if (i === retries - 1) throw error;
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      }
+    };
 
-    // Revalidación adicional después de un delay para asegurar consistencia
-    setTimeout(() => {
-      revalidatePath("/");
-      revalidatePath("/blog");
-    }, 2000);
+    // Revalidar en orden específico con delays
+    const revalidateInOrder = async () => {
+      // Primer paso: Revalidar rutas principales
+      await revalidateWithRetry("/");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await revalidateWithRetry("/blog");
+
+      // Segundo paso: Revalidar blogs si es un cambio de blog
+      if (isBlogChange) {
+        for (const blogPath of blogPaths) {
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          await revalidateWithRetry(blogPath);
+        }
+      }
+
+      // Tercer paso: Revalidar otras rutas
+      for (const path of nonBlogPaths) {
+        await new Promise((resolve) => setTimeout(resolve, 200));
+        await revalidateWithRetry(path);
+      }
+
+      // Paso final: Revalidar nuevamente las rutas principales
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await revalidateWithRetry("/");
+      await revalidateWithRetry("/blog");
+    };
+
+    // Ejecutar la revalidación
+    await revalidateInOrder();
 
     return NextResponse.json(
       {
         message: "Revalidación exitosa",
-        revalidated: revalidationOrder,
+        revalidated: [
+          "/",
+          "/blog",
+          ...(isBlogChange ? blogPaths : []),
+          ...nonBlogPaths,
+        ],
       },
       { status: 200 }
     );
