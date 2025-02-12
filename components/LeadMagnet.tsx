@@ -12,7 +12,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle,
+  XCircle,
+  CheckCircle2,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -123,7 +130,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
         redirect: "follow", // Importante para sheets
         mode: "no-cors", // Crítico para sheets
         body: JSON.stringify({
-          leadMagnetId: selectedLeadMagnet,
+          leadMagnet: selectedLeadMagnet,
           ...formData,
         }),
       });
@@ -131,17 +138,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
       // Como estamos usando no-cors, no podemos verificar response.ok
       // Asumimos éxito y mostramos el mensaje de confirmación
       setIsSuccess(true);
-      toast({
-        title: confirmationTitle || "¡Éxito!", // Usamos el título de Contentful
-        description: confirmationMessage || "Formulario enviado correctamente", // Usamos el mensaje de Contentful
-      });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "No se pudo enviar el formulario",
-        variant: "destructive",
-      });
-      // No cerramos el modal en caso de error
       setIsSuccess(false);
     } finally {
       setIsSubmitting(false);
@@ -360,7 +357,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
                       )}
 
                     <Button
-                      onClick={() => handleOpenModal(leadMagnet.sys.id)}
+                      onClick={() => handleOpenModal(leadMagnet.fields.title)}
                       className="w-full mt-auto"
                     >
                       {leadMagnet.fields.ctaText}
@@ -427,9 +424,13 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
     );
   };
 
+  const toTitleCase = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   return (
     <section className="py-24 relative" style={getBackgroundStyle()}>
-      <div className="container max-w-6xl mx-auto  px-4">
+      <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           <p className="text-foreground/80 max-w-2xl mx-auto">{subtitle}</p>
@@ -438,21 +439,34 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
         {isSingleLeadMagnet ? renderHeroLayout() : renderCardsLayout()}
 
         <Dialog open={isModalOpen} onOpenChange={handleCloseModal}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>
+          <DialogContent className="sm:max-w-sm max-w-md mx-auto border rounded-lg px-6">
+            <DialogHeader className="text-center space-y-2">
+              <DialogTitle className="text-2xl font-bold text-gray-800 text-center my-4 ">
                 {isSuccess ? confirmationTitle : titleModal}
               </DialogTitle>
-              <DialogDescription>
+              {isSuccess && (
+                <div className="flex justify-center">
+                  <CheckCircle2 className="w-16 h-16 mb-4 text-green-500" />
+                </div>
+              )}
+
+              <DialogDescription className="text-gray-600 text-base text-center mt-4">
                 {isSuccess ? confirmationMessage : subtitleModal}
               </DialogDescription>
+              {isSuccess && (
+                <div className="flex justify-center">
+                  <Button onClick={handleCloseModal} className="w-full mt-6">
+                    OK
+                  </Button>
+                </div>
+              )}
             </DialogHeader>
 
             {!isSuccess && (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {fieldsToCapture.map((field) => (
                   <div key={field} className="space-y-2">
-                    <Label htmlFor={field}>{field}</Label>
+                    <Label htmlFor={field}>{toTitleCase(field)}</Label>
                     <Input
                       id={field}
                       value={formData[field] || ""}
