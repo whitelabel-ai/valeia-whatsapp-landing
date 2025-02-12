@@ -30,12 +30,14 @@ export function Pricing({ content }: PricingProps) {
         </div>
 
         <div
-          className={`grid gap-8 justify-center ${
+          className={`grid grid-cols-1 gap-8 justify-center w-full ${
             validPlans.length === 1
-              ? "grid-cols-1 max-w-sm mx-auto"
+              ? " max-w-sm mx-auto" // 1 plan → siempre centrado
               : validPlans.length === 2
-                ? "grid-cols-2 md:grid-cols-2 max-w-md mx-auto"
-                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+                ? "md:grid-cols-2 max-w-3xl mx-auto" // 2 planes → 1 columna en móvil, 2 en md+
+                : validPlans.length === 3
+                  ? "md:grid-cols-3 max-w-6xl mx-auto" // 3 planes → 1 en móvil, 3 en md+
+                  : "sm:grid-cols-2 md:grid-cols-4 max-w-6xl mx-auto" // 4 planes → 1 en móvil, 2 en sm, 4 en md+
           }`}
         >
           {validPlans.map((plan) => (
