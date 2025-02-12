@@ -12,7 +12,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { BLOCKS, MARKS, INLINES } from "@contentful/rich-text-types";
 
 // Configurar revalidación cada 24 horas
-export const revalidate = 86400;
+export const revalidate = 60;
 
 // Generar todas las rutas estáticamente en build time
 export async function generateStaticParams() {

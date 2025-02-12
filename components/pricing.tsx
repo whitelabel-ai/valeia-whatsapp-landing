@@ -34,7 +34,7 @@ export function Pricing({ content }: PricingProps) {
             validPlans.length === 1
               ? "grid-cols-1 max-w-sm mx-auto"
               : validPlans.length === 2
-                ? "grid-cols-1 md:grid-cols-2 max-w-md mx-auto"
+                ? "grid-cols-2 md:grid-cols-2 max-w-md mx-auto"
                 : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
           }`}
         >
