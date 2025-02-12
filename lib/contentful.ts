@@ -141,7 +141,7 @@ export async function getDynamicPage(
       content_type: "dynamicPage",
       "fields.slug": slug,
       limit: 1,
-      include: 2,
+      include: 4,
     });
 
     if (response.items.length === 0) {
