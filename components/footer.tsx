@@ -60,10 +60,24 @@ export function Footer({ content, navigationPages }: FooterProps) {
     (page) => page.location === "legal" && page.isVisible && page.slug
   );
 
+  const footerItems = [
+    logo?.fields?.file?.url && "logo",
+    footerPages.length > 0 && "menu",
+    (email || phone) && "contacto",
+    validLegalPages.length > 0 && "legal",
+  ].filter(Boolean);
+
   return (
     <footer className="card-gradient py-12">
       <div className="container max-w-6xl mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
+        <div
+          className="grid gap-8 mb-8 text-center md:text-left"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${Math.min(footerItems.length, 4)}, minmax(0, 1fr))`,
+            justifyContent: "space-between",
+          }}
+        >
           <div>
             {logo?.fields?.file?.url && (
               <Link href="/" className="inline-block mb-6">
@@ -117,63 +131,68 @@ export function Footer({ content, navigationPages }: FooterProps) {
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">Menú</h3>
-            <ul className="space-y-2">
-              {footerPages.map((page) => (
-                <li key={page.slug}>
-                  <Link
-                    href={`/${page.slug}`}
-                    className="text-foreground/60 hover:text-foreground transition-colors"
-                  >
-                    {page.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {footerPages.length > 0 && (
+            <div>
+              <h3 className="font-semibold mb-4">Menú</h3>
+              <ul className="space-y-2">
+                {footerPages.map((page) => (
+                  <li key={page.slug}>
+                    <Link
+                      href={`/${page.slug}`}
+                      className="text-foreground/60 hover:text-foreground transition-colors"
+                    >
+                      {page.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {(email || phone) && (
+            <div>
+              <h3 className="font-semibold mb-4">Contacto</h3>
+              <ul className="space-y-2">
+                {email && (
+                  <li>
+                    <a
+                      href={`mailto:${email}`}
+                      className="text-foreground/60 hover:text-foreground transition-colors"
+                    >
+                      {email}
+                    </a>
+                  </li>
+                )}
+                {phone && (
+                  <li>
+                    <a
+                      href={`tel:${phone}`}
+                      className="text-foreground/60 hover:text-foreground transition-colors"
+                    >
+                      {phone}
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
 
-          <div>
-            <h3 className="font-semibold mb-4">Contacto</h3>
-            <ul className="space-y-2">
-              {email && (
-                <li>
-                  <a
-                    href={`mailto:${email}`}
-                    className="text-foreground/60 hover:text-foreground transition-colors"
-                  >
-                    {email}
-                  </a>
-                </li>
-              )}
-              {phone && (
-                <li>
-                  <a
-                    href={`tel:${phone}`}
-                    className="text-foreground/60 hover:text-foreground transition-colors"
-                  >
-                    {phone}
-                  </a>
-                </li>
-              )}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              {validLegalPages.map((page) => (
-                <li key={page.slug}>
-                  <Link
-                    href={`/${page.slug}`}
-                    className="text-foreground/60 hover:text-foreground transition-colors"
-                  >
-                    {page.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {validLegalPages.length > 0 && (
+            <div className="justify-self-end">
+              <h3 className="font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2">
+                {validLegalPages.map((page) => (
+                  <li key={page.slug}>
+                    <Link
+                      href={`/${page.slug}`}
+                      className="text-foreground/60 hover:text-foreground transition-colors"
+                    >
+                      {page.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="border-t border-border pt-8">
