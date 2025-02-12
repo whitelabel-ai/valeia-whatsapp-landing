@@ -88,10 +88,10 @@ export function Benefits({ content }: BenefitsProps) {
           )}
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto">
           <div
             className={cn(
-              "flex mb-8 overflow-x-auto pb-4 md:pb-0 md:overflow-x-visible px-4 -mx-4 md:mx-0 md:px-0",
+              "flex mb-8 overflow-x-auto pb-4 md:pb-0 md:overflow-x-visible md:mx-0 md:px-0",
               validBenefits.length <= 2
                 ? "justify-center"
                 : "justify-start md:justify-center"
@@ -128,8 +128,8 @@ export function Benefits({ content }: BenefitsProps) {
               const aspectRatio = benefit.fields.imageAspectRatio || "4:3";
               const imageFit = benefit.fields.imageFit || "Rellenar";
               const imageHeight = benefit.fields.imageHeight || 300;
-
               const isVertical = aspectRatio === "9:16";
+              const hasImage = !!benefit.fields.image;
 
               return (
                 <motion.div
@@ -138,18 +138,23 @@ export function Benefits({ content }: BenefitsProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.2 }}
-                  className="card-gradient rounded-lg p-6 md:p-12"
+                  className={cn(
+                    "card-gradient rounded-lg p-8 md:p-12 mx-auto",
+                    hasImage ? "max-w-6xl" : "max-w-2xl"
+                  )}
                 >
                   <div
                     className={cn(
                       "grid gap-8 md:gap-12 items-center justify-center",
-                      imagePosition === "right"
-                        ? isVertical
-                          ? "md:grid-cols-[2fr,1fr]"
-                          : "md:grid-cols-[1fr,1.2fr]"
-                        : isVertical
-                          ? "md:grid-cols-[1fr,2fr]"
-                          : "md:grid-cols-[1.2fr,1fr]",
+                      hasImage
+                        ? imagePosition === "right"
+                          ? isVertical
+                            ? "md:grid-cols-[2fr,1fr]"
+                            : "md:grid-cols-[1fr,1.2fr]"
+                          : isVertical
+                            ? "md:grid-cols-[1fr,2fr]"
+                            : "md:grid-cols-[1.2fr,1fr]"
+                        : "grid-cols-1",
                       "grid-cols-1"
                     )}
                   >
@@ -226,7 +231,7 @@ export function Benefits({ content }: BenefitsProps) {
                       )}
                     </div>
                     {/* Image Side */}
-                    {benefit.fields.image && (
+                    {hasImage && (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -243,9 +248,9 @@ export function Benefits({ content }: BenefitsProps) {
                         <div className="">
                           <div className="absolute inset-0 rounded-xl overflow-hidden">
                             <img
-                              src={`https:${benefit.fields.image.fields.file.url}`}
+                              src={`https:${benefit.fields.image?.fields.file.url}`}
                               alt={
-                                benefit.fields.image.fields.title ||
+                                benefit.fields.image?.fields.title ||
                                 benefit.fields.title
                               }
                               className={cn(
