@@ -106,7 +106,7 @@ export default async function DynamicPage({
     notFound();
   }
 
-  // Verificar que la página pertenece a la landing page padre
+  // Verificar que la página pertenece a la landing page padre y no es un blog
   const belongsToParent = parentLandingPage.dynamicPages?.some(
     (dynamicPage) =>
       dynamicPage.fields.slug === pageSlug &&
@@ -184,7 +184,7 @@ export default async function DynamicPage({
         />
       )}
       <main className="py-24">
-        <div className="container mx-auto px-4">
+        <div className="container max-w-6xl mx-auto px-4">
           <article className="prose prose-invert mx-auto">
             <h1 className="text-4xl font-bold mb-4 mt-4">{page.title}</h1>
             {page.featuredImage && (
