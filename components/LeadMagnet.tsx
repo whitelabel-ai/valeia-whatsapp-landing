@@ -441,7 +441,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
         <Dialog open={isModalOpen} onOpenChange={handleCloseModal}>
           <DialogContent className="sm:max-w-sm max-w-md mx-auto border rounded-lg px-6">
             <DialogHeader className="text-center space-y-2">
-              <DialogTitle className="text-2xl font-bold text-gray-800 text-center my-4 ">
+              <DialogTitle className="text-2xl font-bold text-center my-4 ">
                 {isSuccess ? confirmationTitle : titleModal}
               </DialogTitle>
               {isSuccess && (
@@ -450,7 +450,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
                 </div>
               )}
 
-              <DialogDescription className="text-gray-600 text-base text-center mt-4">
+              <DialogDescription className="text-foreground/80 text-center mt-4">
                 {isSuccess ? confirmationMessage : subtitleModal}
               </DialogDescription>
               {isSuccess && (
