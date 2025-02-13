@@ -12,15 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  CheckCircle,
-  XCircle,
-  CheckCircle2,
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Check, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { motion, PanInfo, AnimatePresence } from "framer-motion";
@@ -58,7 +50,6 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("left");
-  const { toast } = useToast();
 
   if (!isVisible || !leadMagnets || leadMagnets.length === 0) return null;
 
@@ -194,9 +185,9 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
     const imagePosition = leadMagnet.fields.imagePosition || "right";
 
     const ContentSection = () => (
-      <div className="flex flex-col justify-between h-full space-y-6">
-        <div className="space-y-6">
-          <h3 className="text-2xl md:text-3xl font-bold">
+      <div className="flex flex-col justify-between h-full space-y-6 max-w-full">
+        <div className="space-y-6 max-w-full">
+          <h3 className="text-2xl md:text-3xl font-bold ">
             {leadMagnet.fields.title}
           </h3>
           <div className="prose prose-invert max-w-none">
@@ -244,27 +235,39 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
           </div>
         </div>
       );
+    const hasImage = !!leadMagnet.fields.image;
 
     return (
-      <div className="card-gradient rounded-lg p-6 md:p-12">
+      <div
+        className={cn(
+          "card-gradient rounded-lg p-6 md:p-12 mx-auto",
+          hasImage ? "max-w-6xl" : "max-w-2xl"
+        )}
+      >
         <div
           className={cn(
             "grid gap-8 md:gap-12 items-center",
-            imagePosition === "right"
-              ? "md:grid-cols-[1fr,1.2fr]"
-              : "md:grid-cols-[1.2fr,1fr]"
+            hasImage
+              ? imagePosition === "right"
+                ? "md:grid-cols-[1fr,1.2fr]"
+                : "md:grid-cols-[1.2fr,1fr]"
+              : "max-w-2xl mx-auto"
           )}
         >
-          {imagePosition === "right" ? (
-            <>
-              <ContentSection />
-              <ImageSection />
-            </>
+          {hasImage ? (
+            imagePosition === "right" ? (
+              <>
+                <ContentSection />
+                <ImageSection />
+              </>
+            ) : (
+              <>
+                <ImageSection />
+                <ContentSection />
+              </>
+            )
           ) : (
-            <>
-              <ImageSection />
-              <ContentSection />
-            </>
+            <ContentSection />
           )}
         </div>
       </div>
