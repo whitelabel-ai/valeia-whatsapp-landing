@@ -132,6 +132,7 @@ export interface HeaderSection {
   widthLogo?: number;
   ctaText?: string;
   ctaUrl?: string;
+  ctaSection?: string;
 }
 
 export interface HeroSection {
@@ -139,11 +140,13 @@ export interface HeroSection {
   highlightedText: string;
   description: string;
   ctaText: string;
-  ctaUrl: string;
+  ctaUrl?: string;
   isVisible: boolean;
   image?: ContentfulAsset;
   imagePosition?: "right" | "left" | "top" | "bottom" | "background";
   imageWidth?: number;
+  ctaSection?: string;
+  sectionId: string;
 }
 
 export interface PartnersSection {
@@ -155,6 +158,8 @@ export interface PartnersSection {
   height?: number;
   backgroundColor?: string;
   isVisible: boolean;
+  ctaSection: string;
+  sectionId: string;
 }
 
 export interface ProcessStep {
@@ -163,6 +168,7 @@ export interface ProcessStep {
   icon: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaSection?: string;
 }
 
 export interface ProcessSection {
@@ -170,6 +176,8 @@ export interface ProcessSection {
   subtitle: string;
   steps: ContentfulEntry<ProcessStep>[];
   isVisible: boolean;
+  ctaSection: string;
+  sectionId: string;
 }
 
 export interface PricingPlan {
@@ -188,6 +196,8 @@ export interface PricingSection {
   subtitle: string;
   plans: ContentfulEntry<PricingPlan>[];
   isVisible: boolean;
+  ctaSection: string;
+  sectionId: string;
 }
 
 export interface Benefit {
@@ -202,8 +212,10 @@ export interface Benefit {
   imageFit?: "Ajustar" | "Rellenar" | "Expandir";
   ctaText?: string;
   ctaUrl?: string;
+  ctaSection?: string;
   secondaryCtaText?: string;
   secondaryCtaUrl?: string;
+  secondaryCtaSection?: string;
 }
 
 export interface BenefitsSection {
@@ -213,6 +225,7 @@ export interface BenefitsSection {
   isVisible: boolean;
   backgroundColor?: string;
   accentColor?: string;
+  sectionId: string;
 }
 
 export interface ProductDemoSection {
@@ -226,7 +239,10 @@ export interface ProductDemoSection {
   videoHeight?: number;
   ctaText?: string;
   ctaUrl?: string;
+  ctaSection?: string;
   isVisible: boolean;
+  ctaSection: string;
+  sectionId: string;
 }
 
 export interface UseCase {
@@ -245,6 +261,7 @@ export interface UseCasesSection {
   subtitle?: string;
   cases: ContentfulEntry<UseCase>[];
   isVisible: boolean;
+  sectionId: string;
 }
 
 export interface LeadMagnet {
@@ -270,6 +287,7 @@ export interface LeadMagnetSection {
   confirmationMessage: string;
   backgroundColor?: string;
   isVisible: boolean;
+  sectionId: string;
 }
 
 export interface FAQ {
@@ -283,14 +301,17 @@ export interface FaqSection {
   faqs?: ContentfulEntry<FAQ>[];
   columns?: number;
   isVisible: boolean;
+  sectionId: string;
 }
 
 export interface CtaSection {
   title: string;
   subtitle: string;
   ctaText: string;
-  ctaUrl: string;
+  ctaUrl?: string;
   isVisible: boolean;
+  ctaSection?: string;
+  sectionId: string;
 }
 
 export interface SocialLink {
@@ -314,6 +335,8 @@ export interface FooterSection {
   phone: string;
   copyright: string;
   isVisible: boolean;
+  ctaSection: string;
+  sectionId: string;
 }
 
 interface RichTextContent {
