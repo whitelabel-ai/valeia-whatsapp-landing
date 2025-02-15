@@ -11,7 +11,7 @@ interface PricingProps {
 }
 
 export function Pricing({ content }: PricingProps) {
-  const { title, subtitle, plans, isVisible } = content;
+  const { title, subtitle, plans, isVisible, sectionId } = content;
 
   if (!isVisible || !plans) return null;
 
@@ -22,7 +22,7 @@ export function Pricing({ content }: PricingProps) {
   if (validPlans.length === 0) return null;
 
   return (
-    <section id="precios" className="py-24 relative">
+    <section id={sectionId} className="py-24 relative">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { defaultMarkdownComponents } from "./ui/markdown-components";
+import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
 
 interface ProductDemoProps {
   content: ProductDemoSection;
@@ -23,6 +24,8 @@ export function ProductDemo({ content }: ProductDemoProps) {
     videoHeight,
     ctaText,
     ctaUrl,
+    sectionId,
+    ctaSection,
     isVisible,
   } = content;
 
@@ -99,13 +102,19 @@ export function ProductDemo({ content }: ProductDemoProps) {
             </ReactMarkdown>
           </div>
         )}
-        {ctaText && ctaUrl && (
-          <div className="w-full flex justify-center md:justify-start">
-            <Button asChild size="lg" className="w-full md:w-auto">
-              <Link href={ctaUrl}>{ctaText}</Link>
-            </Button>
-          </div>
-        )}
+        {(ctaText && ctaUrl) ||
+          (ctaSection && (
+            <div className="w-full flex justify-center md:justify-start">
+              <Button asChild size="lg" className="w-full md:w-auto">
+                <Link
+                  href={getTargetHref(ctaSection, ctaUrl)}
+                  onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+                >
+                  {ctaText}
+                </Link>
+              </Button>
+            </div>
+          ))}
       </div>
     );
 
@@ -156,7 +165,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
   };
 
   return (
-    <section className="py-12 md:py-24 relative">
+    <section id={sectionId} className="py-12 md:py-24 relative">
       <div className="container mx-auto px-4">
         <header className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">

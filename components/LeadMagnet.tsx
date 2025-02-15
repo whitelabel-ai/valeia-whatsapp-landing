@@ -39,6 +39,7 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
     confirmationMessage,
     backgroundColor,
     isVisible,
+    sectionId,
   } = content;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -432,7 +433,11 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
   };
 
   return (
-    <section className="py-24 relative" style={getBackgroundStyle()}>
+    <section
+      id={sectionId}
+      className="py-24 relative"
+      style={getBackgroundStyle()}
+    >
       <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>

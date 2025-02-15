@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { HeroSection } from "@/types/contentful";
 import Link from "next/link";
+import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
 
 interface HeroProps {
   content: HeroSection;
@@ -17,6 +18,8 @@ export function Hero({ content }: HeroProps) {
     image,
     imagePosition = "right",
     imageWidth,
+    ctaSection,
+    sectionId,
   } = content;
 
   if (!isVisible) return null;
@@ -40,6 +43,7 @@ export function Hero({ content }: HeroProps) {
 
   return (
     <section
+      id={sectionId}
       className={`relative ${
         image && imagePosition === "background"
           ? "pt-40 pb-24 overflow-hidden"
@@ -82,7 +86,14 @@ export function Hero({ content }: HeroProps) {
                   </p>
                   {ctaUrl && ctaText && (
                     <Button asChild size="lg" className="w-full md:w-auto">
-                      <Link href={ctaUrl}>{ctaText}</Link>
+                      <Link
+                        href={getTargetHref(ctaSection, ctaUrl)}
+                        onClick={(e) =>
+                          handleSectionScroll(e, ctaSection, ctaUrl)
+                        }
+                      >
+                        {ctaText}
+                      </Link>
                     </Button>
                   )}
                 </div>
@@ -107,7 +118,14 @@ export function Hero({ content }: HeroProps) {
                   </p>
                   {ctaUrl && ctaText && (
                     <Button asChild size="lg">
-                      <Link href={ctaUrl}>{ctaText}</Link>
+                      <Link
+                        href={getTargetHref(ctaSection, ctaUrl)}
+                        onClick={(e) =>
+                          handleSectionScroll(e, ctaSection, ctaUrl)
+                        }
+                      >
+                        {ctaText}
+                      </Link>
                     </Button>
                   )}
                 </div>
@@ -122,11 +140,17 @@ export function Hero({ content }: HeroProps) {
             <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
               {description}
             </p>
-            {ctaUrl && ctaText && (
-              <Button asChild size="lg">
-                <Link href={ctaUrl}>{ctaText}</Link>
-              </Button>
-            )}
+            {(ctaUrl && ctaText) ||
+              (ctaSection && (
+                <Button asChild size="lg">
+                  <Link
+                    href={getTargetHref(ctaSection, ctaUrl)}
+                    onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+                  >
+                    {ctaText}
+                  </Link>
+                </Button>
+              ))}
           </div>
         )}
       </div>

@@ -5,13 +5,14 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { defaultMarkdownComponents } from "./ui/markdown-components";
+import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
 
 interface ProcessProps {
   content: ProcessSection;
 }
 
 export function Process({ content }: ProcessProps) {
-  const { title, subtitle, steps, isVisible } = content;
+  const { title, subtitle, steps, isVisible, sectionId, ctaSection } = content;
 
   if (!isVisible || !steps || steps.length === 0) return null;
 
@@ -81,7 +82,7 @@ export function Process({ content }: ProcessProps) {
   };
 
   return (
-    <section id="proceso" className="py-24 relative">
+    <section id={sectionId} className="py-24 relative">
       <div className="absolute inset-0 gradient-bg opacity-50" />
       <div
         className={`container max-w-6xl mx-auto px-4 ${getContainerWidth(validSteps.length)}`}
@@ -128,19 +129,30 @@ export function Process({ content }: ProcessProps) {
                     </ReactMarkdown>
                   </div>
                 </div>
-                {step.fields.ctaText && step.fields.ctaUrl && (
-                  <div className="mt-6 pt-4 border-t border-border/10">
-                    <Link
-                      href={step.fields.ctaUrl}
-                      className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
-                    >
-                      {step.fields.ctaText}
-                      <span className="ml-2 transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </Link>
-                  </div>
-                )}
+                {(step.fields.ctaText && step.fields.ctaUrl) ||
+                  (step.fields.ctaSection && (
+                    <div className="mt-6 pt-4 border-t border-border/10">
+                      <Link
+                        href={getTargetHref(
+                          step.fields.ctaSection,
+                          step.fields.ctaUrl
+                        )}
+                        className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
+                        onClick={(e) =>
+                          handleSectionScroll(
+                            e,
+                            step.fields.ctaSection,
+                            step.fields.ctaUrl
+                          )
+                        }
+                      >
+                        {step.fields.ctaText}
+                        <span className="ml-2 transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </Link>
+                    </div>
+                  ))}
               </div>
             );
           })}
@@ -186,19 +198,30 @@ export function Process({ content }: ProcessProps) {
                       </ReactMarkdown>
                     </div>
                   </div>
-                  {step.fields.ctaText && step.fields.ctaUrl && (
-                    <div className="mt-6 pt-4 border-t border-border/10">
-                      <Link
-                        href={step.fields.ctaUrl}
-                        className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
-                      >
-                        {step.fields.ctaText}
-                        <span className="ml-2 transition-transform group-hover:translate-x-1">
-                          →
-                        </span>
-                      </Link>
-                    </div>
-                  )}
+                  {(step.fields.ctaText && step.fields.ctaUrl) ||
+                    (step.fields.ctaSection && (
+                      <div className="mt-6 pt-4 border-t border-border/10">
+                        <Link
+                          href={getTargetHref(
+                            step.fields.ctaSection,
+                            step.fields.ctaUrl
+                          )}
+                          className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
+                          onClick={(e) =>
+                            handleSectionScroll(
+                              e,
+                              step.fields.ctaSection,
+                              step.fields.ctaUrl
+                            )
+                          }
+                        >
+                          {step.fields.ctaText}
+                          <span className="ml-2 transition-transform group-hover:translate-x-1">
+                            →
+                          </span>
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               );
             })}

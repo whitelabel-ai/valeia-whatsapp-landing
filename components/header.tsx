@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { HeaderSection, DynamicPage } from "@/types/contentful";
+import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
 
 interface HeaderProps {
   content: HeaderSection;
@@ -18,7 +19,7 @@ export function Header({
   currentLandingSlug = "/",
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { logo, ctaText, ctaUrl, widthLogo } = content;
+  const { logo, ctaText, ctaUrl, ctaSection, widthLogo } = content;
 
   // Function to clean URLs by removing duplicated segments
   const cleanUrl = (url: string) => {
@@ -107,13 +108,17 @@ export function Header({
             Blog
           </Link>
 
-          {ctaUrl && (
-            <Button asChild>
-              <a href={ctaUrl} target="_blank" rel="noopener noreferrer">
-                {ctaText}
-              </a>
-            </Button>
-          )}
+          {ctaUrl ||
+            (ctaSection && (
+              <Button asChild>
+                <a
+                  href={getTargetHref(ctaSection, ctaUrl)}
+                  onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+                >
+                  {ctaText}
+                </a>
+              </Button>
+            ))}
         </nav>
 
         <button
@@ -146,13 +151,17 @@ export function Header({
                 {page.label}
               </Link>
             ))}
-            {ctaUrl && (
-              <Button asChild className="w-full">
-                <a href={ctaUrl} target="_blank" rel="noopener noreferrer">
-                  {ctaText}
-                </a>
-              </Button>
-            )}
+            {ctaUrl ||
+              (ctaSection && (
+                <Button asChild className="w-full">
+                  <a
+                    href={getTargetHref(ctaSection, ctaUrl)}
+                    onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+                  >
+                    {ctaText}
+                  </a>
+                </Button>
+              ))}
           </nav>
         </div>
       )}

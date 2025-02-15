@@ -18,7 +18,7 @@ interface FaqProps {
 }
 
 export function Faq({ content }: FaqProps) {
-  const { title, subtitle, faqs, isVisible, columns = 1 } = content;
+  const { title, subtitle, faqs, isVisible, columns = 1, sectionId } = content;
   const [activeItem, setActiveItem] = useState<string | undefined>();
 
   if (!isVisible || !faqs || !Array.isArray(faqs)) return null;
@@ -84,7 +84,7 @@ export function Faq({ content }: FaqProps) {
   );
 
   return (
-    <section id="faq" className="py-24 relative">
+    <section id={sectionId} className="py-24 relative">
       <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>

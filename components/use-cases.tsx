@@ -13,7 +13,7 @@ type ImagePosition = "right" | "left" | "top" | "bottom" | "background";
 type SlideDirection = "left" | "right";
 
 export function UseCases({ content }: UseCasesProps) {
-  const { title, subtitle, cases, isVisible } = content;
+  const { title, subtitle, cases, sectionId, isVisible } = content;
   const [selectedCase, setSelectedCase] = useState(
     cases.find((c) => c.fields.isActive)?.sys.id || cases[0].sys.id
   );
@@ -153,7 +153,7 @@ export function UseCases({ content }: UseCasesProps) {
   );
 
   return (
-    <section className="py-24 relative max-w-6xl mx-auto">
+    <section id={sectionId} className="py-24 relative max-w-6xl mx-auto">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
