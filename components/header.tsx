@@ -5,7 +5,8 @@ import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { HeaderSection, DynamicPage } from "@/types/contentful";
-import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
+import { getTargetHref } from "@/lib/scroll-utils";
+import { SectionLink } from "./ui/section-link";
 
 interface HeaderProps {
   content: HeaderSection;
@@ -109,14 +110,13 @@ export function Header({
           </Link>
 
           {ctaText && (ctaUrl || ctaSection) && (
-            <Button asChild>
-              <a
-                href={getTargetHref(ctaSection, ctaUrl)}
-                onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-              >
-                {ctaText}
-              </a>
-            </Button>
+            <SectionLink
+              href={getTargetHref(ctaSection, ctaUrl)}
+              ctaSection={ctaSection}
+              ctaUrl={ctaUrl}
+            >
+              {ctaText}
+            </SectionLink>
           )}
         </nav>
 
@@ -150,17 +150,15 @@ export function Header({
                 {page.label}
               </Link>
             ))}
-            {ctaUrl ||
-              (ctaSection && (
-                <Button asChild className="w-full">
-                  <a
-                    href={getTargetHref(ctaSection, ctaUrl)}
-                    onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-                  >
-                    {ctaText}
-                  </a>
-                </Button>
-              ))}
+            {ctaText && (ctaUrl || ctaSection) && (
+              <SectionLink
+                href={getTargetHref(ctaSection, ctaUrl)}
+                ctaSection={ctaSection}
+                ctaUrl={ctaUrl}
+              >
+                {ctaText}
+              </SectionLink>
+            )}
           </nav>
         </div>
       )}

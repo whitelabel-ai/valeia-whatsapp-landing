@@ -1,7 +1,8 @@
 import { Button } from "./ui/button";
 import { HeroSection } from "@/types/contentful";
 import Link from "next/link";
-import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
+import { getTargetHref } from "@/lib/scroll-utils";
+import { SectionLink } from "./ui/section-link";
 
 interface HeroProps {
   content: HeroSection;
@@ -85,16 +86,13 @@ export function Hero({ content }: HeroProps) {
                     {description}
                   </p>
                   {ctaText && (ctaUrl || ctaSection) && (
-                    <Button asChild size="lg" className="w-full md:w-auto">
-                      <Link
-                        href={getTargetHref(ctaSection, ctaUrl)}
-                        onClick={(e) =>
-                          handleSectionScroll(e, ctaSection, ctaUrl)
-                        }
-                      >
-                        {ctaText}
-                      </Link>
-                    </Button>
+                    <SectionLink
+                      href={getTargetHref(ctaSection, ctaUrl)}
+                      ctaSection={ctaSection}
+                      ctaUrl={ctaUrl}
+                    >
+                      {ctaText}
+                    </SectionLink>
                   )}
                 </div>
               </>
@@ -116,17 +114,15 @@ export function Hero({ content }: HeroProps) {
                   <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
                     {description}
                   </p>
-                  {ctaUrl && ctaText && (
-                    <Button asChild size="lg">
-                      <Link
-                        href={getTargetHref(ctaSection, ctaUrl)}
-                        onClick={(e) =>
-                          handleSectionScroll(e, ctaSection, ctaUrl)
-                        }
-                      >
-                        {ctaText}
-                      </Link>
-                    </Button>
+                  {ctaText && (ctaUrl || ctaSection) && (
+                    <SectionLink
+                      href={getTargetHref(ctaSection, ctaUrl)}
+                      ctaSection={ctaSection}
+                      ctaUrl={ctaUrl}
+                      className="w-full md:w-auto"
+                    >
+                      {ctaText}
+                    </SectionLink>
                   )}
                 </div>
               </>
@@ -140,17 +136,16 @@ export function Hero({ content }: HeroProps) {
             <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
               {description}
             </p>
-            {(ctaUrl && ctaText) ||
-              (ctaSection && (
-                <Button asChild size="lg">
-                  <Link
-                    href={getTargetHref(ctaSection, ctaUrl)}
-                    onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-                  >
-                    {ctaText}
-                  </Link>
-                </Button>
-              ))}
+            {ctaText && (ctaUrl || ctaSection) && (
+              <SectionLink
+                href={getTargetHref(ctaSection, ctaUrl)}
+                ctaSection={ctaSection}
+                ctaUrl={ctaUrl}
+                className="w-full md:w-auto btn btn-primary btn-lg"
+              >
+                {ctaText}
+              </SectionLink>
+            )}
           </div>
         )}
       </div>

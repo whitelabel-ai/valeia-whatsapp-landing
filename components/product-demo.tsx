@@ -6,7 +6,8 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { defaultMarkdownComponents } from "./ui/markdown-components";
-import { getTargetHref, handleSectionScroll } from "@/lib/scroll-utils";
+import { getTargetHref } from "@/lib/scroll-utils";
+import { SectionLink } from "./ui/section-link";
 
 interface ProductDemoProps {
   content: ProductDemoSection;
@@ -104,14 +105,14 @@ export function ProductDemo({ content }: ProductDemoProps) {
         )}
         {ctaText && (ctaUrl || ctaSection) && (
           <div className="w-full flex justify-center md:justify-start">
-            <Button asChild size="lg" className="w-full md:w-auto">
-              <Link
-                href={getTargetHref(ctaSection, ctaUrl)}
-                onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-              >
-                {ctaText}
-              </Link>
-            </Button>
+            <SectionLink
+              href={getTargetHref(ctaSection, ctaUrl)}
+              ctaSection={ctaSection}
+              ctaUrl={ctaUrl}
+              className="btn btn-primary btn-lg w-full md:w-auto"
+            >
+              {ctaText}
+            </SectionLink>
           </div>
         )}
       </div>
