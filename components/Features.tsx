@@ -194,30 +194,25 @@ export function Process({ content }: ProcessProps) {
                       </ReactMarkdown>
                     </div>
                   </div>
-                  {step.fields.ctaText &&
-                    (step.fields.ctaUrl || step.fields.ctaSection) && (
+                  {(step.fields.ctaText && step.fields.ctaUrl) ||
+                    (step.fields.ctaSection && (
                       <div className="mt-6 pt-4 border-t border-border/10">
-                        <Link
+                        <SectionLink
                           href={getTargetHref(
                             step.fields.ctaSection,
                             step.fields.ctaUrl
                           )}
                           className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
-                          onClick={(e) =>
-                            handleSectionScroll(
-                              e,
-                              step.fields.ctaSection,
-                              step.fields.ctaUrl
-                            )
-                          }
+                          ctaSection={step.fields.ctaSection}
+                          ctaUrl={step.fields.ctaUrl}
                         >
                           {step.fields.ctaText}
                           <span className="ml-2 transition-transform group-hover:translate-x-1">
                             →
                           </span>
-                        </Link>
+                        </SectionLink>
                       </div>
-                    )}
+                    ))}
                 </div>
               );
             })}
