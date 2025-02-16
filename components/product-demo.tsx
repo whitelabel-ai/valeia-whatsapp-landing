@@ -102,19 +102,18 @@ export function ProductDemo({ content }: ProductDemoProps) {
             </ReactMarkdown>
           </div>
         )}
-        {(ctaText && ctaUrl) ||
-          (ctaSection && (
-            <div className="w-full flex justify-center md:justify-start">
-              <Button asChild size="lg" className="w-full md:w-auto">
-                <Link
-                  href={getTargetHref(ctaSection, ctaUrl)}
-                  onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-                >
-                  {ctaText}
-                </Link>
-              </Button>
-            </div>
-          ))}
+        {ctaText && (ctaUrl || ctaSection) && (
+          <div className="w-full flex justify-center md:justify-start">
+            <Button asChild size="lg" className="w-full md:w-auto">
+              <Link
+                href={getTargetHref(ctaSection, ctaUrl)}
+                onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+              >
+                {ctaText}
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     );
 

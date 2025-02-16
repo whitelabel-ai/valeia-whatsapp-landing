@@ -20,17 +20,16 @@ export function Cta({ content }: CtaProps) {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           <p className="text-foreground/80 text-lg mb-8">{subtitle}</p>
-          {(ctaUrl && ctaText) ||
-            (ctaSection && (
-              <Button asChild size="lg">
-                <Link
-                  href={getTargetHref(ctaSection, ctaUrl)}
-                  onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-                >
-                  {ctaText}
-                </Link>
-              </Button>
-            ))}
+          {ctaText && (ctaUrl || ctaSection) && (
+            <Button asChild size="lg">
+              <Link
+                href={getTargetHref(ctaSection, ctaUrl)}
+                onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+              >
+                {ctaText}
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
     </section>

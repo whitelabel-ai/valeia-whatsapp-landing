@@ -84,7 +84,7 @@ export function Hero({ content }: HeroProps) {
                   <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
                     {description}
                   </p>
-                  {ctaUrl && ctaText && (
+                  {ctaText && (ctaUrl || ctaSection) && (
                     <Button asChild size="lg" className="w-full md:w-auto">
                       <Link
                         href={getTargetHref(ctaSection, ctaUrl)}

@@ -108,17 +108,16 @@ export function Header({
             Blog
           </Link>
 
-          {ctaUrl ||
-            (ctaSection && (
-              <Button asChild>
-                <a
-                  href={getTargetHref(ctaSection, ctaUrl)}
-                  onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
-                >
-                  {ctaText}
-                </a>
-              </Button>
-            ))}
+          {ctaText && (ctaUrl || ctaSection) && (
+            <Button asChild>
+              <a
+                href={getTargetHref(ctaSection, ctaUrl)}
+                onClick={(e) => handleSectionScroll(e, ctaSection, ctaUrl)}
+              >
+                {ctaText}
+              </a>
+            </Button>
+          )}
         </nav>
 
         <button

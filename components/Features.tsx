@@ -198,8 +198,8 @@ export function Process({ content }: ProcessProps) {
                       </ReactMarkdown>
                     </div>
                   </div>
-                  {(step.fields.ctaText && step.fields.ctaUrl) ||
-                    (step.fields.ctaSection && (
+                  {step.fields.ctaText &&
+                    (step.fields.ctaUrl || step.fields.ctaSection) && (
                       <div className="mt-6 pt-4 border-t border-border/10">
                         <Link
                           href={getTargetHref(
@@ -221,7 +221,7 @@ export function Process({ content }: ProcessProps) {
                           </span>
                         </Link>
                       </div>
-                    ))}
+                    )}
                 </div>
               );
             })}
