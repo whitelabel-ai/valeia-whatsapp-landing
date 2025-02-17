@@ -123,7 +123,7 @@ export function Hero({ content }: HeroProps) {
                 ) : (
                   <img
                     src={mediaUrl}
-                    alt={image.fields.title || "Hero Image"}
+                    alt={image?.fields?.title || "Hero Image"}
                     className="mx-auto rounded-lg w-full md:w-auto"
                     style={{ maxWidth: computedImageWidth }}
                   />
@@ -162,7 +162,7 @@ export function Hero({ content }: HeroProps) {
                   ) : (
                     <img
                       src={mediaUrl}
-                      alt={image.fields.title || "Hero Image"}
+                      alt={image?.fields?.title || "Hero Image"}
                       className="mx-auto rounded-lg w-full"
                       style={{ maxWidth: computedImageWidth }}
                     />
