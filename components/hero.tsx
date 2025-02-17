@@ -42,6 +42,11 @@ export function Hero({ content }: HeroProps) {
         ] || "md:flex-row"
       : "";
 
+  const isVideo = image?.fields?.file?.contentType?.includes("video");
+  const mediaUrl = image?.fields?.file?.url
+    ? `https:${image.fields.file.url}`
+    : null;
+
   return (
     <section
       id={sectionId}
@@ -50,33 +55,69 @@ export function Hero({ content }: HeroProps) {
           ? "pt-40 pb-24 overflow-hidden"
           : "py-20"
       }`}
-      style={
-        image?.fields?.file?.url && imagePosition === "background"
-          ? {
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https:${image.fields.file.url})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }
-          : {}
-      }
     >
-      {imagePosition === "background" && (
-        <div className="absolute inset-0 gradient-bg" />
+      {/* Fondo de video o imagen */}
+      {mediaUrl && imagePosition === "background" && (
+        <div className="absolute inset-0 z-0">
+          {isVideo ? (
+            <video
+              src={mediaUrl}
+              autoPlay
+              muted
+              loop
+              className="w-full h-full object-cover"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <div
+              className="w-full h-full"
+              style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${mediaUrl})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          )}
+          <div className="absolute inset-0 gradient-bg" />
+        </div>
       )}
 
-      <div className="container mx-auto max-w-6xl px-4 relative">
-        {image?.fields?.file?.url && imagePosition !== "background" ? (
+      <div className="container mx-auto max-w-6xl px-4 relative z-10">
+        {mediaUrl && imagePosition !== "background" ? (
           <div
             className={`w-full flex flex-col ${layoutClasses} items-center gap-8`}
           >
             {imagePosition === "top" || imagePosition === "bottom" ? (
               <>
-                <img
-                  src={`https:${image.fields.file.url}`}
-                  alt={image.fields.title || "Hero Image"}
-                  className="mx-auto rounded-lg w-full md:w-auto"
-                  style={{ maxWidth: computedImageWidth }}
-                />
+                {isVideo ? (
+                  <video
+                    src={mediaUrl}
+                    autoPlay
+                    muted
+                    loop
+                    className="mx-auto rounded-lg w-full md:w-auto"
+                    style={{ maxWidth: computedImageWidth }}
+                  />
+                ) : (
+                  <img
+                    src={mediaUrl}
+                    alt={image?.fields?.title || "Hero Image"}
+                    className="mx-auto rounded-lg w-full md:w-auto"
+                    style={{ maxWidth: computedImageWidth }}
+                  />
+                )}
                 <div className="text-center w-full">
                   <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6">
                     {title}{" "}
@@ -99,12 +140,23 @@ export function Hero({ content }: HeroProps) {
             ) : (
               <>
                 <div className="w-full md:w-1/2 order-2 md:order-none">
-                  <img
-                    src={`https:${image.fields.file.url}`}
-                    alt={image.fields.title || "Hero Image"}
-                    className="mx-auto rounded-lg w-full"
-                    style={{ maxWidth: computedImageWidth }}
-                  />
+                  {isVideo ? (
+                    <video
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      className="mx-auto rounded-lg w-full"
+                      style={{ maxWidth: computedImageWidth }}
+                    />
+                  ) : (
+                    <img
+                      src={mediaUrl}
+                      alt={image?.fields?.title || "Hero Image"}
+                      className="mx-auto rounded-lg w-full"
+                      style={{ maxWidth: computedImageWidth }}
+                    />
+                  )}
                 </div>
                 <div className="text-start w-full md:w-1/2 order-1 md:order-none">
                   <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6">
