@@ -60,21 +60,31 @@ export function Hero({ content }: HeroProps) {
       {mediaUrl && imagePosition === "background" && (
         <div className="absolute inset-0 z-0">
           {isVideo ? (
-            <video
-              src={mediaUrl}
-              autoPlay
-              muted
-              loop
-              className="w-full h-full object-cover"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
+            <>
+              <video
+                src={mediaUrl}
+                autoPlay
+                muted
+                loop
+                className="w-full h-full object-cover"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+              {/* Capa de gradiente para oscurecer el video */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))",
+                }}
+              />
+            </>
           ) : (
             <div
               className="w-full h-full"
@@ -113,7 +123,7 @@ export function Hero({ content }: HeroProps) {
                 ) : (
                   <img
                     src={mediaUrl}
-                    alt={image?.fields?.title || "Hero Image"}
+                    alt={image.fields.title || "Hero Image"}
                     className="mx-auto rounded-lg w-full md:w-auto"
                     style={{ maxWidth: computedImageWidth }}
                   />
@@ -152,7 +162,7 @@ export function Hero({ content }: HeroProps) {
                   ) : (
                     <img
                       src={mediaUrl}
-                      alt={image?.fields?.title || "Hero Image"}
+                      alt={image.fields.title || "Hero Image"}
                       className="mx-auto rounded-lg w-full"
                       style={{ maxWidth: computedImageWidth }}
                     />
