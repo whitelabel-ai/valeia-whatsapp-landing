@@ -13,7 +13,7 @@ interface ProcessProps {
 }
 
 export function Process({ content }: ProcessProps) {
-  const { title, subtitle, steps, isVisible, sectionId, ctaSection } = content;
+  const { title, subtitle, steps, isVisible, sectionId } = content;
 
   if (!isVisible || !steps || steps.length === 0) return null;
 
@@ -130,17 +130,17 @@ export function Process({ content }: ProcessProps) {
                     </ReactMarkdown>
                   </div>
                 </div>
-                {(step.fields.ctaText && step.fields.ctaUrl) ||
-                  (step.fields.ctaSection && (
+                {step.fields.ctaText &&
+                  (step.fields.ctaUrl || step.fields.ctaSection) && (
                     <div className="mt-6 pt-4 border-t border-border/10">
                       <SectionLink
                         href={getTargetHref(
                           step.fields.ctaSection,
                           step.fields.ctaUrl
                         )}
-                        className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
                         ctaSection={step.fields.ctaSection}
                         ctaUrl={step.fields.ctaUrl}
+                        asLink={true}
                       >
                         {step.fields.ctaText}
                         <span className="ml-2 transition-transform group-hover:translate-x-1">
@@ -148,7 +148,7 @@ export function Process({ content }: ProcessProps) {
                         </span>
                       </SectionLink>
                     </div>
-                  ))}
+                  )}
               </div>
             );
           })}
@@ -194,17 +194,17 @@ export function Process({ content }: ProcessProps) {
                       </ReactMarkdown>
                     </div>
                   </div>
-                  {(step.fields.ctaText && step.fields.ctaUrl) ||
-                    (step.fields.ctaSection && (
+                  {step.fields.ctaText &&
+                    (step.fields.ctaUrl || step.fields.ctaSection) && (
                       <div className="mt-6 pt-4 border-t border-border/10">
                         <SectionLink
                           href={getTargetHref(
                             step.fields.ctaSection,
                             step.fields.ctaUrl
                           )}
-                          className="inline-flex items-center text-primary font-medium hover:underline group-hover:translate-x-1 transition-transform"
                           ctaSection={step.fields.ctaSection}
                           ctaUrl={step.fields.ctaUrl}
+                          asLink={true}
                         >
                           {step.fields.ctaText}
                           <span className="ml-2 transition-transform group-hover:translate-x-1">
@@ -212,7 +212,7 @@ export function Process({ content }: ProcessProps) {
                           </span>
                         </SectionLink>
                       </div>
-                    ))}
+                    )}
                 </div>
               );
             })}
