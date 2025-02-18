@@ -141,7 +141,7 @@ Fields:
 - "Price" (Short text)
 
   - Required
-  - **Help text**: "Precio con moneda y periodicidad si aplica (ej: '$99/mes', 'Desde $199')"
+  - **Help text**: "Ingrese el precio con el formato: '50 USD', '100 EUR' (monto seguido de la moneda)"
 
 - "Description" (Long text)
 
@@ -170,9 +170,16 @@ Fields:
   - **Help text**: "Texto del botón de compra. Debe ser claro y accionable, máximo 20 caracteres"
 
 - "Pay Link" (Short text)
+
   - Required
   - Pattern: ^https?://.\*$
   - **Help text**: "URL donde el usuario puede contratar este plan. Debe comenzar con http:// o https://"
+
+- "Enable Coupons" (Boolean)
+
+  - Required
+  - Default: false
+  - **Help text**: "Activa esta opción para mostrar un modal donde el usuario puede ingresar un cupón de descuento"
 
 #### ❓ FAQ
 
@@ -408,9 +415,16 @@ Fields:
   - **Help text**: "Planes a mostrar. Ordénalos de menor a mayor precio para mejor comprensión"
 
 - "Is Visible" (Boolean)
+
   - Required
   - Default: true
   - **Help text**: "Controla la visibilidad de la sección en la página"
+
+- "Coupons Endpoint" (Short text)
+
+  - Required
+  - Pattern: ^https?://.\*$
+  - **Help text**: "URL para consultar cupones disponibles y descuento(POST)"
 
 #### ❓ FAQ Section
 

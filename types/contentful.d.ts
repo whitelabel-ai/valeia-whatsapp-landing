@@ -182,13 +182,15 @@ export interface ProcessSection {
 
 export interface PricingPlan {
   name: string;
-  price: string;
+  price: string; // Ejemplo: "50 USD", "100 EUR"
   description?: string;
   features?: string[];
   highlightedText?: boolean;
   promotionalText?: string;
   payLinkText?: string;
   payLink?: string;
+  enableCoupons?: boolean;
+  paymentScript?: string; // Script personalizado de la pasarela de pago
 }
 
 export interface PricingSection {
@@ -196,7 +198,7 @@ export interface PricingSection {
   subtitle: string;
   plans: ContentfulEntry<PricingPlan>[];
   isVisible: boolean;
-  ctaSection: string;
+  couponsEndpoint?: string; // Endpoint para validación de cupones
   sectionId: string;
 }
 
