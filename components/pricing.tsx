@@ -6,7 +6,7 @@ import { PricingSection } from "@/types/contentful";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { defaultMarkdownComponents } from "./ui/markdown-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CouponModal } from "./ui/coupon-modal";
 import { extractPriceInfo } from "@/lib/price-utils";
 
@@ -22,6 +22,49 @@ export function Pricing({ content }: PricingProps) {
   const [appliedDiscounts, setAppliedDiscounts] = useState<{
     [key: number]: number;
   }>({});
+  const paymentContainersRef = useRef<{ [key: string]: HTMLDivElement | null }>(
+    {}
+  );
+
+  useEffect(() => {
+    // Solo procesar planes válidos que tengan script de pago y descuento aplicado
+    const validPlans = plans?.filter(
+      (plan) => plan.fields?.name && plan.fields?.price
+    );
+
+    if (!validPlans) return;
+
+    validPlans.forEach((plan, index) => {
+      if (plan.fields.paymentScript && appliedDiscounts[index]) {
+        const container = paymentContainersRef.current[`plan-${index}`];
+        if (!container) return;
+
+        // Limpiar el contenedor
+        container.innerHTML = "";
+
+        // Calcular el precio con descuento
+        const { amount, currency } = extractPriceInfo(plan.fields.price);
+        const discount = appliedDiscounts[index];
+        const finalAmount = discount
+          ? amount - (amount * discount) / 100
+          : amount;
+
+        // Preparar el script con los valores actualizados
+        let scriptContent = plan.fields.paymentScript
+          .replace(/amount="[^"]*"/, `amount="${finalAmount}"`)
+          .replace(
+            /data-amount-in-cents="[^"]*"/,
+            `data-amount-in-cents="${finalAmount * 100}"`
+          )
+          .replace(/currency="[^"]*"/, `currency="${currency}"`);
+        console.log(scriptContent);
+        // Crear y agregar el script
+        const scriptElement = document.createElement("script");
+        scriptElement.innerHTML = scriptContent;
+        container.appendChild(scriptElement);
+      }
+    });
+  }, [appliedDiscounts, plans]); // Solo se ejecuta cuando cambian los descuentos o los planes
 
   if (!isVisible || !plans) return null;
 
@@ -42,14 +85,11 @@ export function Pricing({ content }: PricingProps) {
     const { amount, currency } = extractPriceInfo(price);
     if (!discount) return price;
     const discountedAmount = amount - (amount * discount) / 100;
-    return `${discountedAmount.toFixed(2)} ${currency}`;
+    return `${discountedAmount.toFixed(0)} ${currency}`;
   };
 
   const handlePaymentClick = (plan: any, index: number) => {
-    if (plan.fields.enableCoupons && !appliedDiscounts[index]) {
-      setSelectedPlan(index);
-      setIsCouponModalOpen(true);
-    } else if (plan.fields.payLink) {
+    if (!plan.fields.enableCoupons || !appliedDiscounts[index]) {
       const { amount } = extractPriceInfo(plan.fields.price);
       const discount = appliedDiscounts[index];
       const finalAmount = discount
@@ -64,10 +104,10 @@ export function Pricing({ content }: PricingProps) {
 
   const renderPaymentButton = (plan: any, index: number) => {
     if (plan.fields.paymentScript && appliedDiscounts[index]) {
-      // Renderizar el script personalizado de pago
       return (
         <div
-          dangerouslySetInnerHTML={{ __html: plan.fields.paymentScript }}
+          ref={(el) => (paymentContainersRef.current[`plan-${index}`] = el)}
+          id={`payment-container-${index}`}
           className="w-full"
         />
       );
@@ -138,7 +178,7 @@ export function Pricing({ content }: PricingProps) {
                         <span className="text-3xl md:text-4xl font-bold block">
                           {currentPrice}
                         </span>
-                        <span className="text-sm text-green-500">
+                        <span className="text-sm text-primary">
                           {discount}% de descuento aplicado
                         </span>
                       </div>
