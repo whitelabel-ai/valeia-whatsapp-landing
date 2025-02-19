@@ -263,6 +263,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         >
           {children}
         </ThemeProvider>
+        <Script
+          src="https://static.dlocalgo.com/dlocalgo.min.js"
+          strategy="beforeInteractive"
+        />
         {valeiaChat && <Script src="chat-widget.es.js" />}
       </body>
     </html>

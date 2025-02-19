@@ -1,0 +1,48 @@
+<div class="space-y-3"><button
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 w-full"><svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-ticket mr-2 h-4 w-4">
+            <path
+                d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
+            </path>
+            <path d="M13 5v2"></path>
+            <path d="M13 17v2"></path>
+            <path d="M13 11v2"></path>
+        </svg>Aplicar cupón</button>
+    <div id="payment-container-1" class="w-full">
+        <div>
+            <script data-reference-id="e2e71d9c-c21a-4864-aa42-2bf81b699fec">
+                (function () {
+                    const z = !!window.DlocalGo,
+                        s = z
+                            ? document.querySelector(
+                                'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
+                            )
+                            : document.createElement("script");
+                    z ||
+                        ((s.src = "https://static.dlocalgo.com/dlocalgo.min.js"),
+                            (s.async = !0),
+                            document.body.appendChild(s));
+                    s.addEventListener("load", () => {
+                        const e = document.querySelector(
+                            'script[data-reference-id="e2e71d9c-c21a-4864-aa42-2bf81b699fec"]'
+                        ),
+                            t = e.parentNode,
+                            n = "dp-btn-e2e71d9c-c21a-4864-aa42-2bf81b699fec",
+                            c = document.createElement("div");
+                        (c.id = n), t.insertBefore(c, e);
+                        new DlocalGo("sRuITfydBHkflJGgrnTuOEUkUUBOzsWX").createCheckout(n, {
+                            subType: "BUTTON",
+                            country: "",
+                            currency: "USD",
+                            amount: "50",
+                            lang: "",
+                            text: "Pagar ahora",
+                        });
+                    });
+                })();
+            </script>
+        </div>
+    </div>
+</div>

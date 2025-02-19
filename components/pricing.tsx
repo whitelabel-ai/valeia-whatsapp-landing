@@ -9,6 +9,8 @@ import { defaultMarkdownComponents } from "./ui/markdown-components";
 import { useState, useEffect, useRef } from "react";
 import { CouponModal } from "./ui/coupon-modal";
 import { extractPriceInfo } from "@/lib/price-utils";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 interface PricingProps {
   content: PricingSection;
@@ -22,47 +24,7 @@ export function Pricing({ content }: PricingProps) {
   const [appliedDiscounts, setAppliedDiscounts] = useState<{
     [key: number]: number;
   }>({});
-  const paymentContainersRef = useRef<{ [key: string]: HTMLDivElement | null }>(
-    {}
-  );
-
-  useEffect(() => {
-    // Solo procesar planes válidos que tengan script de pago y descuento aplicado
-    const validPlans = plans?.filter(
-      (plan) => plan.fields?.name && plan.fields?.price
-    );
-
-    if (!validPlans) return;
-
-    validPlans.forEach((plan, index) => {
-      if (plan.fields.paymentScript) {
-        const container = paymentContainersRef.current[`plan-${index}`];
-        if (!container) return;
-
-        // Limpiar el contenedor
-        container.innerHTML = "";
-
-        // Calcular el precio con descuento
-        const { amount, currency } = extractPriceInfo(plan.fields.price);
-        const discount = appliedDiscounts[index] || 0;
-        const finalAmount = amount - (amount * discount) / 100;
-
-        // Preparar el script con los valores actualizados
-        let scriptContent = plan.fields.paymentScript
-          .replace(/amount="[^"]*"/, `amount="${finalAmount}"`)
-          .replace(
-            /data-amount-in-cents="[^"]*"/,
-            `data-amount-in-cents="${finalAmount * 100}"`
-          )
-          .replace(/currency="[^"]*"/, `currency="${currency}"`);
-
-        // Crear y agregar el script
-        const scriptElement = document.createElement("div");
-        scriptElement.innerHTML = scriptContent;
-        container.appendChild(scriptElement);
-      }
-    });
-  }, [appliedDiscounts, plans]); // Solo se ejecuta cuando cambian los descuentos o los planes
+  const router = useRouter();
 
   if (!isVisible || !plans) return null;
 
@@ -86,7 +48,7 @@ export function Pricing({ content }: PricingProps) {
     return `${discountedAmount.toFixed(0)} ${currency}`;
   };
 
-  const handlePaymentClick = (plan: any, index: number) => {
+  const handlePaymentClick = async (plan: any, index: number) => {
     if (!plan.fields.enableCoupons || !appliedDiscounts[index]) {
       const { amount } = extractPriceInfo(plan.fields.price);
       const discount = appliedDiscounts[index];
@@ -98,31 +60,45 @@ export function Pricing({ content }: PricingProps) {
         discount ? `?discount=${discount}&amount=${finalAmount}` : ""
       }`;
     }
-  };
+    try {
+      const discount = appliedDiscounts[index] || 0;
+      const couponCode = discount > 0 ? "HAS_COUPON" : "";
 
-  const renderPaymentButton = (plan: any, index: number) => {
-    if (plan.fields.paymentScript) {
-      return (
-        <div
-          ref={(el) => (paymentContainersRef.current[`plan-${index}`] = el)}
-          id={`payment-container-${index}`}
-          className="w-full"
-        />
-      );
+      const response = await fetch("/api/process-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          planId: plan.sys.id,
+          couponCode: couponCode, // Enviar un indicador si hay cupón aplicado
+          discount: discount,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        console.error("Error from API Route:", data.error);
+        // Mostrar un mensaje de error al usuario
+        toast({
+          title: "Error al procesar el pago",
+          description: data.error,
+          variant: "destructive",
+        });
+      } else if (data.redirectUrl) {
+        router.push(data.redirectUrl); // Redirigir al usuario a la URL de pago
+      }
+    } catch (error) {
+      console.error("Error sending request to API Route:", error);
+      // Mostrar un mensaje de error al usuario
+      toast({
+        title: "Error al procesar el pago",
+        description:
+          "Ocurrió un error inesperado. Inténtalo de nuevo más tarde.",
+        variant: "destructive",
+      });
     }
-    return (
-      <Button
-        className="w-full"
-        variant={plan.fields.highlightedText ? "default" : "outline"}
-        onClick={() => handlePaymentClick(plan, index)}
-      >
-        {plan.fields.payLinkText || "Pagar ahora"}
-      </Button>
-    );
-  };
-
-  const toTitleCase = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 
   return (
@@ -224,7 +200,15 @@ export function Pricing({ content }: PricingProps) {
                     </Button>
                   )}
 
-                  {renderPaymentButton(plan, index)}
+                  <Button
+                    className="w-full"
+                    variant={
+                      plan.fields.highlightedText ? "default" : "outline"
+                    }
+                    onClick={() => handlePaymentClick(plan, index)}
+                  >
+                    {plan.fields.payLinkText || "Pagar ahora"}
+                  </Button>
                 </div>
               </div>
             );
