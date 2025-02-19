@@ -190,7 +190,19 @@ export interface PricingPlan {
   payLinkText?: string;
   payLink?: string;
   enableCoupons?: boolean;
-  paymentScript?: string; // Script personalizado de la pasarela de pago
+  apiConnection?: ContentfulEntry<connectApi>[]; // Script personalizado de la pasarela de pago
+}
+
+export interface connectApi {
+  internalName: string;
+  apiProvider: string;
+  apiEndpoint: string;
+  httpMethod: "GET" | "POST" | "PUT" | "DELETE";
+  headers: {}; // Objeto con los headers necesarios para la conexión con la API
+  apiKey: string;
+  secretKey: string;
+  requestBody: {}; // Objeto con los datos necesarios para la conexión con la API
+  queryParameters: {}; // Objeto con los parámetros necesarios para la conexión con la API
 }
 
 export interface PricingSection {

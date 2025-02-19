@@ -4,7 +4,7 @@ import { createClient } from "contentful";
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { planId, couponCode, discount } = reqBody;
+    const { planId, couponCode, discount, couponsEndpoint } = reqBody;
 
     // Inicializar cliente de Contentful
     const client = createClient({
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Obtener la configuración de la API desde Contentful
-    const apiConfig = plan.apiConnection; // Asumiendo que tienes un campo de referencia llamado "apiConnection"
+    const apiConfig = plan.apiConnection.fields; // Acceder a los campos del ConnectAPI
     if (!apiConfig) {
       return NextResponse.json(
         { error: "Configuración de API no encontrada" },
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     let finalAmount = extractPriceInfo(plan.price).amount;
     let appliedDiscount = 0;
 
-    if (couponCode === "HAS_COUPON" && discount > 0) {
+    if (couponCode && couponCode !== "") {
       // Obtener el endpoint de cupones de la sección de precios
       const couponsEndpoint = plan.couponsEndpoint;
       if (!couponsEndpoint) {
@@ -45,10 +45,10 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+      console.log("cupon", couponCode);
 
       try {
-        const couponUrl =
-          couponsEndpoint + "?coupon=" + couponCode + "&amount=" + finalAmount;
+        const couponUrl = `${couponsEndpoint}?coupon=${couponCode}&action=apply-coupon`;
         const couponResponse = await fetch(couponUrl, {
           method: "GET",
           headers: {
@@ -79,12 +79,70 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Construir la URL de redirección
-    const redirectUrl = plan.payLink; // URL base del plan
-    const currency = extractPriceInfo(plan.price).currency;
+    // Construir el cuerpo de la solicitud para dLocal
+    const orderId =
+      plan.name +
+      "-" +
+      finalAmount +
+      "-" +
+      Math.random().toString(36).substring(7); // Generar un ID único
+    const requestBody = {
+      amount: finalAmount,
+      currency: extractPriceInfo(plan.price).currency,
+      order_id: orderId,
+    };
 
-    // Devolver la URL de redirección al frontend
-    return NextResponse.json({ redirectUrl: redirectUrl }, { status: 200 });
+    // Configurar los encabezados de autorización
+    const apiKey = apiConfig.apiKey;
+    const secretKey = apiConfig.secretKey || process.env.DLOCAL_SECRET_KEY; // Obtener la clave secreta de las variables de entorno
+    const authHeader = `Bearer ${apiKey}:${secretKey}`;
+
+    // Llamar a la API de dLocal
+    try {
+      const dlocalResponse = await fetch(
+        apiConfig.apiEndpoint + "v1/payments",
+        {
+          method: apiConfig.httpMethod,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authHeader,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!dlocalResponse.ok) {
+        const errorData = await dlocalResponse.json();
+        console.error("dLocal API error:", errorData);
+        return NextResponse.json(
+          { error: "Error al procesar el pago con dLocal" },
+          { status: 500 }
+        );
+      }
+
+      const dlocalData = await dlocalResponse.json();
+
+      // Extraer la URL de redirección desde la respuesta de dLocal
+      const redirectUrl = dlocalData.redirect_url; // Ajusta esto según la respuesta de dLocal
+
+      if (!redirectUrl) {
+        return NextResponse.json(
+          {
+            error: "URL de redirección no encontrada en la respuesta de dLocal",
+          },
+          { status: 500 }
+        );
+      }
+
+      // Devolver la URL de redirección al frontend
+      return NextResponse.json({ redirectUrl: redirectUrl }, { status: 200 });
+    } catch (dlocalError) {
+      console.error("Error al llamar a la API de dLocal:", dlocalError);
+      return NextResponse.json(
+        { error: "Error al llamar a la API de dLocal" },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error("Error en la API Route:", error);
     return NextResponse.json(

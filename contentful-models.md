@@ -181,6 +181,24 @@ Fields:
   - Default: false
   - **Help text**: "Activa esta opción para mostrar un modal donde el usuario puede ingresar un cupón de descuento"
 
+* "API Connection" (Reference - Single Connect API) - Required
+
+#### 🔌 Connect API
+
+**Content Type ID:** `connectApi` **Nombre para mostrar:** `Connect API` **Descripción:** Configura la conexión a una API externa.
+
+Fields:
+
+- "Internal Name" (Short text, Required, Unique): `internalName` - Nombre descriptivo para identificar esta configuración.
+- "API Provider" (Short text, Required, Dropdown): `apiProvider` - Pasarela de pago (ej: "dLocal", "Stripe", "PayPal", "Wompi", "Otro").
+- "API Endpoint" (Short text, Required): `apiEndpoint` - URL base de la API.
+- "HTTP Method" (Short text, Required, Dropdown): `httpMethod` - Método HTTP (GET, POST).
+- "Headers" (JSON object, Optional): `headers` - OPCIONAL - Encabezados HTTP estáticos.
+- "API Key" (Short text, Optional): `apiKey` - API key (usar variables de entorno en la aplicación).
+- "Request Body" (JSON object, Optional): `requestBody` - Cuerpo de la solicitud estático.
+- "Query Parameters" (JSON object, Optional): `queryParams` - Parámetros de consulta estáticos.
+- "Description" (Long text, Optional): `description` - Notas para el editor.
+
 #### ❓ FAQ
 
 **Content Type ID:** `faq` **Nombre para mostrar:** "FAQ" **Descripción:** Preguntas frecuentes y sus respuestas.

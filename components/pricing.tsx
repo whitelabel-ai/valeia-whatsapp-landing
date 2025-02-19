@@ -24,6 +24,7 @@ export function Pricing({ content }: PricingProps) {
   const [appliedDiscounts, setAppliedDiscounts] = useState<{
     [key: number]: number;
   }>({});
+  const [couponCode, setCouponCode] = useState("");
   const router = useRouter();
 
   if (!isVisible || !plans) return null;
@@ -34,7 +35,11 @@ export function Pricing({ content }: PricingProps) {
 
   if (validPlans.length === 0) return null;
 
-  const handleApplyCoupon = (planIndex: number, discount: number) => {
+  const handleApplyCoupon = (
+    planIndex: number,
+    discount: number,
+    couponCode: string
+  ) => {
     setAppliedDiscounts((prev) => ({
       ...prev,
       [planIndex]: discount,
@@ -62,8 +67,8 @@ export function Pricing({ content }: PricingProps) {
     }
     try {
       const discount = appliedDiscounts[index] || 0;
-      const couponCode = discount > 0 ? "HAS_COUPON" : "";
-
+      //const couponCode = discount > 0 ? "HAS_COUPON" : "";
+      // Enviar el código del cupón real al backend
       const response = await fetch("/api/process-payment", {
         method: "POST",
         headers: {
@@ -71,8 +76,8 @@ export function Pricing({ content }: PricingProps) {
         },
         body: JSON.stringify({
           planId: plan.sys.id,
-          couponCode: couponCode, // Enviar un indicador si hay cupón aplicado
-          discount: discount,
+          couponCode: couponCode, // Enviar el cupon Aplicado
+          couponsEndpoint: couponsEndpoint,
         }),
       });
 
@@ -224,7 +229,7 @@ export function Pricing({ content }: PricingProps) {
             setSelectedPlan(null);
           }}
           onApplyCoupon={(discount) => {
-            handleApplyCoupon(selectedPlan, discount);
+            handleApplyCoupon(selectedPlan, discount, couponCode);
           }}
           endpoint={couponsEndpoint}
           originalPrice={

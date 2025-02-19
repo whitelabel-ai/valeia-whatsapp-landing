@@ -16,7 +16,7 @@ import { toast } from "@/hooks/use-toast";
 interface CouponModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onApplyCoupon: (discount: number) => void;
+  onApplyCoupon: (discount: number, couponCode: string) => void;
   originalPrice: number;
   endpoint?: string;
 }
@@ -66,7 +66,7 @@ export function CouponModal({
           description:
             data.message || "El descuento ha sido aplicado correctamente.",
         });
-        onApplyCoupon(data.discount * 100); // Convierte a porcentaje si es necesario
+        onApplyCoupon(data.discount * 100, couponCode); // Convierte a porcentaje si es necesario
         onClose();
       } else {
         setError(data.message || "El cupón no es válido.");
