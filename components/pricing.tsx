@@ -35,7 +35,7 @@ export function Pricing({ content }: PricingProps) {
     if (!validPlans) return;
 
     validPlans.forEach((plan, index) => {
-      if (plan.fields.paymentScript && appliedDiscounts[index]) {
+      if (plan.fields.paymentScript) {
         const container = paymentContainersRef.current[`plan-${index}`];
         if (!container) return;
 
@@ -44,10 +44,8 @@ export function Pricing({ content }: PricingProps) {
 
         // Calcular el precio con descuento
         const { amount, currency } = extractPriceInfo(plan.fields.price);
-        const discount = appliedDiscounts[index];
-        const finalAmount = discount
-          ? amount - (amount * discount) / 100
-          : amount;
+        const discount = appliedDiscounts[index] || 0;
+        const finalAmount = amount - (amount * discount) / 100;
 
         // Preparar el script con los valores actualizados
         let scriptContent = plan.fields.paymentScript
@@ -57,9 +55,9 @@ export function Pricing({ content }: PricingProps) {
             `data-amount-in-cents="${finalAmount * 100}"`
           )
           .replace(/currency="[^"]*"/, `currency="${currency}"`);
-        console.log(scriptContent);
+
         // Crear y agregar el script
-        const scriptElement = document.createElement("script");
+        const scriptElement = document.createElement("div");
         scriptElement.innerHTML = scriptContent;
         container.appendChild(scriptElement);
       }
@@ -103,7 +101,7 @@ export function Pricing({ content }: PricingProps) {
   };
 
   const renderPaymentButton = (plan: any, index: number) => {
-    if (plan.fields.paymentScript && appliedDiscounts[index]) {
+    if (plan.fields.paymentScript) {
       return (
         <div
           ref={(el) => (paymentContainersRef.current[`plan-${index}`] = el)}
@@ -112,7 +110,6 @@ export function Pricing({ content }: PricingProps) {
         />
       );
     }
-
     return (
       <Button
         className="w-full"
@@ -122,6 +119,10 @@ export function Pricing({ content }: PricingProps) {
         {plan.fields.payLinkText || "Pagar ahora"}
       </Button>
     );
+  };
+
+  const toTitleCase = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 
   return (
