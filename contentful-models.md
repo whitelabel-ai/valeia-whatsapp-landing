@@ -424,7 +424,7 @@ Fields:
 
   - Required
   - Pattern: ^https?://.\*$
-  - **Help text**: "URL para consultar cupones disponibles y descuento(POST)"
+  - **Help text**: "URL para consultar cupones disponibles y descuento(GET)"
 
 #### ❓ FAQ Section
 
