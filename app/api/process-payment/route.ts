@@ -4,7 +4,7 @@ import { createClient } from "contentful";
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { planId, couponCode, discount, couponsEndpoint } = reqBody;
+    const { planId, couponCode, couponsEndpoint } = reqBody;
 
     // Inicializar cliente de Contentful
     const client = createClient({
@@ -37,18 +37,16 @@ export async function POST(request: NextRequest) {
     let appliedDiscount = 0;
 
     if (couponCode && couponCode !== "") {
-      // Obtener el endpoint de cupones de la sección de precios
-      const couponsEndpoint = plan.couponsEndpoint;
       if (!couponsEndpoint) {
         return NextResponse.json(
           { error: "Endpoint de cupones no configurado" },
           { status: 400 }
         );
       }
-      console.log("cupon", couponCode);
 
       try {
         const couponUrl = `${couponsEndpoint}?coupon=${couponCode}&action=apply-coupon`;
+
         const couponResponse = await fetch(couponUrl, {
           method: "GET",
           headers: {
@@ -62,7 +60,7 @@ export async function POST(request: NextRequest) {
         const couponData = await couponResponse.json();
 
         if (couponData.valid) {
-          appliedDiscount = couponData.discount;
+          appliedDiscount = couponData.discount * 100;
           finalAmount = finalAmount - (finalAmount * appliedDiscount) / 100;
         } else {
           return NextResponse.json(
@@ -79,13 +77,32 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    console.log("Monto final:", finalAmount);
+    console.log("Descuento aplicado:", appliedDiscount);
+
     // Construir el cuerpo de la solicitud para dLocal
-    const orderId =
-      plan.name +
-      "-" +
-      finalAmount +
-      "-" +
-      Math.random().toString(36).substring(7); // Generar un ID único
+    const date = new Date();
+    const formattedDate = `${date.getDate().toString().padStart(2, "0")}-${(
+      date.getMonth() + 1
+    )
+      .toString()
+      .padStart(
+        2,
+        "0"
+      )}-${date.getFullYear()}-${date.getHours().toString().padStart(2, "0")}`;
+
+    const planFinal = plan.name
+      .replace(/\s+/g, "")
+      .replace(/\./g, "")
+      .slice(0, 10); // Sin espacios ni puntos
+    const amountInt = Math.floor(finalAmount).toString(); // Solo la parte entera del monto
+    const randomStr = Math.random()
+      .toString(36)
+      .replace(/\./g, "")
+      .substring(6, 12); // 6 caracteres sin puntos
+
+    const orderId = `${planFinal}-${formattedDate}-${amountInt}-${randomStr}`;
+
     const requestBody = {
       amount: finalAmount,
       currency: extractPriceInfo(plan.price).currency,
@@ -93,8 +110,8 @@ export async function POST(request: NextRequest) {
     };
 
     // Configurar los encabezados de autorización
-    const apiKey = apiConfig.apiKey;
-    const secretKey = apiConfig.secretKey || process.env.DLOCAL_SECRET_KEY; // Obtener la clave secreta de las variables de entorno
+    const apiKey = apiConfig.apiKey || process.env.DLOCAL_API_KEY; // Obtener la clave de la API de las variables de entorno si no está proporcionada en la configuración de Contentful como pruebas.
+    const secretKey = apiConfig.secretKey || process.env.DLOCAL_SECRET_KEY; // Obtener la clave secreta de las variables de entorno si no está proporcionada en la configuración de Contentful como pruebas.
     const authHeader = `Bearer ${apiKey}:${secretKey}`;
 
     // Llamar a la API de dLocal

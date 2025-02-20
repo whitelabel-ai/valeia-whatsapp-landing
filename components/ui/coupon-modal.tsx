@@ -25,7 +25,6 @@ export function CouponModal({
   isOpen,
   onClose,
   onApplyCoupon,
-  originalPrice,
   endpoint,
 }: CouponModalProps) {
   const [couponCode, setCouponCode] = useState("");
