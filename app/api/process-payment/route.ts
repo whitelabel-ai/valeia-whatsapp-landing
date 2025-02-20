@@ -117,7 +117,9 @@ export async function POST(request: NextRequest) {
     // Llamar a la API de dLocal
     try {
       const dlocalResponse = await fetch(
-        apiConfig.apiEndpoint + "v1/payments",
+        apiConfig.apiEndpoint.endsWith("v1/payments")
+          ? apiConfig.apiEndpoint
+          : apiConfig.apiEndpoint + "v1/payments",
         {
           method: apiConfig.httpMethod,
           headers: {
