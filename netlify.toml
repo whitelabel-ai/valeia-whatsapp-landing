@@ -2,3 +2,12 @@
   for = "/api/revalidate"
   [headers.values]
     X-Contentful-Signature = "*"
+
+[[redirects]]
+  from = "/_next/static/*"
+  to = "/_next/static/:splat"
+  status = 200
+
+[build]
+  command = "next build"
+  publish = ".next"

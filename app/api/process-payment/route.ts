@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     // Llamar a la API de dLocal
     try {
-      const dlocalResponse = await fetch(
+      const Response = await fetch(
         apiConfig.apiEndpoint.endsWith("v1/payments")
           ? apiConfig.apiEndpoint
           : apiConfig.apiEndpoint + "v1/payments",
@@ -130,19 +130,19 @@ export async function POST(request: NextRequest) {
         }
       );
 
-      if (!dlocalResponse.ok) {
-        const errorData = await dlocalResponse.json();
+      if (!Response.ok) {
+        const errorData = await Response.json();
         console.error("dLocal API error:", errorData);
         return NextResponse.json(
-          { error: "Error al procesar el pago con dLocal" },
+          { error: "Error al procesar el pago con dLocal", errorData },
           { status: 500 }
         );
       }
 
-      const dlocalData = await dlocalResponse.json();
+      const ResponseData = await Response.json();
 
-      // Extraer la URL de redirección desde la respuesta de dLocal
-      const redirectUrl = dlocalData.redirect_url; // Ajusta esto según la respuesta de dLocal
+      // Extraer la URL de redirección desde la respuesta de la pasarela
+      const redirectUrl = ResponseData.redirect_url; // Ajusta esto según la respuesta de la pasarela
 
       if (!redirectUrl) {
         return NextResponse.json(
