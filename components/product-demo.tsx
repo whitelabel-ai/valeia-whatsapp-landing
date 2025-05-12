@@ -22,13 +22,22 @@ export function ProductDemo({ content }: ProductDemoProps) {
     videoUrl,
     videoPosition,
     aspectRatio,
-    videoHeight,
+    videoHeight = 480,
     ctaText,
     ctaUrl,
     sectionId,
     ctaSection,
     isVisible,
   } = content;
+
+  // Función para normalizar la altura del video
+  const normalizeVideoHeight = (height: number): number => {
+    // Limitar el valor entre 240px y 720px
+    return Math.min(Math.max(height, 240), 720);
+  };
+
+  // Altura normalizada
+  const normalizedVideoHeight = normalizeVideoHeight(videoHeight);
 
   if (!isVisible) return null;
 
@@ -62,39 +71,43 @@ export function ProductDemo({ content }: ProductDemoProps) {
         : `https://player.vimeo.com/video/${videoId}`
       : videoUrl;
 
-    const maxMobileHeight = Math.min(videoHeight || 400);
-
     return (
       <div
-        className={`relative ${getAspectRatioClass()} max-w-full`}
+        className="w-full max-w-full overflow-hidden"
         style={{
-          height: videoHeight
-            ? `min(${videoHeight}px, ${maxMobileHeight}px)`
-            : "auto",
-          maxHeight: "70vh",
-          maxWidth: "100%",
+          // Establecer un tamaño máximo dinámico respetando la altura proporcionada
+          maxHeight: `min(${normalizedVideoHeight}px, 70vh)`,
+          minHeight: 'auto',
         }}
       >
-        <iframe
-          src={embedUrl}
-          className="absolute inset-0 w-full h-full rounded-lg shadow-lg"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
+        <div
+          className={`relative ${getAspectRatioClass()} w-full`}
+          style={{
+            maxWidth: '100%',
+            height: '100%',
+          }}
+        >
+          <iframe
+            src={embedUrl}
+            className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-lg"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
       </div>
     );
   };
 
   const renderContent = () => {
     const textContent = (
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center space-y-4">
         {descriptionTitle && (
-          <h3 className="text-xl md:text-2xl font-semibold mb-4">
+          <h3 className="text-xl md:text-2xl font-semibold">
             {descriptionTitle}
           </h3>
         )}
         {description && (
-          <div className="prose prose-invert w-full max-w-none mb-8">
+          <div className="prose prose-invert w-full max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={defaultMarkdownComponents}
@@ -119,13 +132,13 @@ export function ProductDemo({ content }: ProductDemoProps) {
     );
 
     const videoContent = (
-      <div className="w-full flex justify-center items-center  px-4 md:px-0">
+      <div className="w-full flex justify-center items-center">
         <div className="w-full max-w-4xl">{embedVideo()}</div>
       </div>
     );
 
     const textContentContainer = (
-      <div className="w-full md:w-1/2 flex justify-center items-center px-6 md:px-6">
+      <div className="w-full md:w-1/2 flex justify-center items-center px-4 md:px-6">
         {textContent}
       </div>
     );
@@ -133,16 +146,16 @@ export function ProductDemo({ content }: ProductDemoProps) {
     switch (videoPosition) {
       case "left":
         return (
-          <div className="flex flex-col md:flex-row gap-8 md:gap-24 justify-center items-center">
-            <div className="">{videoContent}</div>
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12 justify-center items-center">
+            <div className="w-full md:w-1/2">{videoContent}</div>
             {textContentContainer}
           </div>
         );
       case "right":
         return (
-          <div className="flex flex-col md:flex-row gap-24 md:gap-24 justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12 justify-center items-center">
             {textContentContainer}
-            <div className="">{videoContent}</div>
+            <div className="w-full md:w-1/2">{videoContent}</div>
           </div>
         );
       case "bottom":
@@ -166,7 +179,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
 
   return (
     <section id={sectionId} className="py-12 md:py-24 relative">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto max-w-6xl px-4">
         <header className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
             {title}
