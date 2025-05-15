@@ -84,7 +84,7 @@ export function Faq({ content }: FaqProps) {
   );
 
   return (
-    <section id={sectionId} className="py-24 relative">
+    <section id={sectionId} className="py-6 md:py-24 relative">
       <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
@@ -92,9 +92,8 @@ export function Faq({ content }: FaqProps) {
         </div>
 
         <div
-          className={`mx-auto ${
-            columns === 2 ? "grid md:grid-cols-2 gap-8 md:gap-12" : "max-w-3xl"
-          }`}
+          className={`mx-auto ${columns === 2 ? "grid md:grid-cols-2 gap-8 md:gap-12" : "max-w-3xl"
+            }`}
         >
           {renderFaqColumn(firstColumnFaqs)}
           {columns === 2 &&

@@ -87,14 +87,14 @@ export function Benefits({ content }: BenefitsProps) {
   return (
     <section
       id={sectionId}
-      className="py-24 relative"
+      className="py-6 md:py-24 relative"
       style={getBackgroundStyle()}
     >
       <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           {subtitle && (
-            <p className="text-foreground/80 text-lg max-w-2xl mx-auto">
+            <p className="text-foreground/80 text-xs md:text-lg max-w-2xl mx-auto">
               {subtitle}
             </p>
           )}

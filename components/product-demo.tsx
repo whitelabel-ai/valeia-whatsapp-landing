@@ -178,7 +178,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
   };
 
   return (
-    <section id={sectionId} className="py-12 md:py-24 relative">
+    <section id={sectionId} className="py-6 md:py-24 relative">
       <div className="container mx-auto max-w-6xl px-4">
         <header className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">

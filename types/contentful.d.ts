@@ -145,6 +145,7 @@ export interface HeroSection {
   image?: ContentfulAsset;
   imagePosition?: "right" | "left" | "top" | "bottom" | "background";
   imageWidth?: number;
+  imageMobile?: ContentfulAsset;
   ctaSection?: string;
   sectionId: string;
 }
@@ -330,13 +331,13 @@ export interface CtaSection {
 
 export interface SocialLink {
   redSocial:
-    | "Facebook"
-    | "Twitter"
-    | "Instagram"
-    | "LinkedIn"
-    | "YouTube"
-    | "WhatsApp"
-    | "TikTok";
+  | "Facebook"
+  | "Twitter"
+  | "Instagram"
+  | "LinkedIn"
+  | "YouTube"
+  | "WhatsApp"
+  | "TikTok";
   url: string;
 }
 

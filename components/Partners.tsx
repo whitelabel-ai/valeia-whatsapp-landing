@@ -109,7 +109,7 @@ export function Partners({ content }: PartnersProps) {
   return (
     <section
       id={sectionId}
-      className="py-24 relative"
+      className="py-6 md:py-24 relative"
       style={getBackgroundStyle()}
     >
       <div className="container max-w-6xl mx-auto px-4">
@@ -123,11 +123,10 @@ export function Partners({ content }: PartnersProps) {
         <div ref={containerRef} className="overflow-hidden">
           <div
             ref={scrollRef}
-            className={`flex ${
-              displayMode === "scroll"
-                ? "whitespace-nowrap"
-                : "flex-wrap justify-center"
-            }`}
+            className={`flex ${displayMode === "scroll"
+              ? "whitespace-nowrap"
+              : "flex-wrap justify-center"
+              }`}
             style={{
               transition:
                 displayMode === "scroll" ? "transform 0.05s linear" : undefined,

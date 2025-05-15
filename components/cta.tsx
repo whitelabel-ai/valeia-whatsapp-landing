@@ -15,7 +15,7 @@ export function Cta({ content }: CtaProps) {
   if (!isVisible) return null;
 
   return (
-    <section id={sectionId} className="py-24 relative">
+    <section id={sectionId} className="py-6 md:py-24 relative">
       <div className="absolute inset-0 gradient-bg opacity-50" />
       <div className="container max-w-6xl mx-auto px-4 relative">
         <div className="max-w-3xl mx-auto text-center">

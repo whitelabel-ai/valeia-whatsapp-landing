@@ -19,6 +19,7 @@ export function Hero({ content }: HeroProps) {
     image,
     imagePosition = "right",
     imageWidth,
+    imageMobile,
     ctaSection,
     sectionId,
   } = content;
@@ -38,35 +39,42 @@ export function Hero({ content }: HeroProps) {
   const layoutClasses =
     image && imagePosition !== "background"
       ? imagePositionClasses[
-          imagePosition as keyof typeof imagePositionClasses
-        ] || "md:flex-row"
+      imagePosition as keyof typeof imagePositionClasses
+      ] || "md:flex-row"
       : "";
 
+  // Determinar si la imagen o video es de tipo video
   const isVideo = image?.fields?.file?.contentType?.includes("video");
   const mediaUrl = image?.fields?.file?.url
     ? `https:${image.fields.file.url}`
     : null;
 
+  // Determinar si la imagen mobile es un video y obtener su URL
+  const isMobileVideo = imageMobile?.fields?.file?.contentType?.includes("video");
+  const mobileMediaUrl = imageMobile?.fields?.file?.url
+    ? `https:${imageMobile.fields.file.url}`
+    : null;
+
   return (
     <section
       id={sectionId}
-      className={`relative ${
-        image && imagePosition === "background"
-          ? "pt-40 pb-24 overflow-hidden"
-          : "py-20"
-      }`}
+      className={`relative ${image && imagePosition === "background"
+        ? "pt-40 pb-24 overflow-hidden"
+        : "py-20"
+        }`}
     >
       {/* Fondo de video o imagen */}
       {mediaUrl && imagePosition === "background" && (
         <div className="absolute inset-0 z-0">
           {isVideo ? (
             <>
+              {/* Video para desktop */}
               <video
                 src={mediaUrl}
                 autoPlay
                 muted
                 loop
-                className="w-full h-full object-cover"
+                className="hidden md:block w-full h-full object-cover"
                 style={{
                   position: "absolute",
                   top: 0,
@@ -76,7 +84,59 @@ export function Hero({ content }: HeroProps) {
                   objectFit: "cover",
                 }}
               />
-              {/* Capa de gradiente para oscurecer el video */}
+
+              {/* Video para mobile - muestra video mobile o imagen mobile o el video normal como fallback */}
+              {mobileMediaUrl ? (
+                isMobileVideo ? (
+                  <video
+                    src={mobileMediaUrl}
+                    autoPlay
+                    muted
+                    loop
+                    className="block md:hidden w-full h-full object-cover"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <div
+                    className="block md:hidden w-full h-full"
+                    style={{
+                      backgroundImage: `url(${mobileMediaUrl})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                )
+              ) : (
+                <video
+                  src={mediaUrl}
+                  autoPlay
+                  muted
+                  loop
+                  className="block md:hidden w-full h-full object-cover"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              )}
+
+              {/* Capa de gradiente para oscurecer el video/imagen */}
               <div
                 className="absolute inset-0"
                 style={{
@@ -86,19 +146,80 @@ export function Hero({ content }: HeroProps) {
               />
             </>
           ) : (
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${mediaUrl})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-            />
+            <>
+              {/* Imagen para desktop */}
+              <div
+                className="hidden md:block w-full h-full"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${mediaUrl})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+
+              {/* Contenido para mobile - muestra video/imagen mobile o la normal como fallback */}
+              {mobileMediaUrl ? (
+                isMobileVideo ? (
+                  <video
+                    src={mobileMediaUrl}
+                    autoPlay
+                    muted
+                    loop
+                    className="block md:hidden w-full h-full object-cover"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <div
+                    className="block md:hidden w-full h-full"
+                    style={{
+                      backgroundImage: `url(${mobileMediaUrl})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                )
+              ) : (
+                <div
+                  className="block md:hidden w-full h-full"
+                  style={{
+                    backgroundImage: `url(${mediaUrl})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              )}
+
+              {/* Capa de gradiente para oscurecer la imagen */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))",
+                }}
+              />
+            </>
           )}
           <div className="absolute inset-0 gradient-bg" />
         </div>
@@ -112,21 +233,73 @@ export function Hero({ content }: HeroProps) {
             {imagePosition === "top" || imagePosition === "bottom" ? (
               <>
                 {isVideo ? (
-                  <video
-                    src={mediaUrl}
-                    autoPlay
-                    muted
-                    loop
-                    className="mx-auto rounded-lg w-full md:w-auto"
-                    style={{ maxWidth: computedImageWidth }}
-                  />
+                  <>
+                    <video
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      className="hidden md:block mx-auto rounded-lg w-full md:w-auto"
+                      style={{ maxWidth: computedImageWidth }}
+                    />
+                    {mobileMediaUrl ? (
+                      isMobileVideo ? (
+                        <video
+                          src={mobileMediaUrl}
+                          autoPlay
+                          muted
+                          loop
+                          className="md:hidden mx-auto rounded-lg w-full"
+                        />
+                      ) : (
+                        <img
+                          src={mobileMediaUrl}
+                          alt={imageMobile?.fields?.title || "Hero Mobile Image"}
+                          className="md:hidden mx-auto rounded-lg w-full"
+                        />
+                      )
+                    ) : (
+                      <video
+                        src={mediaUrl}
+                        autoPlay
+                        muted
+                        loop
+                        className="md:hidden mx-auto rounded-lg w-full"
+                      />
+                    )}
+                  </>
                 ) : (
-                  <img
-                    src={mediaUrl}
-                    alt={image?.fields?.title || "Hero Image"}
-                    className="mx-auto rounded-lg w-full md:w-auto"
-                    style={{ maxWidth: computedImageWidth }}
-                  />
+                  <>
+                    <img
+                      src={mediaUrl}
+                      alt={image?.fields?.title || "Hero Image"}
+                      className="hidden md:block mx-auto rounded-lg w-full md:w-auto"
+                      style={{ maxWidth: computedImageWidth }}
+                    />
+                    {mobileMediaUrl ? (
+                      isMobileVideo ? (
+                        <video
+                          src={mobileMediaUrl}
+                          autoPlay
+                          muted
+                          loop
+                          className="md:hidden mx-auto rounded-lg w-full"
+                        />
+                      ) : (
+                        <img
+                          src={mobileMediaUrl}
+                          alt={imageMobile?.fields?.title || "Hero Mobile Image"}
+                          className="md:hidden mx-auto rounded-lg w-full"
+                        />
+                      )
+                    ) : (
+                      <img
+                        src={mediaUrl}
+                        alt={image?.fields?.title || "Hero Image"}
+                        className="md:hidden mx-auto rounded-lg w-full"
+                      />
+                    )}
+                  </>
                 )}
                 <div className="text-center w-full">
                   <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6">
@@ -151,21 +324,73 @@ export function Hero({ content }: HeroProps) {
               <>
                 <div className="w-full md:w-1/2 order-2 md:order-none">
                   {isVideo ? (
-                    <video
-                      src={mediaUrl}
-                      autoPlay
-                      muted
-                      loop
-                      className="mx-auto rounded-lg w-full"
-                      style={{ maxWidth: computedImageWidth }}
-                    />
+                    <>
+                      <video
+                        src={mediaUrl}
+                        autoPlay
+                        muted
+                        loop
+                        className="hidden md:block mx-auto rounded-lg w-full"
+                        style={{ maxWidth: computedImageWidth }}
+                      />
+                      {mobileMediaUrl ? (
+                        isMobileVideo ? (
+                          <video
+                            src={mobileMediaUrl}
+                            autoPlay
+                            muted
+                            loop
+                            className="md:hidden mx-auto rounded-lg w-full"
+                          />
+                        ) : (
+                          <img
+                            src={mobileMediaUrl}
+                            alt={imageMobile?.fields?.title || "Hero Mobile Image"}
+                            className="md:hidden mx-auto rounded-lg w-full"
+                          />
+                        )
+                      ) : (
+                        <video
+                          src={mediaUrl}
+                          autoPlay
+                          muted
+                          loop
+                          className="md:hidden mx-auto rounded-lg w-full"
+                        />
+                      )}
+                    </>
                   ) : (
-                    <img
-                      src={mediaUrl}
-                      alt={image?.fields?.title || "Hero Image"}
-                      className="mx-auto rounded-lg w-full"
-                      style={{ maxWidth: computedImageWidth }}
-                    />
+                    <>
+                      <img
+                        src={mediaUrl}
+                        alt={image?.fields?.title || "Hero Image"}
+                        className="hidden md:block mx-auto rounded-lg w-full"
+                        style={{ maxWidth: computedImageWidth }}
+                      />
+                      {mobileMediaUrl ? (
+                        isMobileVideo ? (
+                          <video
+                            src={mobileMediaUrl}
+                            autoPlay
+                            muted
+                            loop
+                            className="md:hidden mx-auto rounded-lg w-full"
+                          />
+                        ) : (
+                          <img
+                            src={mobileMediaUrl}
+                            alt={imageMobile?.fields?.title || "Hero Mobile Image"}
+                            className="md:hidden mx-auto rounded-lg w-full"
+                          />
+                        )
+                      ) : (
+                        <img
+                          src={mediaUrl}
+                          alt={image?.fields?.title || "Hero Image"}
+                          className="md:hidden mx-auto rounded-lg w-full"
+                        />
+                      )}
+                    </>
                   )}
                 </div>
                 <div className="text-start w-full md:w-1/2 order-1 md:order-none">

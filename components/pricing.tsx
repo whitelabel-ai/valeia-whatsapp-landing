@@ -67,9 +67,8 @@ export function Pricing({ content }: PricingProps) {
         ? amount - (amount * discount) / 100
         : amount;
 
-      window.location.href = `${plan.fields.payLink}${
-        discount ? `?discount=${discount}&amount=${finalAmount}` : ""
-      }`;
+      window.location.href = `${plan.fields.payLink}${discount ? `?discount=${discount}&amount=${finalAmount}` : ""
+        }`;
     }
     try {
       const couponCode = appliedCoupons[index] || ""; // Obtener el cupon Aplicado
@@ -110,7 +109,7 @@ export function Pricing({ content }: PricingProps) {
   };
 
   return (
-    <section id={sectionId} className="py-24 relative">
+    <section id={sectionId} className="py-6 md:py-24 relative">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
@@ -118,15 +117,14 @@ export function Pricing({ content }: PricingProps) {
         </div>
 
         <div
-          className={`grid grid-cols-1 gap-8 justify-center w-full ${
-            validPlans.length === 1
+          className={`grid grid-cols-1 gap-8 justify-center w-full ${validPlans.length === 1
               ? "max-w-sm mx-auto"
               : validPlans.length === 2
                 ? "md:grid-cols-2 max-w-3xl mx-auto"
                 : validPlans.length === 3
                   ? "md:grid-cols-3 max-w-6xl mx-auto"
                   : "sm:grid-cols-2 md:grid-cols-4 max-w-6xl mx-auto"
-          }`}
+            }`}
         >
           {validPlans.map((plan, index) => {
             const discount = appliedDiscounts[index];
@@ -138,9 +136,8 @@ export function Pricing({ content }: PricingProps) {
             return (
               <div
                 key={plan.fields.name}
-                className={`card-gradient rounded-lg p-6 flex flex-col justify-between relative ${
-                  plan.fields.highlightedText ? "ring-2 ring-primary" : ""
-                }`}
+                className={`card-gradient rounded-lg p-6 flex flex-col justify-between relative ${plan.fields.highlightedText ? "ring-2 ring-primary" : ""
+                  }`}
               >
                 {plan.fields.highlightedText && plan.fields.promotionalText && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">

@@ -11,13 +11,18 @@ import { CanonicalUrl } from "@/components/seo/canonical";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export async function generateStaticParams() {
+  return [{ slug: [''] }];
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string[] };
 }): Promise<Metadata> {
   try {
-    const fullSlug = params.slug.join("/");
+    const { slug } = await params;
+    const fullSlug = slug?.join('/') || '/';
     const landingPage = await getLandingPage(fullSlug);
 
     if (!landingPage) {
@@ -122,7 +127,8 @@ export default async function RootLayout({
 }: RootLayoutProps) {
   let landingPage;
   try {
-    const fullSlug = params.slug.join("/");
+    const { slug } = await params;
+    const fullSlug = slug?.join('/') || '/';
     landingPage = await getLandingPage(fullSlug);
   } catch (error) {
     return (

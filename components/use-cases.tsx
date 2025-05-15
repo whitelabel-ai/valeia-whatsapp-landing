@@ -50,8 +50,8 @@ export function UseCases({ content }: UseCasesProps) {
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
-    const SWIPE_THRESHOLD = 50;
-    const SWIPE_VELOCITY = 0.5;
+    const SWIPE_THRESHOLD = 120;
+    const SWIPE_VELOCITY = 0.7;
 
     if (
       Math.abs(info.offset.x) > SWIPE_THRESHOLD ||
@@ -98,17 +98,16 @@ export function UseCases({ content }: UseCasesProps) {
 
   const CaseContent = ({ caseData }: { caseData: any }) => (
     <motion.div
-      className={`card-gradient rounded-lg p-6 relative overflow-hidden ${
-        caseData.imagePosition === "background" ? "min-h-[400px]" : ""
-      }`}
+      className={`card-gradient rounded-lg p-6 relative overflow-hidden ${caseData.imagePosition === "background" ? "min-h-[400px]" : ""
+        }`}
       style={
         caseData.image?.fields?.file?.url &&
-        caseData.imagePosition === "background"
+          caseData.imagePosition === "background"
           ? {
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https:${caseData.image.fields.file.url})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https:${caseData.image.fields.file.url})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }
           : {}
       }
     >
@@ -153,7 +152,7 @@ export function UseCases({ content }: UseCasesProps) {
   );
 
   return (
-    <section id={sectionId} className="py-24 relative max-w-6xl mx-auto">
+    <section id={sectionId} className="py-6 md:py-24 relative max-w-6xl mx-auto">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
@@ -169,11 +168,10 @@ export function UseCases({ content }: UseCasesProps) {
               <button
                 key={useCase.sys.id}
                 onClick={() => setSelectedCase(useCase.sys.id)}
-                className={`w-full text-left p-4 rounded-lg transition-all duration-300 ${
-                  selectedCase === useCase.sys.id
-                    ? "bg-primary/10 border-l-4 border-primary"
-                    : "hover:bg-muted"
-                }`}
+                className={`w-full text-left p-4 rounded-lg transition-all duration-300 ${selectedCase === useCase.sys.id
+                  ? "bg-primary/10 border-l-4 border-primary"
+                  : "hover:bg-muted"
+                  }`}
                 style={{
                   borderColor:
                     selectedCase === useCase.sys.id
@@ -190,11 +188,10 @@ export function UseCases({ content }: UseCasesProps) {
                     />
                   )}
                   <span
-                    className={`font-medium ${
-                      selectedCase === useCase.sys.id
-                        ? "text-primary"
-                        : "text-foreground/80"
-                    }`}
+                    className={`font-medium ${selectedCase === useCase.sys.id
+                      ? "text-primary"
+                      : "text-foreground/80"
+                      }`}
                     style={{
                       color:
                         selectedCase === useCase.sys.id
@@ -243,7 +240,7 @@ export function UseCases({ content }: UseCasesProps) {
               }}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
+              dragElastic={0.1}
               onDragEnd={handleDragEnd}
             >
               <CaseContent caseData={activeCases[currentSlide].fields} />
@@ -256,9 +253,8 @@ export function UseCases({ content }: UseCasesProps) {
               <button
                 key={index}
                 onClick={() => handleSlideChange(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === index ? "bg-primary w-4" : "bg-primary/30"
-                }`}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${currentSlide === index ? "bg-primary w-4" : "bg-primary/30"
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
