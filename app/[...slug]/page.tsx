@@ -21,21 +21,16 @@ import { LeadMagnetSection } from "@/components/LeadMagnet";
 
 export const revalidate = 120;
 
-export async function generateStaticParams() {
-  return [{ slug: [] }];
-}
-
-export default async function DynamicPage({
-  params,
-}: {
-  params: { slug: string[] };
-}) {
+export default async function DynamicPage(
+  props: {
+    params: Promise<{ slug: string[] }>;
+  }
+) {
+  const params = await props.params;
   // Construir el slug completo desde el array de segmentos
-  const { slug } = await params;
-
-  const fullSlug = slug?.join('/') || '/';
-  const parentSlug = slug?.length > 1 ? slug[0] : '/';
-  const pageSlug = slug?.[slug.length - 1] || '';
+  const fullSlug = params.slug.join("/");
+  const parentSlug = params.slug.length > 1 ? params.slug[0] : "/";
+  const pageSlug = params.slug[params.slug.length - 1];
 
   // Primero intentar obtener una landing page con este slug
   const landingPage = await getLandingPage(fullSlug);

@@ -11,18 +11,14 @@ import { CanonicalUrl } from "@/components/seo/canonical";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export async function generateStaticParams() {
-  return [{ slug: [''] }];
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string[] };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string[] }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   try {
-    const { slug } = await params;
-    const fullSlug = slug?.join('/') || '/';
+    const fullSlug = params.slug.join("/");
     const landingPage = await getLandingPage(fullSlug);
 
     if (!landingPage) {
@@ -118,17 +114,19 @@ export async function generateMetadata({
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: RootLayoutProps) {
+export default async function RootLayout(props: RootLayoutProps) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   let landingPage;
   try {
-    const { slug } = await params;
-    const fullSlug = slug?.join('/') || '/';
+    const fullSlug = params.slug.join("/");
     landingPage = await getLandingPage(fullSlug);
   } catch (error) {
     return (

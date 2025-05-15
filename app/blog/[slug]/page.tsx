@@ -22,11 +22,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function BlogPost(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
   const [page, landingPage, navigationPages, legalPages] = await Promise.all([
     getDynamicPage(params.slug),
     getLandingPage(),
