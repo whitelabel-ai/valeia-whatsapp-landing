@@ -3,6 +3,7 @@ import { HeroSection } from "@/types/contentful";
 import Link from "next/link";
 import { getTargetHref } from "@/lib/scroll-utils";
 import { SectionLink } from "./ui/section-link";
+import { processGradient } from "./ui/process-gradient";
 
 interface HeroProps {
   content: HeroSection;
@@ -10,18 +11,19 @@ interface HeroProps {
 
 export function Hero({ content }: HeroProps) {
   const {
+    sectionId,
     title,
     highlightedText,
     description,
     ctaText,
     ctaUrl,
+    ctaSection,
     isVisible,
     image,
     imagePosition = "right",
     imageWidth,
     imageMobile,
-    ctaSection,
-    sectionId,
+    gradientOverlay,
   } = content;
 
   if (!isVisible) return null;
@@ -42,6 +44,9 @@ export function Hero({ content }: HeroProps) {
       imagePosition as keyof typeof imagePositionClasses
       ] || "md:flex-row"
       : "";
+
+  // Aplicar el gradiente de fondo si se proporciona
+  const gradientStyle = processGradient(gradientOverlay);
 
   // Determinar si la imagen o video es de tipo video
   const isVideo = image?.fields?.file?.contentType?.includes("video");
@@ -139,10 +144,7 @@ export function Hero({ content }: HeroProps) {
               {/* Capa de gradiente para oscurecer el video/imagen */}
               <div
                 className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))",
-                }}
+                style={{ background: gradientStyle }}
               />
             </>
           ) : (
@@ -151,7 +153,7 @@ export function Hero({ content }: HeroProps) {
               <div
                 className="hidden md:block w-full h-full"
                 style={{
-                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${mediaUrl})`,
+                  backgroundImage: `${gradientStyle}, url(${mediaUrl})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   position: "absolute",
@@ -214,10 +216,7 @@ export function Hero({ content }: HeroProps) {
               {/* Capa de gradiente para oscurecer la imagen */}
               <div
                 className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))",
-                }}
+                style={{ background: gradientStyle }}
               />
             </>
           )}

@@ -9,7 +9,7 @@ interface UseCasesProps {
   content: UseCasesSection;
 }
 
-type ImagePosition = "right" | "left" | "top" | "bottom" | "background";
+type ImagePosition = "left" | "right" | "top" | "bottom";
 type SlideDirection = "left" | "right";
 
 export function UseCases({ content }: UseCasesProps) {
@@ -21,6 +21,7 @@ export function UseCases({ content }: UseCasesProps) {
   const [direction, setDirection] = useState<SlideDirection>("left");
 
   if (!isVisible) return null;
+  if (!content || !content.isVisible) return null;
 
   const activeCases = cases.filter((c) => c.fields?.isActive);
   const selectedCaseData = cases.find((c) => c.sys.id === selectedCase)?.fields;
@@ -32,15 +33,23 @@ export function UseCases({ content }: UseCasesProps) {
     const positions = {
       right: "flex-row-reverse items-center",
       left: "flex-row items-center",
-      top: "flex-col items-center",
-      bottom: "flex-col-reverse items-center",
-      background: "flex-col items-center",
+      top: "flex-col",
+      bottom: "flex-col-reverse ",
     };
     return positions[imagePosition];
   };
 
+  const getImageSizeClasses = (imagePosition: ImagePosition) => {
+    const sizes = {
+      right: "w-full md:w-1/2",
+      left: "w-full md:w-1/2",
+      top: "w-full",
+      bottom: "w-full",
+    };
+    return sizes[imagePosition];
+  };
+
   const handleSlideChange = (index: number) => {
-    // Determinar la dirección del cambio
     setDirection(index > currentSlide ? "left" : "right");
     setCurrentSlide(index);
     setSelectedCase(activeCases[index].sys.id);
@@ -58,14 +67,12 @@ export function UseCases({ content }: UseCasesProps) {
       Math.abs(info.velocity.x) > SWIPE_VELOCITY
     ) {
       if (info.offset.x > 0 || info.velocity.x > 0) {
-        // Swipe derecha (caso anterior)
         if (currentSlide > 0) {
           setDirection("right");
           setCurrentSlide((prev) => prev - 1);
           setSelectedCase(activeCases[currentSlide - 1].sys.id);
         }
       } else {
-        // Swipe izquierda (siguiente caso)
         if (currentSlide < activeCases.length - 1) {
           setDirection("left");
           setCurrentSlide((prev) => prev + 1);
@@ -96,60 +103,68 @@ export function UseCases({ content }: UseCasesProps) {
     },
   };
 
-  const CaseContent = ({ caseData }: { caseData: any }) => (
-    <motion.div
-      className={`card-gradient rounded-lg p-6 relative overflow-hidden ${caseData.imagePosition === "background" ? "min-h-[400px]" : ""
-        }`}
-      style={
-        caseData.image?.fields?.file?.url &&
-          caseData.imagePosition === "background"
-          ? {
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https:${caseData.image.fields.file.url})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }
-          : {}
-      }
-    >
-      <h3 className="text-2xl font-bold mb-6 relative z-10">{caseData.name}</h3>
+  const CaseContent = ({ caseData, showTitle = true }: { caseData: any; showTitle?: boolean }) => {
+    const hasImage = caseData.image?.fields?.file?.url;
+    const hasDescription = caseData.description;
+    const imagePosition = hasImage ? (caseData.imagePosition as ImagePosition || "right") : "right";
 
-      {caseData.image?.fields?.file?.url ? (
-        caseData.imagePosition === "background" ? (
-          <div className="prose prose-invert max-w-none relative z-10">
-            <div className="text-foreground/80">
-              {documentToReactComponents(caseData.description)}
+    // Determinar el padding top del contenedor principal
+    const getContainerPadding = () => {
+      if (!showTitle) return 'pt-0'; // No mostrar padding si no hay título
+      if (imagePosition === 'top') return 'pt-6'; // Padding si la imagen está arriba
+      return 'pt-6'; // padding por defecto
+    };
+
+    return (
+      <motion.div className={`card-gradient rounded-lg p-6 relative overflow-hidden ${getContainerPadding()}`}>
+        {showTitle && <h3 className="text-2xl font-bold ">{caseData.name}</h3>}
+
+        {hasImage && hasDescription ? (
+          <div className={`flex ${getLayoutClasses(imagePosition)} gap-6`}>
+            <div className={`${getImageSizeClasses(imagePosition)} flex-shrink-0 ${imagePosition === 'top' || imagePosition === 'bottom' ? 'flex justify-center' : ''
+              }`}>
+              <img
+                src={`https:${caseData.image.fields.file.url}`}
+                alt={caseData.image.fields.title || "Case Image"}
+                className={`rounded-lg shadow-lg w-full h-auto object-cover transition-shadow duration-300 hover:shadow-xl ${imagePosition === 'top' || imagePosition === 'bottom' ? 'max-w-2xl' : ''
+                  }`}
+                style={{
+                  maxWidth: computedImageWidth(caseData.imageWidth),
+                  maxHeight: imagePosition === "left" || imagePosition === "right" ? "400px" : "auto"
+                }}
+              />
             </div>
-          </div>
-        ) : (
-          <div
-            className={`flex ${getLayoutClasses(
-              caseData.imagePosition as ImagePosition
-            )} gap-6`}
-          >
-            <img
-              src={`https:${caseData.image.fields.file.url}`}
-              alt={caseData.image.fields.title || "Case Image"}
-              className="rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl"
-              style={{
-                width: computedImageWidth(caseData.imageWidth),
-              }}
-            />
-            <div className="prose prose-invert max-w-none flex-1">
+            <div className="prose prose-invert max-w-none flex-1 mt-0">
               <div className="text-foreground/80">
                 {documentToReactComponents(caseData.description)}
               </div>
             </div>
           </div>
-        )
-      ) : (
-        <div className="prose prose-invert max-w-none">
-          <div className="text-foreground/80">
-            {documentToReactComponents(caseData.description)}
+        ) : hasImage ? (
+          <div className="flex justify-center">
+            <img
+              src={`https:${caseData.image.fields.file.url}`}
+              alt={caseData.image.fields.title || "Case Image"}
+              className="rounded-lg shadow-lg w-full max-w-2xl h-auto object-cover transition-shadow duration-300 hover:shadow-xl"
+              style={{
+                maxWidth: computedImageWidth(caseData.imageWidth),
+              }}
+            />
           </div>
-        </div>
-      )}
-    </motion.div>
-  );
+        ) : hasDescription ? (
+          <div className="prose prose-invert max-w-none">
+            <div className="text-foreground/80">
+              {documentToReactComponents(caseData.description)}
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-8 text-foreground/60">
+            "No content available for this case."
+          </div>
+        )}
+      </motion.div>
+    );
+  };
 
   return (
     <section id={sectionId} className="py-6 md:py-24 relative max-w-6xl mx-auto">
@@ -217,7 +232,7 @@ export function UseCases({ content }: UseCasesProps) {
                   exit={{ opacity: 0, x: direction === "left" ? -100 : 100 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <CaseContent caseData={selectedCaseData} />
+                  <CaseContent caseData={selectedCaseData} showTitle={false} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -243,22 +258,35 @@ export function UseCases({ content }: UseCasesProps) {
               dragElastic={0.1}
               onDragEnd={handleDragEnd}
             >
-              <CaseContent caseData={activeCases[currentSlide].fields} />
+              <CaseContent caseData={activeCases[currentSlide].fields} showTitle={true} />
             </motion.div>
           </AnimatePresence>
 
           {/* Dots Navigation */}
-          <div className="flex justify-center gap-2 mt-6">
-            {activeCases.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleSlideChange(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${currentSlide === index ? "bg-primary w-4" : "bg-primary/30"
-                  }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+          {activeCases.length > 1 && (
+            <div className="flex justify-center gap-3 mt-6 sticky bottom-4 z-10">
+              {activeCases.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSlideChange(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 flex items-center justify-center ${currentSlide === index ? "bg-primary w-6" : "bg-primary/30 hover:bg-primary/50"
+                    }`}
+                  aria-label={`Go to case ${index + 1}`}
+                >
+                  {currentSlide === index && (
+                    <span className="w-2 h-2 bg-white rounded-full"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Indicador de swipe (solo se muestra en el primer render) 
+          <div className="text-center mt-4 text-sm text-foreground/60 animate-pulse">
+            Desliza para navegar
           </div>
+          */}
+
         </div>
       </div>
     </section>

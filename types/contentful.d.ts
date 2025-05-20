@@ -144,6 +144,7 @@ export interface HeroSection {
   isVisible: boolean;
   image?: ContentfulAsset;
   imagePosition?: "right" | "left" | "top" | "bottom" | "background";
+  gradientOverlay?: string;
   imageWidth?: number;
   imageMobile?: ContentfulAsset;
   ctaSection?: string;
@@ -262,7 +263,7 @@ export interface ProductDemoSection {
 
 export interface UseCase {
   name: string;
-  description: Any;
+  description?: Any;
   icon?: ContentfulAsset;
   image?: ContentfulAsset;
   accentColor?: string;
