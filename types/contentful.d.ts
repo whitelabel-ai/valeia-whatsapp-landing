@@ -141,13 +141,16 @@ export interface HeroSection {
   description: string;
   ctaText: string;
   ctaUrl?: string;
+  ctaSection?: string;
+  secondaryCtaText?: string;
+  secondaryCtaUrl?: string;
+  secondaryCtaSection?: string;
   isVisible: boolean;
   image?: ContentfulAsset;
   imagePosition?: "right" | "left" | "top" | "bottom" | "background";
   gradientOverlay?: string;
   imageWidth?: number;
   imageMobile?: ContentfulAsset;
-  ctaSection?: string;
   sectionId: string;
 }
 

@@ -18,6 +18,9 @@ export function Hero({ content }: HeroProps) {
     ctaText,
     ctaUrl,
     ctaSection,
+    secondaryCtaText, // Nuevo campo para el texto del botón secundario
+    secondaryCtaUrl, // Nuevo campo para la URL del botón secundario
+    secondaryCtaSection, // Nuevo campo para la sección del botón secundario
     isVisible,
     image,
     imagePosition = "right",
@@ -308,15 +311,29 @@ export function Hero({ content }: HeroProps) {
                   <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
                     {description}
                   </p>
-                  {ctaText && (ctaUrl || ctaSection) && (
-                    <SectionLink
-                      href={getTargetHref(ctaSection, ctaUrl)}
-                      ctaSection={ctaSection}
-                      ctaUrl={ctaUrl}
-                    >
-                      {ctaText}
-                    </SectionLink>
-                  )}
+                  <div className="flex flex-col md:flex-row gap-4 justify-center">
+                    {ctaText && (ctaUrl || ctaSection) && (
+                      <SectionLink
+                        href={getTargetHref(ctaSection, ctaUrl)}
+                        ctaSection={ctaSection}
+                        ctaUrl={ctaUrl}
+                        className="w-full md:w-auto"
+                      >
+                        {ctaText}
+                      </SectionLink>
+                    )}
+                    {secondaryCtaText && (secondaryCtaUrl || secondaryCtaSection) && (
+                      <SectionLink
+                        href={getTargetHref(secondaryCtaSection, secondaryCtaUrl)}
+                        ctaSection={secondaryCtaSection}
+                        ctaUrl={secondaryCtaUrl}
+                        variant="outline"
+                        className="w-full md:w-auto"
+                      >
+                        {secondaryCtaText}
+                      </SectionLink>
+                    )}
+                  </div>
                 </div>
               </>
             ) : (
@@ -400,16 +417,29 @@ export function Hero({ content }: HeroProps) {
                   <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
                     {description}
                   </p>
-                  {ctaText && (ctaUrl || ctaSection) && (
-                    <SectionLink
-                      href={getTargetHref(ctaSection, ctaUrl)}
-                      ctaSection={ctaSection}
-                      ctaUrl={ctaUrl}
-                      className="w-full md:w-auto"
-                    >
-                      {ctaText}
-                    </SectionLink>
-                  )}
+                  <div className="flex flex-col md:flex-row gap-4">
+                    {ctaText && (ctaUrl || ctaSection) && (
+                      <SectionLink
+                        href={getTargetHref(ctaSection, ctaUrl)}
+                        ctaSection={ctaSection}
+                        ctaUrl={ctaUrl}
+                        className="w-full md:w-auto"
+                      >
+                        {ctaText}
+                      </SectionLink>
+                    )}
+                    {secondaryCtaText && (secondaryCtaUrl || secondaryCtaSection) && (
+                      <SectionLink
+                        href={getTargetHref(secondaryCtaSection, secondaryCtaUrl)}
+                        ctaSection={secondaryCtaSection}
+                        ctaUrl={secondaryCtaUrl}
+                        variant="outline"
+                        className="w-full md:w-auto"
+                      >
+                        {secondaryCtaText}
+                      </SectionLink>
+                    )}
+                  </div>
                 </div>
               </>
             )}
@@ -422,16 +452,30 @@ export function Hero({ content }: HeroProps) {
             <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
               {description}
             </p>
-            {ctaText && (ctaUrl || ctaSection) && (
-              <SectionLink
-                href={getTargetHref(ctaSection, ctaUrl)}
-                ctaSection={ctaSection}
-                ctaUrl={ctaUrl}
-                className="w-full md:w-auto btn btn-primary btn-lg"
-              >
-                {ctaText}
-              </SectionLink>
-            )}
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              {ctaText && (ctaUrl || ctaSection) && (
+                <SectionLink
+                  href={getTargetHref(ctaSection, ctaUrl)}
+                  ctaSection={ctaSection}
+                  ctaUrl={ctaUrl}
+                  variant="default"
+                  className="w-full md:w-auto"
+                >
+                  {ctaText}
+                </SectionLink>
+              )}
+              {secondaryCtaText && (secondaryCtaUrl || secondaryCtaSection) && (
+                <SectionLink
+                  href={getTargetHref(secondaryCtaSection, secondaryCtaUrl)}
+                  ctaSection={secondaryCtaSection}
+                  ctaUrl={secondaryCtaUrl}
+                  variant="outline"
+                  className="w-full md:w-auto"
+                >
+                  {secondaryCtaText}
+                </SectionLink>
+              )}
+            </div>
           </div>
         )}
       </div>
