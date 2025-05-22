@@ -30,13 +30,10 @@ export function ProductDemo({ content }: ProductDemoProps) {
     isVisible,
   } = content;
 
-  // Función para normalizar la altura del video
   const normalizeVideoHeight = (height: number): number => {
-    // Limitar el valor entre 240px y 720px
     return Math.min(Math.max(height, 240), 720);
   };
 
-  // Altura normalizada
   const normalizedVideoHeight = normalizeVideoHeight(videoHeight);
 
   if (!isVisible) return null;
@@ -75,7 +72,6 @@ export function ProductDemo({ content }: ProductDemoProps) {
       <div
         className="w-full max-w-full overflow-hidden"
         style={{
-          // Establecer un tamaño máximo dinámico respetando la altura proporcionada
           maxHeight: `min(${normalizedVideoHeight}px, 70vh)`,
           minHeight: 'auto',
         }}
@@ -99,6 +95,8 @@ export function ProductDemo({ content }: ProductDemoProps) {
   };
 
   const renderContent = () => {
+    const isVerticalLayout = ["top", "bottom"].includes(videoPosition || "");
+
     const textContent = (
       <div className="flex flex-col justify-center space-y-4">
         {descriptionTitle && (
@@ -117,7 +115,7 @@ export function ProductDemo({ content }: ProductDemoProps) {
           </div>
         )}
         {ctaText && (ctaUrl || ctaSection) && (
-          <div className="w-full flex justify-center md:justify-start">
+          <div className={`w-full flex ${isVerticalLayout ? "justify-center" : "justify-center md:justify-start"}`}>
             <SectionLink
               href={getTargetHref(ctaSection, ctaUrl)}
               ctaSection={ctaSection}
