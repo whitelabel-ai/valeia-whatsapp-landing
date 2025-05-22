@@ -121,3 +121,25 @@ export const processGradient = (gradientValue?: string) => {
 
   return `linear-gradient(${firstColor}, ${secondColor})`;
 };
+
+export function processBackgroundStyle(
+  bgValue?: string,
+  defaultClass?: string
+): { style?: React.CSSProperties; className: string } {
+  if (!bgValue) {
+    return { className: defaultClass || '' };
+  }
+
+  if (isGradient(bgValue)) {
+    return {
+      style: { backgroundImage: bgValue },
+      className: defaultClass || ''
+    };
+  } else {
+    // Es un color sólido
+    return {
+      style: { backgroundColor: bgValue },
+      className: defaultClass || ''
+    };
+  }
+}

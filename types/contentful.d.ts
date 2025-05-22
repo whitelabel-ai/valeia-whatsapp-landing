@@ -353,6 +353,7 @@ export interface FooterSection {
   widthLogo: number;
   socialLinks: ContentfulEntry<SocialLink>[];
   colorSocialLinks: boolean;
+  backgroundColor: string;
   email: string;
   phone: string;
   copyright: string;

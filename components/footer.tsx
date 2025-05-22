@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Music2,
 } from "lucide-react";
+import { processBackgroundStyle } from "@/lib/color-utils";
 
 interface FooterProps {
   content: FooterSection;
@@ -46,11 +47,18 @@ export function Footer({ content, navigationPages }: FooterProps) {
     colorSocialLinks,
     email,
     phone,
+    backgroundColor,
     copyright,
     isVisible,
   } = content;
 
   if (!isVisible) return null;
+
+  // Procesar el estilo de fondo
+  const footerStyle = processBackgroundStyle(
+    backgroundColor,
+    "card-gradient py-12"
+  );
 
   const footerPages = navigationPages.filter(
     (page) => page.location === "footer" && page.isVisible && page.slug
@@ -68,7 +76,10 @@ export function Footer({ content, navigationPages }: FooterProps) {
   ].filter(Boolean);
 
   return (
-    <footer className="card-gradient py-12">
+    <footer
+      className={footerStyle.className}
+      style={footerStyle.style}
+    >
       <div className="container max-w-6xl mx-auto px-4">
         <div
           className="grid gap-8 mb-8 text-center md:text-left"
@@ -97,11 +108,11 @@ export function Footer({ content, navigationPages }: FooterProps) {
               {socialLinks?.map((link) => {
                 const Icon =
                   SOCIAL_ICONS[
-                    link.fields.redSocial as keyof typeof SOCIAL_ICONS
+                  link.fields.redSocial as keyof typeof SOCIAL_ICONS
                   ];
                 const color =
                   SOCIAL_COLORS[
-                    link.fields.redSocial as keyof typeof SOCIAL_COLORS
+                  link.fields.redSocial as keyof typeof SOCIAL_COLORS
                   ];
                 return link.fields?.url ? (
                   <a
@@ -114,11 +125,10 @@ export function Footer({ content, navigationPages }: FooterProps) {
                   >
                     <div className="p-2 rounded-full transition-all duration-300 hover:bg-foreground/10 ">
                       <Icon
-                        className={`h-6 w-6 transition-all duration-300 group-hover:scale-110 ${
-                          colorSocialLinks
-                            ? ""
-                            : "text-foreground/60 group-hover:text-foreground"
-                        }`}
+                        className={`h-6 w-6 transition-all duration-300 group-hover:scale-110 ${colorSocialLinks
+                          ? ""
+                          : "text-foreground/60 group-hover:text-foreground"
+                          }`}
                         style={colorSocialLinks ? { color } : {}}
                       />
                     </div>
@@ -197,9 +207,22 @@ export function Footer({ content, navigationPages }: FooterProps) {
 
         <div className="border-t border-border pt-8">
           <p className="text-center text-foreground/60">
-            {/*copyright*/}
-            2025 desarrollado con Go lean por Whitelabel, derechos reservados ©
-            Diseñado con pasión para impulsar tu crecimiento.
+            {/*copyright || */(
+              <>
+                2025 desarrollado con{" "}
+                <a
+                  href="https://golean.lat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Go lean
+                </a>{" "}
+                por Whitelabel, derechos reservados ©
+                <br className="md:hidden" />
+                Diseñado con pasión para impulsar tu crecimiento.
+              </>
+            )}
           </p>
         </div>
       </div>
