@@ -152,6 +152,9 @@ export interface HeroSection {
   imageWidth?: number;
   imageMobile?: ContentfulAsset;
   sectionId: string;
+  titleColor?: string;
+  highlightedTextColor?: string;
+  descriptionColor?: string;
 }
 
 export interface PartnersSection {

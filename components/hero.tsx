@@ -1,9 +1,7 @@
-import { Button } from "./ui/button";
 import { HeroSection } from "@/types/contentful";
-import Link from "next/link";
 import { getTargetHref } from "@/lib/scroll-utils";
 import { SectionLink } from "./ui/section-link";
-import { processGradient } from "./ui/process-gradient";
+import { processGradient, processTextStyle } from "@/lib/color-utils";
 
 interface HeroProps {
   content: HeroSection;
@@ -18,15 +16,18 @@ export function Hero({ content }: HeroProps) {
     ctaText,
     ctaUrl,
     ctaSection,
-    secondaryCtaText, // Nuevo campo para el texto del botón secundario
-    secondaryCtaUrl, // Nuevo campo para la URL del botón secundario
-    secondaryCtaSection, // Nuevo campo para la sección del botón secundario
+    secondaryCtaText,
+    secondaryCtaUrl,
+    secondaryCtaSection,
     isVisible,
     image,
     imagePosition = "right",
     imageWidth,
     imageMobile,
     gradientOverlay,
+    titleColor,
+    highlightedTextColor,
+    descriptionColor,
   } = content;
 
   if (!isVisible) return null;
@@ -48,20 +49,33 @@ export function Hero({ content }: HeroProps) {
       ] || "md:flex-row"
       : "";
 
-  // Aplicar el gradiente de fondo si se proporciona
   const gradientStyle = processGradient(gradientOverlay);
 
-  // Determinar si la imagen o video es de tipo video
   const isVideo = image?.fields?.file?.contentType?.includes("video");
   const mediaUrl = image?.fields?.file?.url
     ? `https:${image.fields.file.url}`
     : null;
 
-  // Determinar si la imagen mobile es un video y obtener su URL
   const isMobileVideo = imageMobile?.fields?.file?.contentType?.includes("video");
   const mobileMediaUrl = imageMobile?.fields?.file?.url
     ? `https:${imageMobile.fields.file.url}`
     : null;
+
+  // Estilos de texto con detección automática de gradientes
+  const titleStyle = processTextStyle(
+    titleColor,
+    "text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6"
+  );
+
+  const highlightedTextStyle = processTextStyle(
+    highlightedTextColor,
+    "text-gradient" // Clase por defecto si no hay color personalizado
+  );
+
+  const descriptionStyle = processTextStyle(
+    descriptionColor,
+    "text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto"
+  );
 
   return (
     <section
@@ -93,7 +107,7 @@ export function Hero({ content }: HeroProps) {
                 }}
               />
 
-              {/* Video para mobile - muestra video mobile o imagen mobile o el video normal como fallback */}
+              {/* Video para mobile */}
               {mobileMediaUrl ? (
                 isMobileVideo ? (
                   <video
@@ -144,7 +158,7 @@ export function Hero({ content }: HeroProps) {
                 />
               )}
 
-              {/* Capa de gradiente para oscurecer el video/imagen */}
+              {/* Capa de gradiente */}
               <div
                 className="absolute inset-0"
                 style={{ background: gradientStyle }}
@@ -167,7 +181,7 @@ export function Hero({ content }: HeroProps) {
                 }}
               />
 
-              {/* Contenido para mobile - muestra video/imagen mobile o la normal como fallback */}
+              {/* Contenido para mobile */}
               {mobileMediaUrl ? (
                 isMobileVideo ? (
                   <video
@@ -216,7 +230,7 @@ export function Hero({ content }: HeroProps) {
                 />
               )}
 
-              {/* Capa de gradiente para oscurecer la imagen */}
+              {/* Capa de gradiente */}
               <div
                 className="absolute inset-0"
                 style={{ background: gradientStyle }}
@@ -304,11 +318,11 @@ export function Hero({ content }: HeroProps) {
                   </>
                 )}
                 <div className="text-center w-full">
-                  <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6">
+                  <h1 {...titleStyle}>
                     {title}{" "}
-                    <span className="text-gradient">{highlightedText}</span>
+                    <span {...highlightedTextStyle}>{highlightedText}</span>
                   </h1>
-                  <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
+                  <p {...descriptionStyle}>
                     {description}
                   </p>
                   <div className="flex flex-col md:flex-row gap-4 justify-center">
@@ -410,11 +424,11 @@ export function Hero({ content }: HeroProps) {
                   )}
                 </div>
                 <div className="text-start w-full md:w-1/2 order-1 md:order-none">
-                  <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6">
+                  <h1 {...titleStyle}>
                     {title}{" "}
-                    <span className="text-gradient">{highlightedText}</span>
+                    <span {...highlightedTextStyle}>{highlightedText}</span>
                   </h1>
-                  <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
+                  <p {...descriptionStyle}>
                     {description}
                   </p>
                   <div className="flex flex-col md:flex-row gap-4">
@@ -446,10 +460,10 @@ export function Hero({ content }: HeroProps) {
           </div>
         ) : (
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt-8 md:mt-20 mb-6">
-              {title} <span className="text-gradient">{highlightedText}</span>
+            <h1 {...titleStyle}>
+              {title} <span {...highlightedTextStyle}>{highlightedText}</span>
             </h1>
-            <p className="text-base md:text-lg lg:text-2xl text-foreground/80 mb-8 max-w-2xl mx-auto">
+            <p {...descriptionStyle}>
               {description}
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
