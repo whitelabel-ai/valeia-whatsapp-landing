@@ -1,7 +1,7 @@
 "use client";
 
 import { PartnersSection } from "@/types/contentful";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface PartnersProps {
   content: PartnersSection;
@@ -13,47 +13,89 @@ export function Partners({ content }: PartnersProps) {
     subtitle,
     logos,
     displayMode = "grid",
-    scrollSpeed = 30,
+    scrollSpeed = 1,
     height = 60,
     backgroundColor,
     isVisible,
     sectionId,
   } = content;
 
-  const scrollRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [logoElements, setLogoElements] = useState<JSX.Element[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
+  const animationRef = useRef<number>();
+  const positionRef = useRef(0);
+  const requestRef = useRef<number>();
+  const logosContainerRef = useRef<HTMLDivElement>(null);
 
+  // Preparamos los logos para el carrusel
   useEffect(() => {
-    if (displayMode !== "scroll" || !scrollRef.current || !containerRef.current)
-      return;
+    if (!logos?.length) return;
 
-    const scrollContainer = scrollRef.current;
-    const container = containerRef.current;
-    let scrollPos = -0;
-    let animationFrameId: number;
+    const validLogos = logos.filter(
+      (logo) => logo?.fields?.file?.url && logo?.fields?.title
+    );
 
-    const resetScroll = () => {
-      if (scrollPos >= container.offsetWidth / 3) {
-        scrollPos = 0;
-        scrollContainer.style.transform = `translateX(20)`;
+    if (validLogos.length === 0) return;
+
+    const elements = validLogos.map((logo, index) => (
+      <div
+        key={`logo-${logo.sys.id}-${index}`}
+        className="flex-shrink-0 px-4 flex items-center justify-center"
+      >
+        <img
+          src={`https:${logo.fields.file.url}`}
+          alt={logo.fields.title}
+          style={{ height: `${height}px`, maxWidth: '200px' }}
+          className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+        />
+      </div>
+    ));
+
+    setLogoElements(elements);
+  }, [logos, height]);
+
+  // Animación del carrusel infinito mejorado
+  useEffect(() => {
+    if (displayMode !== "carrusel" || !logosContainerRef.current || !logoElements.length) return;
+
+    const container = logosContainerRef.current;
+    const containerWidth = container.firstElementChild?.clientWidth || 0;
+    const totalWidth = containerWidth * logoElements.length;
+    let lastTimestamp = 0;
+    let accumulatedDistance = 0;
+
+    const animate = (timestamp: number) => {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const deltaTime = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      if (!isHovered) {
+        const distance = (scrollSpeed * deltaTime) / 32; // Normalizado a 30fps
+        accumulatedDistance += distance;
+
+        // Mover el contenedor
+        positionRef.current -= distance;
+        container.style.transform = `translateX(${positionRef.current}px)`;
+
+        // Reposicionamiento imperceptible cuando pasa un conjunto completo
+        if (Math.abs(positionRef.current) >= totalWidth) {
+          positionRef.current += totalWidth;
+          container.style.transform = `translateX(${positionRef.current}px)`;
+        }
       }
+
+      requestRef.current = requestAnimationFrame(animate);
     };
 
-    const scroll = () => {
-      scrollPos += scrollSpeed / 60;
-      scrollContainer.style.transform = `translateX(-${scrollPos}px)`;
-      resetScroll();
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    animationFrameId = requestAnimationFrame(scroll);
+    requestRef.current = requestAnimationFrame(animate);
 
     return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
       }
     };
-  }, [displayMode, scrollSpeed]);
+  }, [displayMode, scrollSpeed, isHovered, logoElements]);
 
   if (!isVisible || !logos?.length) return null;
 
@@ -75,37 +117,6 @@ export function Partners({ content }: PartnersProps) {
     };
   };
 
-  const renderLogos = () => {
-    const validLogos = logos.filter(
-      (logo) => logo?.fields?.file?.url && logo?.fields?.title
-    );
-
-    if (validLogos.length === 0) return null;
-
-    const logoElements = validLogos.map((logo, index) => (
-      <div
-        key={`logo-${logo.sys.id}-${index}`}
-        className="flex items-center justify-center p-4 transition-transform hover:scale-105"
-      >
-        <img
-          src={`https:${logo.fields.file.url}`}
-          alt={logo.fields.title}
-          style={{ height: `${height}px` }}
-          className="object-contain filter grayscale hover:grayscale-0 transition-all"
-        />
-      </div>
-    ));
-
-    if (displayMode === "scroll") {
-      return logoElements.concat(
-        logoElements.map((el, i) => ({ ...el, key: `logo-scroll-1-${i}` })),
-        logoElements.map((el, i) => ({ ...el, key: `logo-scroll-2-${i}` }))
-      );
-    }
-
-    return logoElements;
-  };
-
   return (
     <section
       id={sectionId}
@@ -120,21 +131,42 @@ export function Partners({ content }: PartnersProps) {
           )}
         </div>
 
-        <div ref={containerRef} className="overflow-hidden">
-          <div
-            ref={scrollRef}
-            className={`flex ${displayMode === "scroll"
-              ? "whitespace-nowrap"
-              : "flex-wrap justify-center"
-              }`}
-            style={{
-              transition:
-                displayMode === "scroll" ? "transform 0.05s linear" : undefined,
-            }}
-          >
-            {renderLogos()}
+        {displayMode === "grid" ? (
+          <div className="flex flex-wrap justify-center gap-4">
+            {logos.map((logo, index) => (
+              <div
+                key={`logo-${logo.sys.id}-${index}`}
+                className="flex items-center justify-center p-4 transition-transform hover:scale-105"
+              >
+                <img
+                  src={`https:${logo.fields.file.url}`}
+                  alt={logo.fields.title}
+                  style={{ height: `${height}px` }}
+                  className="object-contain filter grayscale hover:grayscale-0 transition-all"
+                />
+              </div>
+            ))}
           </div>
-        </div>
+        ) : (
+          <div
+            className="relative overflow-hidden py-4"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            ref={containerRef}
+          >
+            <div
+              ref={logosContainerRef}
+              className="flex items-center"
+              style={{
+                willChange: 'transform',
+                width: 'fit-content'
+              }}
+            >
+              {/* Renderizamos los logos 3 veces para fluidez */}
+              {[...logoElements, ...logoElements, ...logoElements]}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

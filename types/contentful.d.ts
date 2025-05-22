@@ -161,7 +161,7 @@ export interface PartnersSection {
   title: string;
   subtitle?: string;
   logos: ContentfulAsset[];
-  displayMode: "grid" | "scroll";
+  displayMode: "grid" | "carrusel";
   scrollSpeed?: number;
   height?: number;
   backgroundColor?: string;
