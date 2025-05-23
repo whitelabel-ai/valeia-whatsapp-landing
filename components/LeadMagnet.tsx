@@ -447,9 +447,14 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
         {isSingleLeadMagnet ? renderHeroLayout() : renderCardsLayout()}
 
         <Dialog open={isModalOpen} onOpenChange={handleCloseModal}>
-          <DialogContent className="sm:max-w-sm max-w-md mx-auto border rounded-lg px-6">
+          <DialogContent
+            className={cn(
+              "sm:max-w-md mx-auto border rounded-lg px-4 ",
+              fieldsToCapture.length > 6 ? "max-h-[90vdh]" : "max-h-[80dvh]"
+            )}
+          >
             <DialogHeader className="text-center space-y-2">
-              <DialogTitle className="text-2xl font-bold text-center my-4 ">
+              <DialogTitle className="text-2xl font-bold text-center my-4">
                 {isSuccess ? confirmationTitle : titleModal}
               </DialogTitle>
               {isSuccess && (
@@ -471,21 +476,40 @@ export function LeadMagnetSection({ content }: LeadMagnetSectionProps) {
             </DialogHeader>
 
             {!isSuccess && (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {fieldsToCapture.map((field) => (
-                  <div key={field} className="space-y-2">
-                    <Label htmlFor={field}>{toTitleCase(field)}</Label>
-                    <Input
-                      id={field}
-                      value={formData[field] || ""}
-                      onChange={(e) => handleInputChange(field, e.target.value)}
-                      required
-                    />
-                  </div>
-                ))}
+              <form onSubmit={handleSubmit}>
+                <div
+                  className={cn(
+                    "space-y-2",
+                    fieldsToCapture.length > 3 && "grid grid-cols-1 md:grid-cols-2 gap-1 gap-x-2",
+                    fieldsToCapture.length > 6 && "overflow-y-auto max-h-[60vh] pr-2"
+                  )}
+                >
+                  {fieldsToCapture.map((field) => (
+                    <div
+                      key={field}
+                      className={cn(
+                        "space-y-1",
+                        // Campos importantes siempre en una columna si hay división
+                        (field === 'email' || field === 'nombre') && fieldsToCapture.length > 3
+                          ? "md:col-span-2"
+                          : ""
+                      )}
+                    >
+                      <Label htmlFor={field}>{toTitleCase(field)}</Label>
+                      <Input
+                        id={field}
+                        type={field === 'email' ? 'email' : 'text'}
+                        value={formData[field] || ""}
+                        onChange={(e) => handleInputChange(field, e.target.value)}
+                        required={field === 'email'} // Email siempre requerido
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded-md mx-1 px-2 py-1 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                      />
+                    </div>
+                  ))}
+                </div>
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full mt-6"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Enviando..." : ctaTextModal}
